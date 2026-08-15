@@ -1,0 +1,36 @@
+name: CI
+
+# Vérifie chaque PR (vers develop et main) ainsi que les pushs sur develop :
+# lint + tests + build de production. La branche main étant protégée (PR
+# requise), tout code qui arrive sur main est passé par cette CI.
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Tests
+        run: npm test
+
+      - name: Build (typecheck inclus)
+        run: npm run build
