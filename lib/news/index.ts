@@ -3,6 +3,7 @@ import { cache } from "@/lib/data/cache";
 import { ARTICLE_SOURCES, VIDEO_CHANNELS } from "./sources";
 import { parseArticleFeed, parseVideoFeed } from "./parse";
 import { applyNewsQuery } from "./filter";
+import { proxyImageUrl } from "./img-proxy";
 import type { NewsFilter, NewsItem, NewsPage, NewsQuery } from "./types";
 
 /**
@@ -70,7 +71,11 @@ async function getAllItems(type: NewsFilter): Promise<NewsItem[]> {
   const results = await Promise.all(tasks);
   const items = results
     .flat()
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+    // les vignettes des hôtes protégés (WBN) passent par /api/img
+    .map((item) =>
+      item.thumbnail ? { ...item, thumbnail: proxyImageUrl(item.thumbnail) } : item
+    );
 
   // on ne cache jamais un agrégat vide (sinon les pannes réseau
   // « cacheraient » une page sans actualités pendant 15 min)
