@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const WORD = "ROUNDS".split("");
 const BANDS = 16;
@@ -14,15 +15,28 @@ const BANDS = 16;
  *
  * Rendu côté serveur (`visible = true` initial) : le rideau est dans le
  * HTML dès le premier paint, on ne voit JAMAIS le site avant lui, et le
- * site n'apparaît qu'une fois le rideau parti. Il se joue à chaque
- * chargement de page (pas de cookie/sessionStorage : l'utilisateur veut
- * le voir à chaque visite pendant la phase de test). Les navigations
- * internes (SPA) ne rechargent pas le layout → pas de rejeu. Sauté en
- * prefers-reduced-motion.
+ * site n'apparaît qu'une fois le rideau parti.
+ *
+ * Il se joue à CHAQUE chargement de page : premier chargement (animation
+ * complète), rechargement, et aussi à chaque navigation interne (SPA) via
+ * `usePathname` — le rideau retombe et se relève sur la nouvelle page.
+ * Sauté en prefers-reduced-motion.
  */
 export function AppLoader() {
+  const pathname = usePathname();
   const [visible, setVisible] = useState(true);
   const [opening, setOpening] = useState(true);
+  const firstRun = useRef(true);
+
+  /** Descend le rideau, le tient `holdMs`, puis le lève et le démonte. */
+  const play = useCallback((holdMs: number) => {
+    setVisible(true);
+    setOpening(true);
+    const timers: Array<ReturnType<typeof setTimeout>> = [];
+    timers.push(setTimeout(() => setOpening(false), holdMs));
+    timers.push(setTimeout(() => setVisible(false), holdMs + 800));
+    return timers;
+  }, []);
 
   useEffect(() => {
     const timers: Array<ReturnType<typeof setTimeout>> = [];
@@ -33,12 +47,14 @@ export function AppLoader() {
           setVisible(false);
           return;
         }
-        timers.push(setTimeout(() => setOpening(false), 1400));
-        timers.push(setTimeout(() => setVisible(false), 2400));
+        // premier chargement : séquence complète ; navigation : reprise courte
+        const hold = firstRun.current ? 1500 : 900;
+        firstRun.current = false;
+        timers.push(...play(hold));
       }, 0)
     );
     return () => timers.forEach((t) => clearTimeout(t));
-  }, []);
+  }, [pathname, play]);
 
   return (
     <AnimatePresence>
