@@ -25,9 +25,13 @@ const securityHeaders = [
       "default-src 'self'",
       `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob:",
+      // agrégateur d'actualités : les vignettes viennent de domaines variés
+      // (i*.ytimg.com, cdn des sites boxe…) et le lecteur embarqué utilise
+      // une iframe YouTube — on autorise https en images + frame-src YouTube.
+      "img-src 'self' data: blob: https:",
       "font-src 'self' data:",
       "connect-src 'self'",
+      "frame-src https://www.youtube-nocookie.com https://www.youtube.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",

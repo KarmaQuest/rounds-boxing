@@ -109,6 +109,69 @@ describe("parseArticleFeed — Atom", () => {
   });
 });
 
+describe("parseArticleFeed — miniatures", () => {
+  const RSS_WITH_DESC_IMG = `<?xml version="1.0"?>
+<rss version="2.0">
+  <channel>
+    <item>
+      <title>Terrel Williams</title>
+      <link>https://example.com/tw</link>
+      <pubDate>Wed, 14 Aug 2026 20:30:00 GMT</pubDate>
+      <description>&lt;img src="https://www.worldboxingnews.com/wp-content/uploads/2026/08/terrel-williams.jpg" alt="x" /&gt; Le récit…</description>
+    </item>
+  </channel>
+</rss>`;
+
+  const RSS_WITH_MEDIA_CONTENT = `<?xml version="1.0"?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <item>
+      <title>Crawford vs Pacquiao</title>
+      <link>https://example.com/cp</link>
+      <pubDate>Wed, 14 Aug 2026 20:30:00 GMT</pubDate>
+      <description>analyse</description>
+      <media:content url="https://cdn-img.boxingnewsonline.net/uploads/content/1.jpg" />
+    </item>
+  </channel>
+</rss>`;
+
+  const ATOM_WITH_CONTENT_IMG = `<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <entry>
+    <title>Joshua vs Fury</title>
+    <link href="https://example.com/jf" />
+    <published>2026-08-13T10:00:00Z</published>
+    <content type="html">&lt;img src="https://platform.badlefthook.com/wp-content/uploads/jf.jpg" /&gt; &lt;p&gt;texte&lt;/p&gt;</content>
+  </entry>
+</feed>`;
+
+  it("extrait l'image de la description (WBN)", () => {
+    const items = parseArticleFeed(RSS_WITH_DESC_IMG, RSS_SOURCE);
+    expect(items[0]!.thumbnail).toBe(
+      "https://www.worldboxingnews.com/wp-content/uploads/2026/08/terrel-williams.jpg"
+    );
+  });
+
+  it("extrait media:content (Boxing News Online / Boxing Social)", () => {
+    const items = parseArticleFeed(RSS_WITH_MEDIA_CONTENT, RSS_SOURCE);
+    expect(items[0]!.thumbnail).toBe(
+      "https://cdn-img.boxingnewsonline.net/uploads/content/1.jpg"
+    );
+  });
+
+  it("extrait l'image du contenu Atom (Bad Left Hook)", () => {
+    const items = parseArticleFeed(ATOM_WITH_CONTENT_IMG, ATOM_SOURCE);
+    expect(items[0]!.thumbnail).toBe(
+      "https://platform.badlefthook.com/wp-content/uploads/jf.jpg"
+    );
+  });
+
+  it("pas d'image → thumbnail undefined", () => {
+    const items = parseArticleFeed(RSS_XML, RSS_SOURCE);
+    expect(items[0]!.thumbnail).toBeUndefined();
+  });
+});
+
 describe("parseVideoFeed — YouTube videos.xml", () => {
   it("construit l'URL de lecture et la miniature", () => {
     const items = parseVideoFeed(YT_XML, VIDEO_SOURCE);
@@ -125,9 +188,11 @@ describe("parseVideoFeed — YouTube videos.xml", () => {
     expect(first.videoId).toBe("abc123");
   });
 
-  it("gère les entrées sans miniature", () => {
+  it("miniature de secours déterministe quand le flux n'en fournit pas", () => {
     const items = parseVideoFeed(YT_XML, VIDEO_SOURCE);
-    expect(items[1]!.thumbnail).toBeUndefined();
+    expect(items[1]!.thumbnail).toBe(
+      "https://i.ytimg.com/vi/def456/hqdefault.jpg"
+    );
   });
 
   it("trie-t-il ? non — l'agrégateur trie, le parser préserve l'ordre", () => {

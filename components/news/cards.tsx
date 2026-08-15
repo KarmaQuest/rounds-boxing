@@ -1,31 +1,50 @@
 "use client";
 
+import { useState } from "react";
 import { ExternalLink, Newspaper, PlayCircle } from "lucide-react";
 import type { NewsItem } from "@/lib/news/types";
 
 /** Carte article : texte + source. */
 export function ArticleCard({ item }: { item: NewsItem }) {
+  // certaines sources protègent leurs images (WBN renvoie 403 aux
+  // hotlinks) → on masque l'image cassée et on retombe sur la carte texte
+  const [imgOk, setImgOk] = useState(true);
+
   return (
     <a
       href={item.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex h-full flex-col rounded-2xl border border-line/60 bg-panel p-5 transition-all duration-300 hover:-translate-y-1 hover:border-neon/40 hover:shadow-neon-sm"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line/60 bg-panel transition-all duration-300 hover:-translate-y-1 hover:border-neon/40 hover:shadow-neon-sm"
     >
-      <div className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-fog">
-        <Newspaper size={13} aria-hidden />
-        <span>{item.source}</span>
-      </div>
-      <h3 className="line-clamp-3 font-display text-lg uppercase leading-snug tracking-wide text-snow transition-colors group-hover:text-neon-soft">
-        {item.title}
-      </h3>
-      {item.description && (
-        <p className="mt-2 line-clamp-2 text-sm text-mist">{item.description}</p>
+      {item.thumbnail && imgOk && (
+        <div className="relative aspect-video overflow-hidden bg-ink">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={item.thumbnail}
+            alt=""
+            loading="lazy"
+            onError={() => setImgOk(false)}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
       )}
-      <span className="mt-auto flex items-center gap-1 pt-4 text-xs text-fog">
-        <ExternalLink size={12} aria-hidden />
-        Lire l’article
-      </span>
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-fog">
+          <Newspaper size={13} aria-hidden />
+          <span>{item.source}</span>
+        </div>
+        <h3 className="line-clamp-3 font-display text-lg uppercase leading-snug tracking-wide text-snow transition-colors group-hover:text-neon-soft">
+          {item.title}
+        </h3>
+        {item.description && (
+          <p className="mt-2 line-clamp-2 text-sm text-mist">{item.description}</p>
+        )}
+        <span className="mt-auto flex items-center gap-1 pt-4 text-xs text-fog">
+          <ExternalLink size={12} aria-hidden />
+          Lire l’article
+        </span>
+      </div>
     </a>
   );
 }
