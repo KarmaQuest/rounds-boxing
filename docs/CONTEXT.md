@@ -296,11 +296,13 @@ npm run dev        # http://localhost:3000 (Turbopack)
 
 ## 12. Workflow git (agence) — depuis le 15/08/2026
 
-Dépôt : **`github.com/KarmaQuest/rounds-boxing`** (privé). Branche par
-défaut : `main`.
+Dépôt : **`github.com/KarmaQuest/rounds-boxing`** (**public**). Branche par
+défaut : `main`, **protégée** (PR requise pour merger, force-push et
+suppressions bloqués). CI GitHub Actions (lint + tests + build) sur
+chaque PR vers `develop`/`main` et sur les pushs `develop`.
 
-- **`main`** : stable, version déployable. On n'y pousse que des fusions
-  validées (release), jamais de travail en cours.
+- **`main`** : stable, version déployable, **protégée** (PR requise). On n'y
+  fusionne que des releases validées, jamais de travail en cours.
 - **`develop`** : intégration. Toute feature y fusionne une fois terminée.
   C'est LA branche de travail courante.
 - **`feature/*`** : une branche par tâche (ex. `feature/comparateur`),
