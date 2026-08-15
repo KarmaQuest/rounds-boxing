@@ -212,6 +212,9 @@ class ProviderRouter {
   async upcomingFights(limit = 20): Promise<{ fights: Fight[]; source: string }> {
     const merged = new Map<string, Fight>();
     const sources: string[] = [];
+    // le mock (combats aux dates figées, AUDIT P2) ne sert QUE de dernier
+    // recours : dès qu'une source réelle fournit des combats, on les écarte
+    let realSourceFound = false;
 
     for (const provider of this.providers) {
       const list = await this.fetchOne<Fight[]>(
@@ -223,6 +226,7 @@ class ProviderRouter {
       );
       if (!list || list.length === 0) continue;
       sources.push(provider.name);
+      if (provider.name !== "mock") realSourceFound = true;
       for (const fight of list) {
         const key = fightKey(fight);
         const existing = merged.get(key);
@@ -231,7 +235,7 @@ class ProviderRouter {
         } else if (existing.odds) {
           // les cotes réelles (oddsapi, première source) priment ; la fiche
           // enrichie (venue, titre, catégorie) vient du mock
-          merged.set(key, { ...fight, odds: existing.odds, source: fight.source });
+          merged.set(key, { ...fight, odds: existing.odds, source: existing.source });
         } else {
           merged.set(key, { ...fight, odds: fight.odds ?? existing.odds });
         }
@@ -244,6 +248,8 @@ class ProviderRouter {
     const now = Date.now();
     const fights = [...merged.values()]
       .filter((f) => new Date(f.date).getTime() > now)
+      // le mock n'apparaît que si AUCUNE source réelle n'a rien renvoyé
+      .filter((f) => !realSourceFound || f.source !== "mock")
       .sort(
         (a, b) =>
           fightImportance(b) - fightImportance(a) ||

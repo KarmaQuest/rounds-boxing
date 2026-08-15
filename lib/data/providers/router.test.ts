@@ -392,6 +392,67 @@ describe("upcomingFights", () => {
     expect(fights).toHaveLength(1);
     expect(fights[0]!.id).toBe("early");
   });
+
+  it("écarte les combats mock dès qu'une source réelle fournit des combats", async () => {
+    // affiche inventée du mock (dates figées) — ne doit pas apparaître
+    const invented = mkFight({
+      id: "mock-figé",
+      source: "mock",
+      fighters: [{ name: "Canelo Álvarez" }, { name: "Terence Crawford" }],
+    });
+    const real = mkFight({ id: "real-1", fighters: [{ name: "Rolando Romero" }, { name: "Teofimo López" }] });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "oddsapi", priority: 1, capabilities: ["odds"], getUpcomingFights: async () => [real] }),
+      mkProvider({ name: "mock", priority: 99, capabilities: ["odds"], getUpcomingFights: async () => [invented] }),
+    ]);
+
+    const { fights, source } = await router.upcomingFights();
+    expect(fights.map((f) => f.id)).toEqual(["real-1"]);
+    expect(source).toBe("oddsapi + mock");
+  });
+
+  it("garde les combats mock quand AUCUNE source réelle ne répond", async () => {
+    const fallback = mkFight({
+      id: "mock-fallback",
+      source: "mock",
+      fighters: [{ name: "Usyk" }, { name: "Bakole" }],
+    });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "oddsapi", priority: 1, capabilities: ["odds"], getUpcomingFights: async () => [] }),
+      mkProvider({ name: "mock", priority: 99, capabilities: ["odds"], getUpcomingFights: async () => [fallback] }),
+    ]);
+
+    const { fights } = await router.upcomingFights();
+    expect(fights.map((f) => f.id)).toEqual(["mock-fallback"]);
+  });
+
+  it("un combat réel enrichi par le mock garde sa source réelle", async () => {
+    const real = mkFight({
+      id: "real-1",
+      source: "oddsapi",
+      fighters: [{ name: "Canelo Álvarez" }, { name: "Mbilli" }],
+      odds: [1.29, 3.4],
+    });
+    const mock = mkFight({
+      id: "mock-1",
+      source: "mock",
+      fighters: [{ name: "Canelo Álvarez" }, { name: "Mbilli" }],
+      venue: "Riyad",
+    });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "oddsapi", priority: 1, capabilities: ["odds"], getUpcomingFights: async () => [real] }),
+      mkProvider({ name: "mock", priority: 99, capabilities: ["odds"], getUpcomingFights: async () => [mock] }),
+    ]);
+
+    const { fights } = await router.upcomingFights();
+    expect(fights).toHaveLength(1);
+    expect(fights[0]!.source).toBe("oddsapi"); // pas écrasé par le mock
+    expect(fights[0]!.venue).toBe("Riyad"); // enrichissement conservé
+    expect(fights[0]!.odds).toEqual([1.29, 3.4]); // cotes réelles conservées
+  });
 });
 
 describe("recentFights", () => {
