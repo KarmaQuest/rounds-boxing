@@ -2,15 +2,19 @@ import "server-only";
 import { cache } from "@/lib/data/cache";
 import { ARTICLE_SOURCES, VIDEO_CHANNELS } from "./sources";
 import { parseArticleFeed, parseVideoFeed } from "./parse";
-import type { NewsFilter, NewsItem } from "./types";
+import { applyNewsQuery } from "./filter";
+import type { NewsFilter, NewsItem, NewsPage, NewsQuery } from "./types";
 
 /**
- * Agrégateur d'actualités : récupère tous les flux (articles + vidéos) en
- * parallèle, normalise, trie par date décroissante. Chaque source est
- * tolérante aux pannes (timeout + erreur → on la saute) : la section
- * actualités ne doit JAMAIS faire planter la page d'accueil.
+ * Agrégateur d'actualités.
  *
- * Résultat mis en cache 15 min (mémoire ou Redis selon config).
+ * 1. La liste COMPLÈTE (toutes sources, triée par date) est mise en cache
+ *    15 min par type — les flux amont ne sont pas re-fetchés à chaque page.
+ * 2. `fetchNews(query)` applique filtres (type, recherche floue, source),
+ *    tri et pagination SUR la liste en cache, à la volée.
+ *
+ * Tolérant aux pannes : une source qui échoue (timeout 8 s, erreur) est
+ * sautée sans jamais faire planter la page.
  */
 
 const NEWS_TTL_MS = 1000 * 60 * 15; // 15 min
@@ -36,9 +40,9 @@ async function fetchText(url: string): Promise<string | null> {
   }
 }
 
-export async function fetchNews(type: NewsFilter, limit: number): Promise<NewsItem[]> {
-  const safeLimit = Math.min(Math.max(1, limit), 50);
-  const cacheKey = `news:${type}:${safeLimit}`;
+/** Liste complète (toutes sources confondues) pour un type, en cache. */
+async function getAllItems(type: NewsFilter): Promise<NewsItem[]> {
+  const cacheKey = `news:full:${type}`;
 
   const cached = await cache.get<NewsItem[]>(cacheKey);
   if (cached) return cached;
@@ -66,14 +70,19 @@ export async function fetchNews(type: NewsFilter, limit: number): Promise<NewsIt
   const results = await Promise.all(tasks);
   const items = results
     .flat()
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
-    .slice(0, safeLimit);
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 
-  // le cache ne stocke jamais un agrégat vide (sinon les pannes réseau
+  // on ne cache jamais un agrégat vide (sinon les pannes réseau
   // « cacheraient » une page sans actualités pendant 15 min)
   if (items.length > 0) {
     await cache.set(cacheKey, items, NEWS_TTL_MS);
   }
 
   return items;
+}
+
+/** Page d'actualités (filtres + pagination) pour la page /actualites. */
+export async function fetchNews(query: NewsQuery): Promise<NewsPage> {
+  const items = await getAllItems(query.type);
+  return applyNewsQuery(items, query);
 }

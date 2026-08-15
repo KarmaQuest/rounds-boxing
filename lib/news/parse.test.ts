@@ -120,6 +120,9 @@ describe("parseVideoFeed — YouTube videos.xml", () => {
     expect(first.url).toBe("https://www.youtube.com/watch?v=abc123");
     expect(first.thumbnail).toBe("https://i.ytimg.com/vi/abc123/hqdefault.jpg");
     expect(first.source).toBe("DAZN Boxing");
+    // lecteur embarqué multi-plateforme
+    expect(first.platform).toBe("youtube");
+    expect(first.videoId).toBe("abc123");
   });
 
   it("gère les entrées sans miniature", () => {

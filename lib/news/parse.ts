@@ -142,6 +142,8 @@ function parseYtItems(xml: string, source: VideoSource): NewsItem[] {
           stripHtml(asStr(mediaGroup?.["media:description"])),
           160
         ),
+        platform: "youtube",
+        videoId,
       };
     })
     .filter((x): x is NewsItem => x !== null);
