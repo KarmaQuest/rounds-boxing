@@ -292,7 +292,30 @@ npm run dev        # http://localhost:3000 (Turbopack)
 - Jamais de clé en dur dans le code, jamais de fetch client direct vers les APIs (toujours via `/api/*`)
 - Si un jour le chat ou le repo est partagé : **régénérer les clés** (Big Balls recommande de tourner une clé partagée publiquement)
 
-## 12. Docs & Skills (15/08/2026)
+## 12. Workflow git (agence) — depuis le 15/08/2026
+
+Dépôt : **`github.com/KarmaQuest/rounds-boxing`** (privé). Branche par
+défaut : `main`.
+
+- **`main`** : stable, version déployable. On n'y pousse que des fusions
+  validées (release), jamais de travail en cours.
+- **`develop`** : intégration. Toute feature y fusionne une fois terminée.
+  C'est LA branche de travail courante.
+- **`feature/*`** : une branche par tâche (ex. `feature/comparateur`),
+  créée depuis `develop`, fusionnée dans `develop` quand finie. Nommer en
+  anglais court.
+- Règles : chaque tâche = `feature/*` → `develop` (jamais direct sur
+  `main`) ; typecheck + lint + tests verts avant fusion (`npm run build`,
+  `npm run lint`, `npm test`) ; messages de commit conventionnels
+  (`feat:` / `fix:` / `docs:` / `refactor:` / `chore:`).
+
+Démarrage d'une tâche :
+```bash
+git checkout develop && git pull
+# branche de travail…
+```
+
+## 13. Docs & Skills (15/08/2026)
 
 - **`docs/CONTEXT.md`** (ce fichier) : tout le contexte du projet.
 - **`docs/TASKS.md`** : la feuille de route priorisée (court/moyen/long terme).
