@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Anton, Inter } from "next/font/google";
-import { cookies } from "next/headers";
 import "./globals.css";
 import { QueryProviders } from "@/components/query-providers";
 import { AppLoader } from "@/components/loader";
@@ -41,12 +40,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // Le loader est rendu côté serveur (il couvre le site dès le premier
-  // paint) — mais seulement au tout premier passage : un cookie posé par le
-  // client après la première lecture évite tout flash aux retours.
-  const showLoader = !(await cookies()).get("rounds_loader_seen");
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${anton.variable} ${inter.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-ink text-snow">
@@ -54,7 +48,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <a href="#contenu" className="skip-link">
             Aller au contenu
           </a>
-          {showLoader && <AppLoader />}
+          {/* Rendu SSR : le rideau cache le site dès le premier paint et
+              ne le révèle qu'après l'animation (voir components/loader.tsx). */}
+          <AppLoader />
           <SwRegister />
           <Navbar />
           <main id="contenu" className="flex-1">

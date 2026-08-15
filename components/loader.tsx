@@ -13,10 +13,12 @@ const BANDS = 16;
  * la page.
  *
  * Rendu côté serveur (`visible = true` initial) : le rideau est dans le
- * HTML dès le premier paint, on ne voit JAMAIS le site avant lui. Le
- * layout serveur ne le rend que si le cookie `rounds_loader_seen` est
- * absent (retours sans flash) ; ici on pose le cookie + sessionStorage à
- * la fin de l'animation. Sauté en prefers-reduced-motion.
+ * HTML dès le premier paint, on ne voit JAMAIS le site avant lui, et le
+ * site n'apparaît qu'une fois le rideau parti. Il se joue à chaque
+ * chargement de page (pas de cookie/sessionStorage : l'utilisateur veut
+ * le voir à chaque visite pendant la phase de test). Les navigations
+ * internes (SPA) ne rechargent pas le layout → pas de rejeu. Sauté en
+ * prefers-reduced-motion.
  */
 export function AppLoader() {
   const [visible, setVisible] = useState(true);
@@ -24,28 +26,15 @@ export function AppLoader() {
 
   useEffect(() => {
     const timers: Array<ReturnType<typeof setTimeout>> = [];
-    // setState dans un callback (règle react-hooks/set-state-in-effect)
+    // setState dans des callbacks (règle react-hooks/set-state-in-effect)
     timers.push(
       setTimeout(() => {
-        // reduced-motion ou déjà vu dans cette session : on retire le
-        // rideau immédiatement, sans animation
-        if (
-          window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-          sessionStorage.getItem("rounds-seen")
-        ) {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           setVisible(false);
           return;
         }
         timers.push(setTimeout(() => setOpening(false), 1400));
-        timers.push(
-          setTimeout(() => {
-            setVisible(false);
-            sessionStorage.setItem("rounds-seen", "1");
-            // ne plus rejouer le loader aux prochains chargements
-            document.cookie =
-              "rounds_loader_seen=1; path=/; max-age=31536000; samesite=lax";
-          }, 2400)
-        );
+        timers.push(setTimeout(() => setVisible(false), 2400));
       }, 0)
     );
     return () => timers.forEach((t) => clearTimeout(t));
