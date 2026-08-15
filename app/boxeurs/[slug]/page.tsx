@@ -10,6 +10,7 @@ import { JsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
 import { RecordBar, RecordNumbers } from "@/components/record-bar";
 import { FightCard } from "@/components/fight-card";
+import { FavoriteButton } from "@/components/auth/favorite-button";
 import { SITE_URL } from "@/lib/site";
 
 interface PageProps {
@@ -89,10 +90,15 @@ export default async function FighterPage({ params }: PageProps) {
       </Link>
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <Reveal>
-        <div className="relative overflow-hidden rounded-3xl border border-line/60 bg-panel p-6 panel-glow sm:p-10">
+      <Reveal>          <div className="relative overflow-hidden rounded-3xl border border-line/60 bg-panel p-6 panel-glow sm:p-10">
           <div className="bg-grid pointer-events-none absolute inset-0 opacity-40 mask-fade-b" />
           <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-neon/10 blur-3xl" />
+
+          {/* Favori (compte requis — invisible sinon) */}
+          <div className="absolute right-4 top-4 z-10">
+            <FavoriteButton fighter={fighter} />
+          </div>
+
 
           <div className="relative flex flex-col items-center gap-8 sm:flex-row sm:items-end">
             <div className="relative">
