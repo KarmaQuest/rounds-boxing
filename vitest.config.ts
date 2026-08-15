@@ -14,6 +14,8 @@ export default defineConfig({
       "server-only": fileURLToPath(
         new URL("./test/stubs/server-only.ts", import.meta.url)
       ),
+      // alias `@/` comme tsconfig (les modules peuvent importer via `@/…`)
+      "@": fileURLToPath(new URL("./", import.meta.url)),
     },
   },
   test: {

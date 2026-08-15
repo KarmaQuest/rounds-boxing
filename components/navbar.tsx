@@ -17,7 +17,7 @@ const PRIMARY_LINKS = [
   { href: "/boxeurs", label: "Boxeurs" },
   { href: "/combats", label: "Combats" },
   { href: "/comparateur", label: "Comparateur" },
-  { href: "/#actualites", label: "Actualités" },
+  { href: "/actualites", label: "Actualités" },
 ];
 
 const SECONDARY_LINKS = [

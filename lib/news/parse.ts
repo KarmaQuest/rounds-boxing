@@ -32,6 +32,44 @@ function asStr(value: unknown): string {
   return "";
 }
 
+/**
+ * Miniature d'un item, en cascade selon ce que fournit le flux :
+ * 1. media:content / media:thumbnail (@_url)
+ * 2. enclosure (@_url)
+ * 3. première <img src> dans content:encoded / content (Atom)
+ * 4. première <img src> dans description / summary
+ * Les flux ont des formats très différents (testés : Bad Left Hook met
+ * l'image dans <content>, WBN dans <description>, Boxing News Online /
+ * Boxing Social dans <media:content>) — on couvre tout, sans casser.
+ */
+function extractThumbnail(item: Xml): string {
+  const firstUrl = (value: unknown): string => {
+    if (Array.isArray(value)) value = value[0];
+    if (typeof value === "object" && value !== null) {
+      const url = (value as Record<string, unknown>)["@_url"];
+      if (typeof url === "string") return url.trim();
+    }
+    return "";
+  };
+
+  const imgSrc = (html: string): string => {
+    const m = html.match(/<img[^>]+src=["']([^"']+)/i);
+    return m ? m[1] : "";
+  };
+
+  const content =
+    asStr(item["content:encoded"]) || asStr(item.content);
+  const desc = asStr(item.description) || asStr(item.summary);
+
+  return (
+    firstUrl(item["media:content"]) ||
+    firstUrl(item["media:thumbnail"]) ||
+    firstUrl(item.enclosure) ||
+    imgSrc(content) ||
+    imgSrc(desc)
+  );
+}
+
 /** Retire le HTML (balises + entités communes) d'un résumé. */
 export function stripHtml(html: string): string {
   return html
@@ -80,6 +118,7 @@ function parseRssItems(xml: string, source: ArticleSource): NewsItem[] {
         sourceId: source.id,
         publishedAt: publishedAt || new Date(0).toISOString(),
         description: truncate(stripHtml(asStr(item.description))),
+        thumbnail: extractThumbnail(item) || undefined,
       };
     })
     .filter((x): x is NewsItem => x !== null);
@@ -106,6 +145,7 @@ function parseAtomItems(xml: string, source: ArticleSource): NewsItem[] {
         sourceId: source.id,
         publishedAt: publishedAt || new Date(0).toISOString(),
         description: truncate(stripHtml(asStr(entry.summary ?? entry.content))),
+        thumbnail: extractThumbnail(entry) || undefined,
       };
     })
     .filter((x): x is NewsItem => x !== null);
@@ -137,11 +177,17 @@ function parseYtItems(xml: string, source: VideoSource): NewsItem[] {
         source: source.name,
         sourceId: source.id,
         publishedAt: publishedAt || new Date(0).toISOString(),
-        thumbnail: thumbnailUrl || undefined,
+        // fallback : la miniature i.ytimg.com est déterministe et toujours
+        // disponible même si le flux omet media:thumbnail
+        thumbnail:
+          thumbnailUrl ||
+          `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
         description: truncate(
           stripHtml(asStr(mediaGroup?.["media:description"])),
           160
         ),
+        platform: "youtube",
+        videoId,
       };
     })
     .filter((x): x is NewsItem => x !== null);

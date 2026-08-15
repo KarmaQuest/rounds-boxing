@@ -44,6 +44,11 @@
 - **Sources** : 5 flux articles (Bad Left Hook, World Boxing News, Boxing News Online, Boxing Social, Boxing Insider) + 5 chaînes YT via `videos.xml` public (DAZN, Top Rank, Matchroom, Sky Sports Boxing, iFL TV). ⚠️ BoxingScene / BoxingNews24 / The Ring répondent 403 (Cloudflare) — laissées de côté.
 - **Acceptation** : ✅ articles + vidéos triés par date, miniatures YT, une source en panne ne casse jamais la page (timeout 8 s + skip), cache 15 min, 0 erreur en prod.
 
+### 1.10 Page actualités dédiée (/actualites) — 🚧 FAIT (branche feature/actualites)
+- **Objectif** : page complète d'actualités au-delà de la section d'accueil : recherche floue, filtres par source, pagination, lecteur vidéo embarqué multi-plateforme.
+- **Fichiers** : `app/actualites/page.tsx`, `components/actualites/{news-page,video-embed}.tsx`, `components/news/cards.tsx` (cartels partagées accueil/page), `lib/news/{filter,types}.ts` (requête paginée + filtre pur), `lib/news/index.ts` (liste complète en cache 15 min + requête), `app/api/news/route.ts` (`q`, `source`, `sort`, `offset`, `limit`), navbar (lien menu), accueil (aperçu réduit 6 cartes + « Voir tout »), sitemap.
+- **Acceptation** : ✅ recherche « uzyk » → titre Usyk (API + page), « Charger plus » 24/page cohérent, lecteur embarqué en modal (iframe selon plateforme, YouTube-nocookie), filtres combinables.
+
 ### 1.9 Design : menu Rive + loader Eszterbial + animations boutons — ✅ FAIT
 - **Objectif** : menu plein écran style rive.app (burger animé → croix, liens en cascade), loader style eszterbial.com (rideau de bandes verticales qui s’écartent), chaque bouton/lien animé.
 - **Fichiers** : `components/navbar.tsx` (réécrit : burger + overlay + cascade + scroll lock + Échap), `components/loader.tsx` (réécrit : 14 bandes, paires ↑ / impaires ↓, 1×/session, reduced-motion sauté), `app/globals.css` (`.sheen`, `.hover-lift`, `.press`, `.link-underline`, transitions globales `a`/`button` sans transform pour ne pas casser framer-motion).
@@ -133,6 +138,34 @@ chargement » — révélation du site mal synchronisée avec le chargement.
 
 **Vérifié en navigateur (headless)** : rideau présent 500 ms → 2 s,
 révélé ~3,5 s ; clic interne sans rideau avec fade ; retour accueil OK.
+
+### Page actualités dédiée (/actualites) — session 15/08/2026
+
+**Tâche** : voir **1.10**. Implémentée sur la branche `feature/actualites`,
+PR vers `develop`.
+
+**Interview** (2 entretiens, réponses utilisateur) :
+
+| Question | Réponse choisie |
+| --- | --- |
+| Quelle prochaine feature ? | **Page actualités dédiée** (prolonge TASKS 1.8) |
+| Accès / rôle de l'accueil ? | **Lien dans le menu principal** + section accueil **réduite** (aperçu 6 cartes) avec « Voir tout → » |
+| Pagination ? | **« Charger plus »** (24/page, offset/limit côté API) — cohérent avec le répertoire |
+| Recherche / filtres ? | **Recherche floue** sur les titres + onglets Toutes/Articles/Vidéos + **chips par source** + tri par date (récent/ancien) |
+| Lecteur vidéo ? | **Lecteur embarqué multi-plateforme** : iframe adaptée à la plateforme (YouTube → youtube-nocookie, extensible Vimeo/Dailymotion…), ouvert en **modal** sur clic |
+
+**Décisions d'architecture** :
+- `NewsItem` gagne `platform` + `videoId` → `getEmbedUrl()` calcule l'URL
+  d'embed par plateforme (switch extensible).
+- API `/api/news` étendue : `q` (fuzzy sur titres), `source`, `sort`,
+  `offset`, `limit` → `{ items, total, hasMore, updatedAt }`.
+- `lib/news/filter.ts` : fonction PURE `applyNewsQuery` (filtres + tri +
+  pagination sur la liste complète en cache) — testée unitairement.
+- Page client `components/actualites/` : debounce 300 ms sur la recherche,
+  `useInfiniteQuery` (queryKey = filtres), « Charger plus », modal vidéo
+  (AnimatePresence, Échap, scroll lock).
+- Cartes partagées `components/news/cards.tsx` (accueil + page).
+- Sitemap : `/actualites` (hourly).
 
 ---
 
