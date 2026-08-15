@@ -1,36 +1,58 @@
-# 🥊 ROUNDS — Répertoire de la boxe
+# 🥊 ROUNDS — Les records de la boxe
 
-Un site type *BoxeRec*, mais stylisé : thème dark néon, animations
-(Framer Motion), loaders, skeletons et un système de filtres ultra-rapide
-et partageable.
+Un site type *BoxeRec*, stylisé : thème **dark néon**, animations
+(Framer Motion), loader d'intro, menu plein écran, filtres ultra-rapides
+et partageables. En **test** — rien n'est déployé.
 
 ## ✨ Fonctionnalités
 
-- **Répertoire de boxeurs** avec filtres instantanés côté client :
-  recherche (insensible aux accents), chips de catégories de poids, pays,
-  sliders « victoires minimum » et « % KO minimum », tri. **Les filtres
-  sont synchronisés dans l'URL** → partageables, back/forward OK.
-- **Profil boxeur** : hero, palmarès (V-D-N, % KO), barre de palmarès
-  animée, fiche technique (taille, allonge, garde, âge), ceintures, bio,
-  et ses combats à venir / récents.
-- **Page combats** : affiches à venir avec **cotes** (The Odds API) et
-  résultats récents.
-- **Animations** : loader d'intro plein écran (une fois par session),
-  révélation au scroll, compteurs animés, hover néon, transitions de
-  grille avec `AnimatePresence` + `layout`, skeletons shimmer.
+- **Répertoire de boxeurs** : filtres instantanés côté client (recherche
+  insensible aux accents, **typos tolérées** via Levenshtein + autocomplete,
+  catégories de poids, pays, sliders victoires/% KO, 6 tris), synchronisés
+  dans l'URL (`?q=&cat=&pays=&v=&ko=&tri=`) et **pagines** (24/page,
+  « Charger plus »).
+- **Profils boxeurs** : hero (avatar, surnom, rang), palmarès V-D-N + % KO,
+  fiche technique, ceintures, bio, combats à venir/récents, lien BoxRec,
+  **carte OG de partage générée** (avatar + palmarès).
+- **Combats** : affiches à venir avec **cotes réelles** (The Odds API),
+  résultats récents, section « Les affiches du moment » (gros combats
+  classés par enjeu).
+- **Comparateur « Tale of the Tape »** : deux boxeurs côte à côte, stats
+  gagnantes en or, partage par URL.
+- **Comptes utilisateurs** : inscription / connexion JWT (cookie httpOnly),
+  dashboard (profil, mot de passe), **favoris boxeurs** (étoile sur les
+  cartes).
+- **Actualités boxe** : section « L'actu boxe » sur l'accueil — 5 flux
+  RSS/Atom + 5 chaînes YouTube (via le flux public `videos.xml`, sans clé
+  API), triées par date, miniatures, cache 15 min.
+- **SEO** : sitemap.xml (127 URLs), robots.txt, canonical, noindex des
+  pages filtres, JSON-LD (Person / SportsEvent / WebSite).
+- **PWA (base)** : manifest, icône SVG, service worker network-first.
+- **Design** : loader rideau style eszterbial.com, menu plein écran style
+  rive.app, transitions de page, badges « Top x », utilitaires
+  `.sheen` / `.press` / `.hover-lift` / `.link-underline`.
+- **A11y** : contrastes AA, `:focus-visible`, skip-link, `aria-hidden` sur
+  les icônes, `prefers-reduced-motion` respecté.
 
 ## 🧱 Stack
 
-- **Next.js 16** (App Router, route handlers, React Server Components)
-- **Tailwind CSS v4** (design system custom dark néon)
-- **Framer Motion** (animations)
-- **TanStack Query** (data fetching côté client)
-- TypeScript strict
+| Brique | Version | Usage |
+| --- | --- | --- |
+| Next.js | 16 (App Router, Turbopack) | Framework, RSC, route handlers |
+| React | 19 | UI |
+| TypeScript | 5 (strict) | Typage |
+| Tailwind CSS | 4 (`@theme`) | Style |
+| Framer Motion | 13 | Animations |
+| TanStack Query | 5 | Data fetching client |
+| better-sqlite3 | 13 | Base locale (comptes, favoris) |
+| jose | 6 | JWT HS256 |
+| fast-xml-parser | 5 | RSS / Atom / YouTube |
+| Vitest | 4 | Tests (80) |
 
-## 🗄️ Stratégie multi-API (le cœur du projet)
+## 🗄️ Stratégie multi-API
 
 BoxRec n'a pas d'API officielle. ROUNDS agrège plusieurs sources avec
-**bascule automatique** :
+**fusion + bascule automatique** :
 
 | Besoin | Source primaire | Secours | Gratuit |
 | --- | --- | --- | --- |
@@ -38,30 +60,16 @@ BoxRec n'a pas d'API officielle. ROUNDS agrège plusieurs sources avec
 | Combats à venir + cotes | The Odds API | mock | 500 crédits/mois |
 | Résultats récents | mock (TheSportsDB quand dispo) | — | — |
 
-Architecture dans `lib/data/` :
+Architecture (`lib/data/`) : `ProviderRouter` qui interroge toutes les
+sources capables puis **fusionne** (dédup par slug, le mock enrichit les
+stars, les cotes réelles priment), **saute les providers au quota épuisé**
+(persisté dans `.data/quota.json`), **ouvre un circuit** 10 min en cas de
+429/erreurs, et **cache chaque réponse TTL** (profils 24 h, cotes 10 min,
+news 15 min). Le cache et les quotas ont des drivers mémoire (dev/VM) et
+Redis Upstash (serverless), activé par les variables `UPSTASH_*`.
 
-```
-lib/data/
-├── types.ts          # types partagés (Fighter, Fight, …)
-├── cache.ts          # cache TTL en mémoire (profils 24h, cotes 10 min)
-├── quota.ts          # quota quotidien par provider + circuit breaker
-├── index.ts          # API publique (searchBoxeurs, getBoxeur, …)
-└── providers/
-    ├── provider.ts   # interface DataProvider
-    ├── router.ts     # ProviderRouter : fallback + quota + cache
-    ├── mock.ts       # jeu de données de démo (24 boxeurs, combats)
-    ├── bigballs.ts   # Big Balls Sports Data (BBS_API_KEY)
-    ├── thesportsdb.ts# TheSportsDB (THESPORTSDB_API_KEY)
-    └── oddsapi.ts    # The Odds API (ODDS_API_KEY)
-```
-
-Comment ça marche : le `ProviderRouter` essaie les sources par ordre de
-priorité, **saute celles dont le quota quotidien est épuisé** (persisté
-dans `.data/quota.json`), **ouvre un circuit** 10 min en cas de 429 ou
-d'erreurs répétées, et **met chaque réponse en cache TTL** — ce qui réduit
-considérablement le nombre de requêtes réellement envoyées aux APIs.
-Les clés restent **côté serveur** (route handlers) ; le client passe par
-`/api/boxeurs` et `/api/combats`.
+Les clés API vivent **uniquement côté serveur** (`.env.local`, gitignoré) ;
+le client passe par `/api/*` (rate-limited par IP).
 
 ## 🚀 Démarrage
 
@@ -71,31 +79,36 @@ npm run dev        # http://localhost:3000
 ```
 
 Sans clé API, tout fonctionne avec les données de démo. Pour activer les
-vraies sources :
-
-```bash
-cp .env.example .env.local
-# remplis BBS_API_KEY / THESPORTSDB_API_KEY / ODDS_API_KEY
-```
+vraies sources : copier `.env.example` → `.env.local` et remplir
+`BBS_API_KEY`, `THESPORTSDB_API_KEY`, `ODDS_API_KEY` (limites optionnelles
+`*_DAILY_LIMIT`). Auth : `JWT_SECRET` (obligatoire en prod).
 
 ## 📜 Scripts
 
 ```bash
-npm run dev     # dev (Turbopack)
-npm run build   # build de production + typecheck
-npm run start   # serveur de prod
-npm run lint    # ESLint
+npm run dev     # dev (Turbopack, hot reload)
+npm run build   # build + typecheck
+npm start       # serveur de prod
+npm run lint    # ESLint (0 erreur)
+npm test        # Vitest (80 tests)
 ```
 
-## 🔜 Idées de suite
+## 🔀 Workflow git (agence)
 
-- Page « tale of the tape » : comparateur côte à côte de deux boxeurs
-- Recherche floue (fuzzy) plus poussée
-- Pagination / virtualisation pour les 12 000 profils Big Balls
-- Historique complet des combats par boxeur (quand les APIs le fournissent)
-- Internationalisation, thème clair, PWA
+- **`main`** : stable / déployable (protégée — pas de push direct).
+- **`develop`** : intégration, branche de travail courante.
+- **`feature/*`** : une branche par tâche, fusionnée dans `develop`.
+- Règles : build + lint + tests verts avant fusion, commits conventionnels
+  (`feat:` / `fix:` / `docs:` / `refactor:` / `chore:`).
+
+## 📚 Docs
+
+- `docs/CONTEXT.md` — contexte complet du projet (stack, architecture,
+  décisions, pièges)
+- `docs/TASKS.md` — feuille de route priorisée
+- `docs/AUDIT.md` — audit « niveau agence » (sécurité, perf, SEO, a11y…)
 
 ---
 
-*Démo — sans clé API, les palmarès affichés sont approximatifs et datés de
-mi-2026. Projet Next.js / React / Tailwind / Framer Motion.*
+*Démo — sans clé API, les palmarès affichés sont approximatifs (données de
+mi-2026). Projet Next.js / React / Tailwind / Framer Motion.*
