@@ -184,10 +184,17 @@ c'est ce qui protège la stratégie multi-API.
 Une erreur runtime côté client → écran blanc. **Fix :** `app/error.tsx`
 global + `app/boxeurs/[slug]/error.tsx` avec fallback stylé + bouton retry.
 
-### P2 — Combats mock « à venir » avec dates figées
-Les 6 combats mock ont des dates fixes (sept. → déc. 2026) : une fois
-passées, ils resteront affichés. **Fix :** filtrer `status upcoming` avec
-`date > now` dans le routeur (et le mock).
+### ✅ FAIT — Combats mock « à venir » avec dates figées
+Les 6 combats mock ont des dates fixes (sept. → déc. 2026) et des affiches
+**inventées** (Canelo vs Crawford, Usyk vs Bakole…). Deux défauts constatés
+en prod : le tri `fightImportance` les mettait **en tête** de la liste, et
+leurs dates/duos ne correspondaient pas à l'actualité (ex. le vrai combat
+est Canelo vs Mbilli le 31/10, pas Canelo vs Crawford le 13/09). **Fix :**
+dans `router.upcomingFights`, dès qu'**une source réelle** (oddsapi) fournit
+des combats, les combats mock sont écartés — le mock ne sert plus que de
+dernier recours si toutes les sources réelles échouent (comportement testé).
+Filtre `date > now` déjà en place. Le tri `fightImportance` n'ordonne plus
+que des combats réels.
 
 ### P2 — `mergeFighter` : le mock écrase toujours
 Par design aujourd'hui (Big Balls renvoie `record: null`), mais le jour où
@@ -218,7 +225,9 @@ quand elle a des combats**. Logique à rendre paramétrable dès maintenant
 - TheSportsDB : recherche par nom uniquement.
 - Odds API : cotes uniquement ; le volume de combats est réel mais
   hétérogène (beaucoup d'affiches mineures) → mise en avant des gros
-  combats (TASKS 1.4).
+  combats (TASKS 1.4). ✅ Depuis le 15/08/2026, la liste « À venir »
+  n'affiche plus que les vrais combats de l'API (le mock est écarté
+  dès qu'une source réelle répond).
 
 ---
 
