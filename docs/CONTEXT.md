@@ -217,10 +217,12 @@ interface Fight {
 - **Dashboard + favoris** : profil (email, date), étoile sur les cartes du répertoire, liste sur le dashboard (table `favorites` SQLite)
 - **Actualités boxe** : section « L’actu boxe » sur l’accueil — 5 flux RSS/Atom (Bad Left Hook, WBN, Boxing News Online, Boxing Social, Boxing Insider) + 5 chaînes YouTube via `videos.xml` public (DAZN, Top Rank, Matchroom, Sky, iFL TV), triées par date, miniatures, cache 15 min, source en panne = skip sans casser la page
 - **Design (session 15/08/2026)** : menu plein écran style rive.app (burger → croix, liens en cascade, scroll lock, Échap), loader style eszterbial.com (rideau de 16 bandes verticales paires ↑ / impaires ↓, coutures `border-white/10`), utilitaires `.sheen` / `.hover-lift` / `.press` / `.link-underline` appliqués aux boutons/liens
-- **Transitions de page** : `components/page-transition.tsx` (AnimatePresence keyed par pathname, `mode="wait"`, fondu + léger décalage)
+- **Transitions de page** : `components/page-transition.tsx` (motion.div keyé par pathname, entrée seule — fondu + léger décalage ; sans AnimatePresence, qui laissait la page à `opacity:0`)
+- **Bus d'événements de page** : `lib/page-events.ts` — `PageReadySignal` (layout) émet `rounds:page-ready` au `window.load` ; `AppLoader` écoute et lève le rideau (min. d'affichage 1,5 s, filet de sécurité 6 s)
 - **Badges « Top x »** : sur toutes les cartes boxeur avec un `rank` (or + couronne pour ≤ 5, neutre au-delà)
 - **Loader rendu côté serveur** : rideau dans le HTML SSR (le site n'est jamais visible avant le loader) ; le layout ne le rend que si le cookie `rounds_loader_seen` est absent (posé par le client après la 1re lecture → plus de flash aux retours)
 - **Fix menu invisible** : le `backdrop-filter` du header créait un containing block qui effondrait le `fixed` de l'overlay (hauteur 0) → l'overlay est désormais un FRÈRE du header
+- **Loader (décision utilisateur, voir TASKS.md « Journal de conception »)** : rideau uniquement sur les vrais chargements (F5/onglet), révélé à `window.load` via l'événement `rounds:page-ready` ; navigations internes = fade de `PageTransition` (pas de rideau)
 - **Dashboard quotas** : `/debug` + `/api/health` + alerte console à 80 %
 - **ErrorBoundaries** : `error.tsx` global + par boxeur (bouton retry)
 - **Multi-sources** : fusion + enrichissement (voir §4), section explicative sur l'accueil

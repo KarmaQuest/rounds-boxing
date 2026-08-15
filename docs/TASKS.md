@@ -99,6 +99,43 @@
 
 ---
 
+## Journal de conception (interviews) — 15/08/2026
+
+Chaque évolution de conception est cadrée par un entretien avec
+l'utilisateur, puis documentée ici (décisions → implémentation).
+
+### Loader & chargement de page (session 15/08/2026)
+
+**Problème** : « je vois la page avant le loader à chaque nouveau
+chargement » — révélation du site mal synchronisée avec le chargement.
+
+**Interview** (3 questions, réponses utilisateur) :
+
+| Question | Réponse choisie |
+| --- | --- |
+| Quand révéler le site ? | **À `window.load`** (tout est chargé : HTML, styles, polices, images non-lazy) — pas à une durée fixe |
+| Que faire sur navigation interne (clic lien) ? | **Distinguer** : rideau uniquement sur les vrais chargements (F5 / nouvel onglet) ; sur les clics internes, **fade smooth du contenu** (transition de page) |
+| Styles critiques inline pour l'anti-flash ? | **Simple, sans inline** — on garde le CSS normal (flash résiduel possible en dev, absent en prod où Next inline le CSS critique) |
+
+**Décisions d'architecture retenues** :
+- **Bus d'événements JS propre** (`lib/page-events.ts`) :
+  - `PageReadySignal` (layout, client) émet **`rounds:page-ready`** au
+    `window.load` + un paint (`requestAnimationFrame`).
+  - `AppLoader` écoute l'événement → lève le rideau (temps minimal
+    d'affichage du logo : 1,5 s) — **filet de sécurité 6 s** si l'événement
+    ne part jamais (jamais de site bloqué).
+  - Émission sans écouteur = no-op ; désabonnement propre (cleanup).
+- **Rideau** : rendu SSR (`visible = true` initial) → couvre le site dès le
+  premier paint ; site révélé uniquement au `window.load` + min 1,5 s.
+- **Navigation SPA** : plus de rejeu du rideau — `PageTransition` (fade
+  keyé par pathname) gère le changement de page.
+- `prefers-reduced-motion` : rideau retiré immédiatement (aucune animation).
+
+**Vérifié en navigateur (headless)** : rideau présent 500 ms → 2 s,
+révélé ~3,5 s ; clic interne sans rideau avec fade ; retour accueil OK.
+
+---
+
 ## Conventions à respecter en travaillant sur ces tâches
 
 - **Typecheck/build** : `npm run build` doit passer avant de conclure une tâche.

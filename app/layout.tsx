@@ -6,6 +6,7 @@ import { AppLoader } from "@/components/loader";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { SwRegister } from "@/components/sw-register";
+import { PageReadySignal } from "@/components/page-ready-signal";
 import { PageTransition } from "@/components/page-transition";
 import { SITE_URL } from "@/lib/site";
 
@@ -48,9 +49,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <a href="#contenu" className="skip-link">
             Aller au contenu
           </a>
-          {/* Rendu SSR : le rideau cache le site dès le premier paint et
-              ne le révèle qu'après l'animation (voir components/loader.tsx). */}
+          {/* Rendu SSR : le rideau cache le site dès le premier paint et ne
+              le révèle qu'à l'événement « page prête » (voir loader.tsx). */}
           <AppLoader />
+          {/* Émet rounds:page-ready au window.load (source de l'événement). */}
+          <PageReadySignal />
           <SwRegister />
           <Navbar />
           <main id="contenu" className="flex-1">
