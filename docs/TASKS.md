@@ -86,6 +86,24 @@
 - **Acceptation** : ✅ `getCombatsRecents` sert les shards (test d'intégration : source `shards`, combats `finished`, 2 fighters) ; mapping testé sur les vrais shards (10 tests) ; 127 tests Vitest ; tsc 0 erreur.
 - ⚠️ **Déploiement** : lecture par `fs` → VM/container Node long-running ; sur Vercel/serverless il faudra copier `public/data/` ou passer par un store (voir AUDIT §2).
 
+### 2.7 Combats à venir & liste des boxeurs À JOUR — ✅ FAIT (16/08/2026)
+- **Combats à venir** : quand une source réelle (Odds API) répond, les affiches **fictives du mock** (dates figées, cotes inventées) sont écartées ; le mock ne sert plus que d'**enrichissement** des vrais combats (titre, venue) et de filet de sécurité sans source réelle. Label source corrigé (`oddsapi`, plus `+ mock` trompeur). `router.ts` (`upcomingFights`).
+- **Liste des boxeurs** : 2 bugs corrigés — (1) la fusion `listFighters` **tronquait à la limite de fetch** : les stars absentes du pool Big Balls (Crawford, Inoue, Canelo…) étaient coupées (seuls 4 rangs restaient) → plus de slice, la pagination se fait dans `applyFilters` ; (2) le **tri par défaut** est hybride : boxeurs classés (p4p) → palmarès réel (victoires) → nom. Résultat : page 1 = les 24 stars avec leurs vrais palmarès (Usyk 25-0, Crawford 42-0, Inoue 33-0, Canelo 63-3…), plus de 0-0-0 en tête.
+- **Tests** : +10 (routeur : mock écarté/enrichissement/filet de sécurité/absence de troncature ; tri hybride ; belts) → **137 tests Vitest**.
+
+### 2.8 Ceintures par organisation sur le profil — ✅ FAIT (16/08/2026)
+- **Objectif** : afficher TOUTES les ceintures remportées par un boxeur, groupées par organisation (WBA, WBC, IBF, WBO, CSAC, FFBoxe), avec date.
+- **Fichiers** : `lib/data/belts.ts` (index des victoires en combat de titre dérivé des shards `public/data/fights/{org}.json` — vainqueur résolu par égalité exacte, catégories EN → FR, régionales en nom brut, tri date desc) + export `getBoxerBelts` dans `lib/data/index.ts` + section UI « Ceintures par organisation » dans `app/boxeurs/[slug]/page.tsx`.
+- **Acceptation** : ✅ Usyk → 7 ceintures IBF (5× Poids lourds 2021→2025 + 2× Poids lourds-légers 2018) ; Canelo → rien (pas de combat de titre capturé dans les shards — le mock fournit ses titres actuels) ; couverture limitée à ce que les shards contiennent (IBF riche : 1213 combats de titre ; WBA/WBC/WBO/CSAC partiels).
+
+### 2.9 Corrections données (tri dates, fiche technique, carrière, statut ceintures) — ✅ FAIT (16/08/2026)
+- **Combats à venir triés par date** (proche → lointain, l'importance ne départage plus que les égalités) + **date réelle conservée** quand le mock enrichit (l'Odds API fait foi). `router.ts` (`upcomingFights`).
+- **Combats terminés → Résultats récents** : endpoint `/scores/` de The Odds API (`completed: true`) — les combats à venir qui ont eu lieu basculent en résultats (winner déduit des scores). `oddsapi.ts` (capability `fights` ajoutée) + tri global date desc dans `recentFights`.
+- **Fiche technique corrigée (2A)** : les DÉFAUTS des APIs (garde « Orthodoxe », allonge 0, taille 175) n'écrasent plus les données curées — `mergeFighter` choisit la meilleure valeur physique (Wikipedia > Big Balls > mock > TheSportsDB ; garde spécifique Southpaw/Switch prime sur le défaut Orthodoxe). Usyk : Southpaw · 191 cm · allonge 198 ✅.
+- **Tous les résultats d'un boxeur (2B)** : `getBoxerFights(name)` lit TOUTE la carrière dans les shards (pas seulement les 30 combats les plus récents du monde) + combats du mock, dédup, tri date desc. Usyk : Dubois 2025 → Fury 2024 → … → 2018 (7 combats IBF). `shardsfights.ts` (`readAllShardFights` / `getShardFightsForFighter`), `index.ts`, profil.
+- **Statut des ceintures honnête (2C)** : `lib/data/belt-status.ts` — statut ACTUEL curé par org (ex. Usyk : WBA/WBC/IBF/WBO tous « Vacant » — abandon juin 2026 / déc 2025) affiché AVANT l'historique daté des victoires (shards). Plus de sous-entendu « il détient » quand il a renoncé.
+- **Tests** : +9 (fusion physique curée, tri par date prioritaire, date réelle conservée, scores → récents, getBoxerFights intégration réelle, statut ceintures) → **146 tests Vitest** ; tsc 0 erreur ; lint 0 erreur.
+
 ### 2.5 Améliorations UX/animations
 - **Objectif** : transitions de page (View Transitions ou AnimatePresence autour de `main`), marquee des grands noms, micro-animations KO, dark/light toggle, respect `prefers-reduced-motion` partout.
 - **Fichiers** : `app/layout.tsx`, `components/`, `app/globals.css`.

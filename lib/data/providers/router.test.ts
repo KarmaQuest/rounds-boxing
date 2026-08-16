@@ -149,6 +149,7 @@ describe("listFighters — fusion multi-source", () => {
       stance: "Southpaw",
       nickname: "The Cat",
       record: { wins: 25, losses: 0, draws: 0, ko: 16 },
+      source: "bigballs",
     });
     const mock = mkFighter({
       name: "Oleksandr Usyk",
@@ -156,6 +157,7 @@ describe("listFighters — fusion multi-source", () => {
       stance: "Orthodoxe", // ne doit pas écraser Southpaw
       reachCm: undefined, // champ absent → ne doit pas écraser par undefined
       record: { wins: 25, losses: 0, draws: 0, ko: 16 },
+      source: "mock",
     });
 
     const router = new ProviderRouter([
@@ -168,6 +170,39 @@ describe("listFighters — fusion multi-source", () => {
     expect(fighters[0]!.stance).toBe("Southpaw");
     expect(fighters[0]!.reachCm).toBe(198); // pas écrasé par undefined
     expect(fighters[0]!.nickname).toBe("The Cat");
+  });
+
+  it("les DÉFAUTS d'une API (Orthodoxe, allonge 0) n'écrasent pas les données curées de Wikipedia", async () => {
+    // Cas réel observé : Usyk — Big Balls renvoie Orthodoxe + allonge 0
+    // (champs absents → défauts), le snapshot Wikipedia a Southpaw + 198.
+    const api = mkFighter({
+      name: "Oleksandr Usyk",
+      heightCm: 175, // défaut TheSportsDB
+      reachCm: 0,
+      stance: "Orthodoxe", // défaut quand la source ne sait pas
+      record: { wins: 0, losses: 0, draws: 0, ko: 0 },
+      source: "thesportsdb",
+    });
+    const wikipedia = mkFighter({
+      name: "Oleksandr Usyk",
+      heightCm: 191,
+      reachCm: 198,
+      stance: "Southpaw",
+      record: { wins: 25, losses: 0, draws: 0, ko: 16 },
+      source: "wikipedia",
+    });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "thesportsdb", priority: 2, listFighters: async () => [api] }),
+      mkProvider({ name: "wikipedia", priority: 2, listFighters: async () => [wikipedia] }),
+    ]);
+
+    const { fighters } = await router.listFighters();
+    const f = fighters[0]!;
+    expect(f.stance).toBe("Southpaw"); // Wikipedia curé > défaut API
+    expect(f.reachCm).toBe(198); // l'allonge réelle n'est pas écrasée par 0
+    expect(f.heightCm).toBe(191);
+    expect(f.record.wins).toBe(25);
   });
 
   it("une fiche minimale (Wikipedia) ne doit pas écraser les champs de la source réelle (Big Balls)", async () => {
@@ -233,6 +268,23 @@ describe("listFighters — fusion multi-source", () => {
     const { fighters, source } = await router.listFighters();
     expect(fighters).toEqual([]);
     expect(source).toBe("aucune");
+  });
+
+  it("la fusion ne coupe PAS les ajouts d'une source non recouvrante (régression : stars hors pool Big Balls)", async () => {
+    // bigballs remplit le quota de fetch avec 2 boxeurs, wikipedia en ajoute
+    // un 3e absent de bigballs → il doit SURVIVRE à la fusion (pas de slice).
+    const a = mkFighter({ name: "Aaron Davis", record: { wins: 49, losses: 6, draws: 0, ko: 30 } });
+    const b = mkFighter({ name: "Aaron Bowen", record: { wins: 8, losses: 1, draws: 0, ko: 6 } });
+    const star = mkFighter({ name: "Terence Crawford", rank: 2, record: { wins: 42, losses: 0, draws: 0, ko: 31 } });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "bigballs", priority: 1, listFighters: async () => [a, b] }),
+      mkProvider({ name: "wikipedia", priority: 2, listFighters: async () => [star] }),
+    ]);
+
+    const { fighters } = await router.listFighters(2); // limite de fetch = 2
+    expect(fighters.map((f) => f.slug).sort()).toEqual(["aaron-bowen", "aaron-davis", "terence-crawford"]);
+    expect(fighters.find((f) => f.slug === "terence-crawford")!.rank).toBe(2);
   });
 });
 
@@ -415,7 +467,8 @@ describe("upcomingFights", () => {
     expect(fights[0]!.odds).toEqual([1.9, 1.88]); // cotes réelles
     expect(fights[0]!.title).toBe("Superfight incontesté : Canelo vs Crawford"); // fiche mock
     expect(fights[0]!.venue).toBe("T-Mobile Arena");
-    expect(source).toBe("oddsapi + mock");
+    // le label ne mentionne le mock que s'il est la SEULE source
+    expect(source).toBe("oddsapi");
   });
 
   it("déduplique par paire de noms, quel que soit l'ordre ou la casse", async () => {
@@ -443,17 +496,111 @@ describe("upcomingFights", () => {
     expect(fights.map((f) => f.id)).toEqual(["future"]);
   });
 
-  it("trie par date croissante puis applique la limite", async () => {
-    const late = mkFight({ id: "late", date: "2026-12-13" });
-    const early = mkFight({ id: "early", date: "2026-09-13" });
+  it("trie par date croissante (le plus PROCHE d'abord), même quand l'importance diffère", async () => {
+    // L'importance ne doit PAS passer avant la date : le combat du 22/08
+    // (petite affiche) apparaît avant celui du 13/09 (superfight).
+    const big = mkFight({
+      id: "big",
+      date: "2026-09-13",
+      title: "Superfight incontesté : Canelo vs Crawford",
+      odds: [1.9, 1.88],
+      location: "Las Vegas, États-Unis",
+      fighters: [{ name: "Canelo Álvarez" }, { name: "Terence Crawford" }],
+    });
+    const small = mkFight({
+      id: "small",
+      date: "2026-08-22",
+      fighters: [{ name: "Mayelli Flores Rosquero" }, { name: "Melissa Mortensen" }],
+    });
 
     const router = new ProviderRouter([
-      mkProvider({ name: "mock", capabilities: ["odds"], getUpcomingFights: async () => [late, early] }),
+      mkProvider({ name: "mock", capabilities: ["odds"], getUpcomingFights: async () => [big, small] }),
     ]);
 
-    const { fights } = await router.upcomingFights(1);
+    const { fights } = await router.upcomingFights();
+    expect(fights.map((f) => f.id)).toEqual(["small", "big"]);
+  });
+
+  it("la date RÉELLE (Odds API) est conservée quand le mock enrichit la fiche", async () => {
+    const real = mkFight({
+      id: "odds-1",
+      date: "2026-08-22T00:00:00Z",
+      fighters: [{ name: "Mayelli Flores Rosquero" }, { name: "Melissa Mortensen" }],
+      odds: [1.95, 1.73],
+      source: "oddsapi",
+    });
+    const mock = mkFight({
+      id: "mock-1",
+      date: "2026-12-13", // date fictive du mock → ne doit PAS écraser la vraie
+      fighters: [{ name: "Mayelli Flores Rosquero" }, { name: "Melissa Mortensen" }],
+      title: "Championnat WBC",
+      venue: "Madison Square Garden",
+      source: "mock",
+    });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "oddsapi", priority: 1, capabilities: ["odds"], getUpcomingFights: async () => [real] }),
+      mkProvider({ name: "mock", priority: 99, capabilities: ["odds"], getUpcomingFights: async () => [mock] }),
+    ]);
+
+    const { fights } = await router.upcomingFights();
     expect(fights).toHaveLength(1);
-    expect(fights[0]!.id).toBe("early");
+    expect(fights[0]!.date).toBe("2026-08-22T00:00:00Z"); // la vraie date
+    expect(fights[0]!.title).toBe("Championnat WBC"); // la fiche mock enrichit
+    expect(fights[0]!.odds).toEqual([1.95, 1.73]); // les cotes réelles
+  });
+
+  it("écarte les affiches FICTIVES du mock quand une source réelle répond", async () => {
+    const real = mkFight({ id: "odds-1", date: "2026-08-22", fighters: [{ name: "A Fighter" }, { name: "B Fighter" }], source: "oddsapi" });
+    const fiction = mkFight({ id: "mock-1", date: "2026-09-13", fighters: [{ name: "Canelo Álvarez" }, { name: "Terence Crawford" }], odds: [1.9, 1.88], source: "mock" });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "oddsapi", priority: 1, capabilities: ["odds"], getUpcomingFights: async () => [real] }),
+      mkProvider({ name: "mock", priority: 99, capabilities: ["odds"], getUpcomingFights: async () => [fiction] }),
+    ]);
+
+    const { fights, source } = await router.upcomingFights();
+    expect(fights.map((f) => f.id)).toEqual(["odds-1"]); // la fiction mock disparaît
+    expect(source).toBe("oddsapi");
+  });
+
+  it("garde le mock quand AUCUNE source réelle ne répond (filet de sécurité)", async () => {
+    const fiction = mkFight({ id: "mock-1", date: "2026-09-13", fighters: [{ name: "Canelo Álvarez" }, { name: "Terence Crawford" }], source: "mock" });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "mock", priority: 99, capabilities: ["odds"], getUpcomingFights: async () => [fiction] }),
+    ]);
+
+    const { fights } = await router.upcomingFights();
+    expect(fights.map((f) => f.id)).toEqual(["mock-1"]);
+  });
+
+  it("le mock ENRICHIT toujours un vrai combat (même paire) — il n'est pas écarté", async () => {
+    const real = mkFight({
+      id: "odds-1",
+      date: "2026-08-22",
+      fighters: [{ name: "Canelo Álvarez" }, { name: "Terence Crawford" }],
+      odds: [1.9, 1.88],
+      source: "oddsapi",
+    });
+    const mock = mkFight({
+      id: "mock-1",
+      date: "2026-09-13",
+      title: "Superfight incontesté",
+      venue: "T-Mobile Arena",
+      fighters: [{ name: "Canelo Álvarez" }, { name: "Terence Crawford" }],
+      source: "mock",
+    });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "oddsapi", priority: 1, capabilities: ["odds"], getUpcomingFights: async () => [real] }),
+      mkProvider({ name: "mock", priority: 99, capabilities: ["odds"], getUpcomingFights: async () => [mock] }),
+    ]);
+
+    const { fights } = await router.upcomingFights();
+    expect(fights).toHaveLength(1);
+    expect(fights[0]!.title).toBe("Superfight incontesté"); // enrichi par le mock
+    expect(fights[0]!.odds).toEqual([1.9, 1.88]); // cotes réelles conservées
   });
 });
 

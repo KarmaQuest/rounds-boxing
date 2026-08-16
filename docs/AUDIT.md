@@ -216,6 +216,29 @@ quand elle a des combats**. Logique à rendre paramétrable dès maintenant
   lus en statique par `ShardsFightsProvider` (priorité 3, zéro réseau,
   dédup inter-sources par id SHA-256) — le mock ne sert plus que les
   combats à venir et l'enrichissement des stars (TASKS 2.6).
+- **Combats à venir À JOUR (2.7)** : la fiction du mock (cotes inventées,
+  dates figées) est écartée quand l'Odds API répond ; le label source ne
+  ment plus (« oddsapi », pas « oddsapi + mock »).
+- **Combats à venir triés par date (2.9)** : du plus proche au plus lointain
+  (l'importance ne départage plus que les égalités) et **date réelle
+  conservée** quand le mock enrichit.
+- **Combats terminés → Résultats récents (2.9)** : l'endpoint `/scores/` de
+  The Odds API (`completed: true`) fait basculer les combats à venir qui ont
+  eu lieu en résultats récents (winner déduit des scores), triés par date
+  décroissante.
+- **Ceintures par organisation (2.8 + 2.9)** : historique dérivé des shards
+  (victoires en combat de titre) + **statut ACTUEL curé** par org
+  (`belt-status.ts`, ex. Usyk : WBA/WBC/IBF/WBO « Vacant » après abandon
+  2025-2026) — plus de sous-entendu « il détient » quand il a renoncé.
+- **Fiche technique corrigée (2.9)** : les défauts d'API (Orthodoxe,
+  allonge 0) n'écrasent plus les données curées — ordre de confiance
+  Wikipedia > Big Balls > mock > TheSportsDB, garde spécifique prime
+  (Usyk : Southpaw · 198 d'allonge).
+- **Toute la carrière d'un boxeur (2.9)** : `getBoxerFights` lit TOUS les
+  shards (pas seulement le top-30 mondial) — Usyk : Dubois 2025 → 2018.
+- **Répertoire crédible (2.7)** : tri par défaut hybride (rang → palmarès →
+  nom) et fusion sans troncature — les 24 stars (avec vrais records
+  Wikipedia) ouvrent la liste, fini les 0-0-0 en page 1.
 
 ### ⚠️ Limites à assumer (produit)
 - Big Balls : `record` null → les boxeurs non-mock affichent 0-0-0 (honnête

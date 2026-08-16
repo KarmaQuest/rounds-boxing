@@ -85,6 +85,16 @@ function mapWeightClass(raw: string): WeightClass | undefined {
   return undefined;
 }
 
+/** Nom de boxeur → slug (pour matcher les noms des shards). */
+function nameSlug(raw: string): string {
+  return (raw ?? "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
 /** Une catégorie qui EST une ceinture (WBA/WBC/IBF/WBO/…) → titre du combat. */
 function isBelt(raw: string): boolean {
   return /(^|\s)(wba|wbc|ibf|wbo|wba\s+international|continental|intercontinental|wbo\s+global|the\s+ring)\b/i.test(raw);
@@ -129,6 +139,72 @@ function toFrontFight(p: PipelineFight, source: string): Fight {
   };
 }
 
+/**
+ * Tous les combats officiels des shards (dédup inter-sources, tri date desc).
+ * Lecture statique à chaque appel — les shards sont committés et le routeur
+ * met déjà la réponse en cache (TTL 24 h).
+ */
+export async function readAllShardFights(): Promise<Fight[]> {
+  const dir = path.join(process.cwd(), "public", "data");
+  const indexPath = path.join(dir, "organizations-index.json");
+  let index: OrgIndex;
+  try {
+    index = JSON.parse(await fs.readFile(indexPath, "utf-8")) as OrgIndex;
+  } catch {
+    return [];
+  }
+
+  const orgs = index.organizations ?? {};
+  const fights: Fight[] = [];
+  const seen = new Set<string>();
+
+  for (const slug of Object.keys(orgs).sort()) {
+    const shardPath = path.join(dir, "fights", `${slug}.json`);
+    let raw: PipelineFight[];
+    try {
+      raw = JSON.parse(await fs.readFile(shardPath, "utf-8")) as PipelineFight[];
+    } catch {
+      continue;
+    }
+    for (const p of raw) {
+      if (!p?.id || !p.fighter_a || !p.fighter_b) continue;
+      if (seen.has(p.id)) continue;
+      seen.add(p.id);
+      fights.push(toFrontFight(p, slug));
+    }
+  }
+
+  return fights.sort((x, y) => y.date.localeCompare(x.date));
+}
+
+/**
+ * Tous les combats d'un boxeur (par nom), depuis les shards officiels.
+ * Match insensible à la casse/accents, tolérant à l'ordre des mots et aux
+ * initiales (« Usyk, Oleksandr » ou « O. Usyk » matchent « Oleksandr Usyk »)
+ * — sert au profil (« Derniers résultats ») pour montrer TOUTE la carrière,
+ * pas seulement les 30 combats les plus récents du monde entier.
+ */
+export async function getShardFightsForFighter(
+  name: string,
+  limit = 40
+): Promise<Fight[]> {
+  const target = nameSlug(name);
+  if (!target) return [];
+  const tokens = target.split(" ").filter((t) => t.length > 0);
+  const all = await readAllShardFights();
+  return all
+    .filter((f) =>
+      f.fighters.some((ref) => {
+        const s = nameSlug(ref.name);
+        if (s === target) return true;
+        // tous les tokens significatifs du nom recherché présents
+        // (l'ordre ou une initiale « o usyk » ne bloquent pas)
+        return tokens.length >= 2 && tokens.every((t) => s.includes(t));
+      })
+    )
+    .slice(0, limit);
+}
+
 export class ShardsFightsProvider implements DataProvider {
   readonly name = "shards";
   readonly priority = 3; // après BigBalls/Odds (1) et TheSportsDB/Wikipedia (2), avant le mock (99)
@@ -165,38 +241,7 @@ export class ShardsFightsProvider implements DataProvider {
   }
 
   async getRecentFights(limit = 20): Promise<Fight[]> {
-    const dir = this.dataDir();
-    const indexPath = path.join(dir, "organizations-index.json");
-    let index: OrgIndex;
-    try {
-      index = JSON.parse(await fs.readFile(indexPath, "utf-8")) as OrgIndex;
-    } catch {
-      return []; // pipeline pas encore runné → le routeur bascule
-    }
-
-    const orgs = index.organizations ?? {};
-    const fights: Fight[] = [];
-    const seen = new Set<string>(); // dédup inter-sources par id SHA-256
-
-    for (const slug of Object.keys(orgs).sort()) {
-      const shardPath = path.join(dir, "fights", `${slug}.json`);
-      let raw: PipelineFight[];
-      try {
-        raw = JSON.parse(await fs.readFile(shardPath, "utf-8")) as PipelineFight[];
-      } catch {
-        continue; // shard manquant/corrompu → on passe à la source suivante
-      }
-      for (const p of raw) {
-        if (!p?.id || !p.fighter_a || !p.fighter_b) continue;
-        if (seen.has(p.id)) continue;
-        seen.add(p.id);
-        fights.push(toFrontFight(p, slug));
-      }
-    }
-
-    // plus récents d'abord (les shards sont déjà triés, on re-trie par sécurité)
-    return fights
-      .sort((x, y) => y.date.localeCompare(x.date))
-      .slice(0, limit);
+    const all = await readAllShardFights();
+    return all.slice(0, limit);
   }
 }

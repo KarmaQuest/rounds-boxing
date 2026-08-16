@@ -2,7 +2,7 @@ import "server-only";
 import { cache, TTL } from "../cache";
 import { quota } from "../quota";
 import type { Capability, DataProvider } from "./provider";
-import type { Fighter, Fight } from "../types";
+import type { Fighter, Fight, Stance } from "../types";
 import { dedupeFighters, fightImportance, slugify } from "../utils";
 
 export class RateLimitedError extends Error {
@@ -18,6 +18,52 @@ function isRateLimit(res: Response): boolean {
 
 function hasFights(record: Fighter["record"]): boolean {
   return record.wins + record.losses + record.draws > 0;
+}
+
+/**
+ * Fiabilité des sources pour les données PHYSIQUES (taille, allonge, garde).
+ * - Wikipedia (infobox curée) > Big Balls (API réelle, champs parfois null)
+ *   > mock (fiches démo) > TheSportsDB (défauts systématiques).
+ * Sert à départager deux valeurs « réelles » qui se contredisent.
+ */
+const PHYS_TRUST: Record<string, number> = {
+  wikipedia: 3,
+  bigballs: 2,
+  mock: 1,
+  thesportsdb: 0,
+};
+
+function physTrust(f: Fighter): number {
+  return PHYS_TRUST[f.source ?? ""] ?? 0;
+}
+
+/** Une valeur numérique physique est « réelle » si elle est non nulle. */
+function physReal(v: number): boolean {
+  return typeof v === "number" && v > 0;
+}
+
+/** Choisit la meilleure valeur physique entre deux sources (défaut → 0). */
+function pickPhys(existing: number, incoming: number, eTrust: number, iTrust: number): number {
+  const eReal = physReal(existing);
+  const iReal = physReal(incoming);
+  if (eReal && !iReal) return existing;
+  if (iReal && !eReal) return incoming;
+  if (eReal && iReal) return iTrust > eTrust ? incoming : existing;
+  return existing;
+}
+
+/**
+ * Garde : une garde SPÉCIFIQUE (Southpaw/Switch) prime sur « Orthodoxe »,
+ * car « Orthodoxe » est aussi la valeur par défaut quand une source ne sait
+ * pas. À spécificité égale, la source la plus fiable gagne.
+ */
+function pickStance(existing: Fighter, incoming: Fighter): Stance {
+  const e = existing.stance;
+  const i = incoming.stance;
+  const specific = (s: Stance) => s === "Southpaw" || s === "Switch";
+  if (specific(i) && !specific(e)) return i;
+  if (specific(e) && !specific(i)) return e;
+  return physTrust(incoming) > physTrust(existing) ? i : e;
 }
 
 /**
@@ -49,6 +95,9 @@ function mergeFighter(
         ? incoming.record
         : existing.record;
 
+  const eTrust = physTrust(existing);
+  const iTrust = physTrust(incoming);
+
   return {
     // La source suivante (Wikipedia minimal, mock) comble les trous…
     ...incoming,
@@ -62,8 +111,17 @@ function mergeFighter(
     source: record === existing.record ? existing.source : incoming.source,
     titles: incoming.titles.length > 0 ? incoming.titles : existing.titles,
     bio: incoming.bio ?? existing.bio,
+    // le rank (p4p du mock, ou futur rang réel) ne doit jamais être écrasé
+    // par un `undefined` d'une source qui n'en fournit pas
     rank: incoming.rank ?? existing.rank,
     promoter: incoming.promoter ?? existing.promoter,
+    // ── Données physiques : les défauts (0, « Orthodoxe ») d'une API ne
+    // doivent jamais écraser une valeur réelle d'une source plus fiable
+    // (ex. le snapshot Wikipedia d'Usyk : Southpaw, allonge 198 — alors que
+    // Big Balls / TheSportsDB renvoient Orthodoxe / 0).
+    heightCm: pickPhys(existing.heightCm, incoming.heightCm, eTrust, iTrust),
+    reachCm: pickPhys(existing.reachCm, incoming.reachCm, eTrust, iTrust),
+    stance: pickStance(existing, incoming),
   };
 }
 
@@ -157,8 +215,12 @@ class ProviderRouter {
       }
     }
 
+    // ⚠️ Pas de slice ici : la limite sert à cadrer les FETCH des providers,
+    // pas la fusion. Couper à `limit` laisserait les ajouts Wikipedia (stars
+    // absentes du pool Big Balls) hors du pool — la pagination/tri se font
+    // dans applyFilters (index.ts).
     return {
-      fighters: dedupeFighters([...merged.values()]).slice(0, limit),
+      fighters: dedupeFighters([...merged.values()]),
       source: sources.length > 0 ? sources.join(" + ") : "aucune",
     };
   }
@@ -218,6 +280,7 @@ class ProviderRouter {
 
   async upcomingFights(limit = 20): Promise<{ fights: Fight[]; source: string }> {
     const merged = new Map<string, Fight>();
+    const realKeys = new Set<string>(); // paires venues d'une source RÉELLE
     const sources: string[] = [];
 
     for (const provider of this.providers) {
@@ -232,33 +295,60 @@ class ProviderRouter {
       sources.push(provider.name);
       for (const fight of list) {
         const key = fightKey(fight);
+        if (provider.name !== "mock") realKeys.add(key);
         const existing = merged.get(key);
         if (!existing) {
           merged.set(key, fight);
         } else if (existing.odds) {
-          // les cotes réelles (oddsapi, première source) priment ; la fiche
-          // enrichie (venue, titre, catégorie) vient du mock
-          merged.set(key, { ...fight, odds: existing.odds, source: fight.source });
+          // les cotes et la date réelles (oddsapi, première source) priment ;
+          // la fiche enrichie (venue, titre, catégorie) vient du mock
+          merged.set(key, {
+            ...fight,
+            date: existing.date,
+            odds: existing.odds,
+            source: fight.source,
+          });
         } else {
-          merged.set(key, { ...fight, odds: fight.odds ?? existing.odds });
+          // deux sources sans cotes (ex. mock seul) : la fiche la plus
+          // complète (venue, titre) complète sans toucher à la date
+          merged.set(key, {
+            ...existing,
+            ...fight,
+            odds: fight.odds ?? existing.odds,
+          });
         }
       }
     }
 
-    // on ne propose que des combats réellement à venir (les dates figées
-    // du mock finiraient par être dépassées — AUDIT P2), et les grosses
-    // affiches passent en tête (TASKS 1.4)
+    // Les combats à venir doivent être À JOUR : quand une source réelle
+    // (Odds API) répond, on écarte les affiches FICTIVES du mock (dates
+    // figées, cotes inventées) qui n'ont aucun équivalent réel. Le mock ne
+    // sert plus que d'ENRICHISSEMENT des vrais combats (titre, venue) et de
+    // filet de sécurité si aucune source réelle ne répond.
+    const hasReal = sources.some((s) => s !== "mock");
     const now = Date.now();
     const fights = [...merged.values()]
+      .filter((f) => !hasReal || f.source !== "mock" || realKeys.has(fightKey(f)))
       .filter((f) => new Date(f.date).getTime() > now)
+      // Tri demandé : du combat le plus PROCHE au plus lointain (date
+      // croissante d'abord), l'importance ne départage que les égalités.
       .sort(
         (a, b) =>
-          fightImportance(b) - fightImportance(a) ||
-          new Date(a.date).getTime() - new Date(b.date).getTime()
+          new Date(a.date).getTime() - new Date(b.date).getTime() ||
+          fightImportance(b) - fightImportance(a)
       )
       .slice(0, limit);
 
-    return { fights, source: sources.length > 0 ? sources.join(" + ") : "aucune" };
+    // Le label source reflète ce qui est RÉELLEMENT servi : quand une source
+    // réelle répond, les fiches mock servies ne sont que des enrichissements
+    // → on n'affiche que les sources réelles (pas « + mock »).
+    const served = hasReal
+      ? sources.filter((s) => s !== "mock")
+      : sources;
+    return {
+      fights,
+      source: served.length > 0 ? served.join(" + ") : "aucune",
+    };
   }
 
   async recentFights(limit = 20): Promise<{ fights: Fight[]; source: string }> {
@@ -281,7 +371,11 @@ class ProviderRouter {
     }
 
     return {
-      fights: [...merged.values()].slice(0, limit),
+      // les plus RÉCENTS d'abord (les scores Odds API peuvent être plus
+      // frais que les shards du pipeline)
+      fights: [...merged.values()]
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, limit),
       source: sources.join(" + ") || "aucune",
     };
   }
