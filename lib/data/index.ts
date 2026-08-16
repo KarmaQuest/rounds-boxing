@@ -4,10 +4,11 @@ import { BigBallsProvider } from "./providers/bigballs";
 import { TheSportsDbProvider } from "./providers/thesportsdb";
 import { OddsApiProvider } from "./providers/oddsapi";
 import { WikipediaProvider } from "./providers/wikipedia";
-import { ShardsFightsProvider } from "./providers/shardsfights";
+import { getShardFightsForFighter, ShardsFightsProvider } from "./providers/shardsfights";
+import { RECENT_FIGHTS } from "./providers/mock";
 import { ProviderRouter } from "./providers/router";
-import type { FighterFilters } from "./types";
-import { applyFilters, dedupeFighters } from "./utils";
+import type { FighterFilters, Fight } from "./types";
+import { applyFilters, dedupeFighters, slugify } from "./utils";
 import { getBoxerBelts } from "./belts";
 
 /**
@@ -69,6 +70,32 @@ export async function getBoxeur(slug: string) {
 
 /** Ceintures remportées par un boxeur, groupées par organisation (shards du pipeline). */
 export { getBoxerBelts };
+
+/**
+ * Tous les derniers résultats d'un boxeur : shards officiels du pipeline
+ * (toute la carrière, pas seulement les N combats les plus récents du monde)
+ * + les combats du mock (enrichissement). Dédup par paire de noms.
+ */
+export async function getBoxerFights(name: string, limit = 40): Promise<Fight[]> {
+  const [shard, mock] = await Promise.all([
+    getShardFightsForFighter(name, 200), // large fenêtre, dédup ensuite
+    Promise.resolve(
+      RECENT_FIGHTS.filter((f) =>
+        f.fighters.some((ref) => slugify(ref.name) === slugify(name))
+      )
+    ),
+  ]);
+
+  const seen = new Set<string>();
+  const fights: Fight[] = [];
+  for (const f of [...shard, ...mock]) {
+    const key = f.fighters.map((x) => slugify(x.name)).sort().join("|");
+    if (seen.has(key)) continue;
+    seen.add(key);
+    fights.push(f);
+  }
+  return fights.sort((a, b) => b.date.localeCompare(a.date)).slice(0, limit);
+}
 
 export async function getCombatsAvenir(limit = 20) {
   return router.upcomingFights(limit);

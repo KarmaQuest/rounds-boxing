@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { slugify } from "./utils";
+import { BELT_STATUS, type BeltStatus } from "./belt-status";
 
 /**
  * Ceintures remportées par les boxeurs, dérivées des résultats OFFICIELS
@@ -115,10 +116,16 @@ async function buildIndex(): Promise<Map<string, BeltWin[]>> {
   return index;
 }
 
-/** Ceintures remportées par un boxeur, groupées par organisation (tri date desc). */
+/**
+ * Ceintures d'un boxeur, groupées par organisation : le STATUT ACTUEL
+ * (curé, ex. « Vacant » pour Usyk qui a abandonné ses ceintures en 2026)
+ * + l'HISTORIQUE daté des victoires en combat de titre (shards officiels).
+ */
 export async function getBoxerBelts(
   slug: string
-): Promise<{ org: string; label: string; wins: BeltWin[] }[]> {
+): Promise<
+  { org: string; label: string; status?: BeltStatus; wins: BeltWin[] }[]
+> {
   if (!cache) cache = await buildIndex();
   const wins = cache.get(slug) ?? [];
 
@@ -128,9 +135,16 @@ export async function getBoxerBelts(
     list.push(w);
     byOrg.set(w.org, list);
   }
-  return [...byOrg.entries()].map(([org, list]) => ({
-    org,
-    label: ORG_LABELS[org] ?? org,
-    wins: list,
-  }));
+
+  const curated = BELT_STATUS[slug] ?? {};
+  const orgs = new Set([...byOrg.keys(), ...Object.keys(curated)]);
+
+  return [...orgs]
+    .sort((a, b) => (ORG_LABELS[a] ?? a).localeCompare(ORG_LABELS[b] ?? b))
+    .map((org) => ({
+      org,
+      label: ORG_LABELS[org] ?? org,
+      status: curated[org],
+      wins: byOrg.get(org) ?? [],
+    }));
 }

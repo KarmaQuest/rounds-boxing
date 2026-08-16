@@ -5,8 +5,8 @@ import { ArrowLeft, Crown, Ruler, Scale, Calendar, Flag, Swords } from "lucide-r
 import {
   getBoxeur,
   getBoxerBelts,
+  getBoxerFights,
   getCombatsAvenir,
-  getCombatsRecents,
 } from "@/lib/data";
 import type { Fight } from "@/lib/data/types";
 import { koPct } from "@/lib/data/utils";
@@ -58,8 +58,8 @@ export default async function FighterPage({ params }: PageProps) {
   const { fighter, source } = await getBoxeur(slug);
   if (!fighter) notFound();
 
-  const [recent, upcoming, belts] = await Promise.all([
-    getCombatsRecents(30),
+  const [career, upcoming, belts] = await Promise.all([
+    getBoxerFights(fighter.name, 40), // TOUS les résultats (shards + mock)
     getCombatsAvenir(10),
     getBoxerBelts(slug),
   ]);
@@ -69,7 +69,7 @@ export default async function FighterPage({ params }: PageProps) {
       f.fighters.some((ref) => ref.name.toLowerCase() === name.toLowerCase())
     );
 
-  const recentFights = fightsWith(recent.fights, fighter.name);
+  const recentFights = career; // déjà filtrés par le boxeur
   const upcomingFights = fightsWith(upcoming.fights, fighter.name);
   const ko = koPct(fighter.record);
 
@@ -183,25 +183,54 @@ export default async function FighterPage({ params }: PageProps) {
                   <p className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-gold/10 px-2.5 py-1 text-xs font-bold text-gold ring-1 ring-gold/30">
                     <Crown size={11} aria-hidden /> {org.label}
                   </p>
-                  <ul className="space-y-1.5">
-                    {org.wins.map((w, i) => (
-                      <li
-                        key={`${w.date}-${i}`}
-                        className="flex items-baseline justify-between gap-2 text-xs"
-                      >
-                        <span className="font-semibold text-snow">{w.belt}</span>
-                        <span className="shrink-0 text-fog">
-                          {formatDate(w.date)}
+
+                  {org.status && (
+                    <div className="mb-3 rounded-lg bg-ink/50 p-3">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-fog">
+                        Statut :{" "}
+                        <span
+                          className={
+                            org.status.state === "Vacant"
+                              ? "text-fog"
+                              : "text-gold"
+                          }
+                        >
+                          {org.status.state}
                         </span>
-                      </li>
-                    ))}
-                  </ul>
+                      </p>
+                      <p className="mt-1 text-[11px] leading-relaxed text-mist">
+                        {org.status.detail}
+                      </p>
+                    </div>
+                  )}
+
+                  {org.wins.length > 0 && (
+                    <>
+                      <p className="mb-1.5 text-[10px] uppercase tracking-wider text-fog/70">
+                        Historique
+                      </p>
+                      <ul className="space-y-1.5">
+                        {org.wins.map((w, i) => (
+                          <li
+                            key={`${w.date}-${i}`}
+                            className="flex items-baseline justify-between gap-2 text-xs"
+                          >
+                            <span className="font-semibold text-snow">{w.belt}</span>
+                            <span className="shrink-0 text-fog">
+                              {formatDate(w.date)}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
             <p className="mt-4 text-[11px] text-fog">
-              Ceintures remportées en combat de titre, d’après les résultats
-              officiels des organisations (pipeline).
+              Statut actuel d’après les sources officielles (Wikipedia) ·
+              historique des victoires en combat de titre d’après les résultats
+              des organisations (pipeline).
             </p>
           </section>
         </Reveal>

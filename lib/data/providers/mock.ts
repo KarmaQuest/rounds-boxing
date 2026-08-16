@@ -431,8 +431,8 @@ function ref(name: string, fighter?: Fighter) {
 
 const byName = (n: string) => FIGHTERS.find((x) => x.name === n);
 
-/** Combats récents (résultats). */
-const RECENT_FIGHTS: Fight[] = [
+/** Combats récents (résultats). Exporté pour le profil boxeur (fusion avec les shards). */
+export const RECENT_FIGHTS: Fight[] = [
   {
     id: "f-2024-12-21-usyk-fury2",
     date: "2024-12-21",

@@ -40,12 +40,23 @@ interface OddsEvent {
   bookmakers?: OddsBookmaker[];
 }
 
+/** Événement de l'endpoint /scores (combats terminés récents). */
+interface OddsScoreEvent {
+  id: string;
+  sport_key: string;
+  commence_time: string;
+  home_team: string;
+  away_team: string;
+  completed?: boolean;
+  scores?: Array<{ name: string; score: string }> | null;
+}
+
 const BASE = "https://api.the-odds-api.com/v4/sports/boxing_boxing";
 
 export class OddsApiProvider implements DataProvider {
   readonly name = "oddsapi";
   readonly priority = 1;
-  readonly capabilities = ["odds"] as const;
+  readonly capabilities = ["odds", "fights"] as const;
   readonly dailyLimit = Number(process.env.ODDS_DAILY_LIMIT ?? 16);
 
   isActive(): boolean {
@@ -89,8 +100,34 @@ export class OddsApiProvider implements DataProvider {
     });
   }
 
-  async getRecentFights(): Promise<Fight[]> {
-    return [];
+  async getRecentFights(limit = 20): Promise<Fight[]> {
+    // /scores/ : combats terminés des 3 derniers jours (max autorisé).
+    // Quand un combat à venir a eu lieu, il bascule ici → « Résultats
+    // récents ». Cache TTL 24 h du routeur → 1 requête/jour.
+    const events = await fetchJson<OddsScoreEvent[]>(
+      `${BASE}/scores/?apiKey=${process.env.ODDS_API_KEY}&daysFrom=3`
+    );
+
+    return events
+      .filter((e) => e.completed === true)
+      .slice(0, limit)
+      .map((ev): Fight => {
+        const scores = ev.scores ?? [];
+        const a = Number(scores[0]?.score);
+        const b = Number(scores[1]?.score);
+        const hasScores = Number.isFinite(a) && Number.isFinite(b) && a !== b;
+        return {
+          id: `odds-${ev.id}`,
+          date: ev.commence_time,
+          status: "finished",
+          fighters: [{ name: ev.home_team }, { name: ev.away_team }],
+          outcome: {
+            winnerIndex: hasScores ? (a > b ? 0 : 1) : undefined,
+            method: "Décision",
+          },
+          source: "oddsapi",
+        };
+      });
   }
 
   async searchFighters(): Promise<never[]> {

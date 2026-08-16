@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getCombatsRecents, searchBoxeurs } from "./index";
+import { getBoxerFights, getCombatsRecents, searchBoxeurs } from "./index";
 
 /**
  * Tests d'intégration de la couche publique (index.ts) sur le mock
@@ -35,6 +35,45 @@ describe("searchBoxeurs (intégration mock)", () => {
     });
     expect(fighters.length).toBeGreaterThan(0);
     expect(fighters.every((f) => f.weightClass === "Poids super-moyens")).toBe(true);
+  });
+});
+
+describe("getBoxerFights (tous les résultats d'un boxeur)", () => {
+  it("Usyk : remonte sa carrière depuis les shards (Dubois 2025, Fury 2024…), pas seulement le top-30 mondial", async () => {
+    const fights = await getBoxerFights("Oleksandr Usyk", 40);
+
+    // les vrais shards du pipeline sont committés → au moins les combats IBF
+    expect(fights.length).toBeGreaterThan(0);
+
+    // le dernier combat d'Usyk (Dubois, juillet 2025) apparaît en tête
+    expect(fights[0]!.date).toBe("2025-07-19");
+    expect(
+      fights[0]!.fighters.some((f) => f.name.toLowerCase().includes("dubois"))
+    ).toBe(true);
+
+    // toute la carrière remonte (pas seulement les 30 derniers du monde)
+    const dates = fights.map((f) => f.date);
+    expect(dates[dates.length - 1]!).toBe("2018-07-21");
+
+    // tri décroissant + dédup (pas de doublon Usyk-Fury)
+    const sorted = [...dates].sort((a, b) => b.localeCompare(a));
+    expect(dates).toEqual(sorted);
+  });
+
+  it("combat du mock inclus s'il n'existe pas dans les shards (enrichissement)", async () => {
+    const fights = await getBoxerFights("Christian Mbilli", 40);
+    // Mbilli n'a pas (ou peu) de combats dans les shards → le mock
+    // (Montréal 2024) complète la carrière
+    const montreal = fights.find((f) =>
+      f.fighters.some((x) => x.name === "Christian Mbilli") &&
+      (f.venue ?? "").includes("Bell")
+    );
+    expect(fights.length).toBeGreaterThan(0);
+    expect(montreal?.date ?? "").toBe("2024-09-28");
+  });
+
+  it("boxeur inconnu → liste vide (pas d'erreur)", async () => {
+    expect(await getBoxerFights("Boxeur Inexistant XYZ", 40)).toEqual([]);
   });
 });
 

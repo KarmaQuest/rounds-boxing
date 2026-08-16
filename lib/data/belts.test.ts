@@ -9,13 +9,17 @@ import { getBoxerBelts } from "./belts";
  */
 
 describe("getBoxerBelts (shards officiels)", () => {
-  it("Usyk : 7 ceintures IBF, groupées par organisation, triées par date décroissante", async () => {
+  it("Usyk : 7 ceintures IBF + statut curé « Vacant » sur les 4 organisations", async () => {
     const belts = await getBoxerBelts("oleksandr-usyk");
 
-    expect(belts).toHaveLength(1); // uniquement l'IBF dans les shards couverts
-    const ibf = belts[0]!;
+    // 4 organisations : l'IBF (historique des shards) + WBA/WBC/WBO (statut curé)
+    expect(belts.map((b) => b.org).sort()).toEqual(["ibf", "wba", "wbc", "wbo"]);
+
+    const ibf = belts.find((b) => b.org === "ibf")!;
     expect(ibf.label).toBe("IBF");
     expect(ibf.wins).toHaveLength(7);
+    expect(ibf.status).toBeDefined();
+    expect(ibf.status!.state).toBe("Vacant"); // abandon des ceintures en 2026
 
     // 5 défenses poids lourds (2021→2025) + 2 cruiserweight (2018)
     const heavy = ibf.wins.filter((w) => w.belt === "Poids lourds");
@@ -29,9 +33,16 @@ describe("getBoxerBelts (shards officiels)", () => {
 
     // chaque entrée porte l'org
     expect(ibf.wins.every((w) => w.org === "ibf" && w.label === "IBF")).toBe(true);
+
+    // les orgs curées sans historique n'ont pas de wins mais un statut
+    for (const org of ["wba", "wbc", "wbo"]) {
+      const b = belts.find((x) => x.org === org)!;
+      expect(b.status!.state).toBe("Vacant");
+      expect(b.wins).toEqual([]);
+    }
   });
 
-  it("Canelo Álvarez : aucune ceinture dans les shards couverts (pas de combat de titre capturé)", async () => {
+  it("Canelo Álvarez : aucune ceinture dans les shards couverts ni statut curé (pas de combat de titre capturé)", async () => {
     const belts = await getBoxerBelts("canelo-alvarez");
     expect(belts).toEqual([]);
   });
