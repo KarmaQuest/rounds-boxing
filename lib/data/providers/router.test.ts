@@ -234,6 +234,23 @@ describe("listFighters — fusion multi-source", () => {
     expect(fighters).toEqual([]);
     expect(source).toBe("aucune");
   });
+
+  it("la fusion ne coupe PAS les ajouts d'une source non recouvrante (régression : stars hors pool Big Balls)", async () => {
+    // bigballs remplit le quota de fetch avec 2 boxeurs, wikipedia en ajoute
+    // un 3e absent de bigballs → il doit SURVIVRE à la fusion (pas de slice).
+    const a = mkFighter({ name: "Aaron Davis", record: { wins: 49, losses: 6, draws: 0, ko: 30 } });
+    const b = mkFighter({ name: "Aaron Bowen", record: { wins: 8, losses: 1, draws: 0, ko: 6 } });
+    const star = mkFighter({ name: "Terence Crawford", rank: 2, record: { wins: 42, losses: 0, draws: 0, ko: 31 } });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "bigballs", priority: 1, listFighters: async () => [a, b] }),
+      mkProvider({ name: "wikipedia", priority: 2, listFighters: async () => [star] }),
+    ]);
+
+    const { fighters } = await router.listFighters(2); // limite de fetch = 2
+    expect(fighters.map((f) => f.slug).sort()).toEqual(["aaron-bowen", "aaron-davis", "terence-crawford"]);
+    expect(fighters.find((f) => f.slug === "terence-crawford")!.rank).toBe(2);
+  });
 });
 
 // ── Quota & circuit breaker ────────────────────────────────────────────
@@ -415,7 +432,8 @@ describe("upcomingFights", () => {
     expect(fights[0]!.odds).toEqual([1.9, 1.88]); // cotes réelles
     expect(fights[0]!.title).toBe("Superfight incontesté : Canelo vs Crawford"); // fiche mock
     expect(fights[0]!.venue).toBe("T-Mobile Arena");
-    expect(source).toBe("oddsapi + mock");
+    // le label ne mentionne le mock que s'il est la SEULE source
+    expect(source).toBe("oddsapi");
   });
 
   it("déduplique par paire de noms, quel que soit l'ordre ou la casse", async () => {
@@ -454,6 +472,59 @@ describe("upcomingFights", () => {
     const { fights } = await router.upcomingFights(1);
     expect(fights).toHaveLength(1);
     expect(fights[0]!.id).toBe("early");
+  });
+
+  it("écarte les affiches FICTIVES du mock quand une source réelle répond", async () => {
+    const real = mkFight({ id: "odds-1", date: "2026-08-22", fighters: [{ name: "A Fighter" }, { name: "B Fighter" }], source: "oddsapi" });
+    const fiction = mkFight({ id: "mock-1", date: "2026-09-13", fighters: [{ name: "Canelo Álvarez" }, { name: "Terence Crawford" }], odds: [1.9, 1.88], source: "mock" });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "oddsapi", priority: 1, capabilities: ["odds"], getUpcomingFights: async () => [real] }),
+      mkProvider({ name: "mock", priority: 99, capabilities: ["odds"], getUpcomingFights: async () => [fiction] }),
+    ]);
+
+    const { fights, source } = await router.upcomingFights();
+    expect(fights.map((f) => f.id)).toEqual(["odds-1"]); // la fiction mock disparaît
+    expect(source).toBe("oddsapi");
+  });
+
+  it("garde le mock quand AUCUNE source réelle ne répond (filet de sécurité)", async () => {
+    const fiction = mkFight({ id: "mock-1", date: "2026-09-13", fighters: [{ name: "Canelo Álvarez" }, { name: "Terence Crawford" }], source: "mock" });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "mock", priority: 99, capabilities: ["odds"], getUpcomingFights: async () => [fiction] }),
+    ]);
+
+    const { fights } = await router.upcomingFights();
+    expect(fights.map((f) => f.id)).toEqual(["mock-1"]);
+  });
+
+  it("le mock ENRICHIT toujours un vrai combat (même paire) — il n'est pas écarté", async () => {
+    const real = mkFight({
+      id: "odds-1",
+      date: "2026-08-22",
+      fighters: [{ name: "Canelo Álvarez" }, { name: "Terence Crawford" }],
+      odds: [1.9, 1.88],
+      source: "oddsapi",
+    });
+    const mock = mkFight({
+      id: "mock-1",
+      date: "2026-09-13",
+      title: "Superfight incontesté",
+      venue: "T-Mobile Arena",
+      fighters: [{ name: "Canelo Álvarez" }, { name: "Terence Crawford" }],
+      source: "mock",
+    });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "oddsapi", priority: 1, capabilities: ["odds"], getUpcomingFights: async () => [real] }),
+      mkProvider({ name: "mock", priority: 99, capabilities: ["odds"], getUpcomingFights: async () => [mock] }),
+    ]);
+
+    const { fights } = await router.upcomingFights();
+    expect(fights).toHaveLength(1);
+    expect(fights[0]!.title).toBe("Superfight incontesté"); // enrichi par le mock
+    expect(fights[0]!.odds).toEqual([1.9, 1.88]); // cotes réelles conservées
   });
 });
 

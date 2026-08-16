@@ -99,7 +99,8 @@ boxing-app/
 │       ├── utils.ts          # slugify, flagForCountry, koPct, applyFilters, dedupe
 │       ├── cache.ts          # TTL cache en mémoire (profils 24h, cotes 10 min)
 │       ├── quota.ts          # quota quotidien par provider + circuit breaker (fichier .data/quota.json)
-│       ├── index.ts          # API publique : searchBoxeurs, getBoxeur, getCombatsAvenir/Recents
+│       ├── belts.ts          # ceintures remportées par boxeur, dérivées des shards (par organisation)
+│       ├── index.ts          # API publique : searchBoxeurs, getBoxeur, getCombatsAvenir/Recents, getBoxerBelts
 │       └── providers/
 │           ├── provider.ts   # interface DataProvider + Catégories
 │           ├── router.ts     # ProviderRouter : fusion multi-source, quota, circuit, cache
@@ -222,6 +223,9 @@ interface Fight {
 - **Profil boxeur** : hero (avatar, surnom, rang p4p, ceintures), palmarès (V-D-N, % KO, total combats), barre animée, fiche technique (taille, allonge, garde, âge, début pro, nationalité), bio, ses combats à venir/récents, **lien BoxRec** quand l'ID existe
 - **Combats** : onglets animés « À venir (avec cotes) » / « Résultats récents », section « Les affiches du moment » (gros combats en tête, `fightImportance`)
 - **Résultats officiels (shards du pipeline)** : `ShardsFightsProvider` (priorité 3, avant le mock) lit `public/data/fights/{org}.json` (générés par `boxingdatasource-pipeline`, 1853 combats : IBF 1422, FFBoxe 271, CSAC 133, WBA 20, WBC 6, WBO 1) et les mappe vers `Fight` (fighter_a/b → fighters[], winner/method/rounds → outcome, catégorie FR/EN → WeightClass canonique, ceintures → title). Dédup inter-sources par id SHA-256, zéro requête réseau ; combats à venir = mock/odds (le pipeline ne publie pas de programmation)
+- **Combats à venir À JOUR (2.7)** : quand l'Odds API répond, les affiches fictives du mock (dates figées, cotes inventées) sont écartées — le mock n'enrichit que les vrais combats et sert de filet de sécurité
+- **Ceintures par organisation (2.8)** : section sur le profil (ex. Usyk → 7 ceintures IBF datées) dérivée des shards par `lib/data/belts.ts`
+- **Liste des boxeurs crédible (2.7)** : tri par défaut hybride (rang p4p → palmarès → nom) et fusion sans troncature → page 1 = les 24 stars avec leurs vrais palmarès
 - **Animations** : loader d'intro « ROUND 1 » (🥊, 1× par session via sessionStorage, **sauté si `prefers-reduced-motion`**), révélation au scroll (`Reveal`), compteurs (`Counter`), hover néon, `AnimatePresence` + `layout` sur les grilles, skeletons shimmer, 404 stylisé
 - **Comparateur tale of the tape** (`/comparateur?boxeurA=&boxeurB=`) : 2 sélecteurs, stats gagnantes en or, partage par URL
 - **Recherche floue** : `levenshtein`/`fuzzyMatch`/`fuzzySuggest` — « uzyk » et « canlo » trouvent Usyk / Canelo (client ET API) + autocomplete 5 suggestions
@@ -241,7 +245,7 @@ interface Fight {
 - **ErrorBoundaries** : `error.tsx` global + par boxeur (bouton retry)
 - **Multi-sources** : fusion + enrichissement (voir §4), section explicative sur l'accueil
 - **Palmarès réels (Wikipedia)** : provider `wikipedia` (priorité 2) — infobox fr/en parsées (record V-D-N-KO, taille, allonge, garde, catégorie, surnom), **snapshot committé** des 24 stars (zéro réseau en runtime), régénérable via `npx tsx scripts/refresh-wikipedia.ts`. Attribution CC BY-SA au footer. Usyk 25-0-0, Crawford 42-0-0, Canelo 63-3-2… (voir `docs/DATA-SOURCES.md`)
-- **Tests (Vitest)** : `npm test` → **127 tests** (routeur : fusion, quota, circuit, cache ; `applyFilters` ; persistance disque du quota ; parser news RSS/Atom/YT ; parser infobox Wikipedia ; provider shards + mapping catégories + intégration routeur)
+- **Tests (Vitest)** : `npm test` → **137 tests** (routeur : fusion, quota, circuit, cache, combats à venir sans mock fictif, non-troncature de la fusion ; `applyFilters` dont tri hybride ; persistance disque du quota ; parser news RSS/Atom/YT ; parser infobox Wikipedia ; provider shards ; **belts** — ceintures dérivées des vrais shards)
 - **SEO** : sitemap.xml (127 URLs), robots.txt, canonical partout, **noindex des URL filtrées** `/boxeurs?…`, OG images (générique + par boxeur, police Anton self-hosted), JSON-LD (Person / SportsEvent / WebSite)
 
 ## 8. État de vérification (15/08/2026)
@@ -250,7 +254,7 @@ interface Fight {
 | --- | --- |
 | `npm run build` (TypeScript inclus) | ✅ |
 | `npm run lint` (ESLint) | ✅ 0 problème |
-| `npm test` (Vitest) | ✅ 127 tests |
+| `npm test` (Vitest) | ✅ 137 tests |
 | Pages : `/`, `/boxeurs`, `/combats`, `/boxeurs/[slug]`, `/comparateur`, `/debug` | ✅ 200 |
 | Pagination API (`limit=24&offset=0/24/48`) | ✅ 24/page cohérentes |
 | Recherche floue API (`q=uzyk`, `q=canlo`) | ✅ Usyk / Canelo trouvés |

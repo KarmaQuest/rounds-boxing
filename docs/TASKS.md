@@ -86,6 +86,16 @@
 - **Acceptation** : ✅ `getCombatsRecents` sert les shards (test d'intégration : source `shards`, combats `finished`, 2 fighters) ; mapping testé sur les vrais shards (10 tests) ; 127 tests Vitest ; tsc 0 erreur.
 - ⚠️ **Déploiement** : lecture par `fs` → VM/container Node long-running ; sur Vercel/serverless il faudra copier `public/data/` ou passer par un store (voir AUDIT §2).
 
+### 2.7 Combats à venir & liste des boxeurs À JOUR — ✅ FAIT (16/08/2026)
+- **Combats à venir** : quand une source réelle (Odds API) répond, les affiches **fictives du mock** (dates figées, cotes inventées) sont écartées ; le mock ne sert plus que d'**enrichissement** des vrais combats (titre, venue) et de filet de sécurité sans source réelle. Label source corrigé (`oddsapi`, plus `+ mock` trompeur). `router.ts` (`upcomingFights`).
+- **Liste des boxeurs** : 2 bugs corrigés — (1) la fusion `listFighters` **tronquait à la limite de fetch** : les stars absentes du pool Big Balls (Crawford, Inoue, Canelo…) étaient coupées (seuls 4 rangs restaient) → plus de slice, la pagination se fait dans `applyFilters` ; (2) le **tri par défaut** est hybride : boxeurs classés (p4p) → palmarès réel (victoires) → nom. Résultat : page 1 = les 24 stars avec leurs vrais palmarès (Usyk 25-0, Crawford 42-0, Inoue 33-0, Canelo 63-3…), plus de 0-0-0 en tête.
+- **Tests** : +10 (routeur : mock écarté/enrichissement/filet de sécurité/absence de troncature ; tri hybride ; belts) → **137 tests Vitest**.
+
+### 2.8 Ceintures par organisation sur le profil — ✅ FAIT (16/08/2026)
+- **Objectif** : afficher TOUTES les ceintures remportées par un boxeur, groupées par organisation (WBA, WBC, IBF, WBO, CSAC, FFBoxe), avec date.
+- **Fichiers** : `lib/data/belts.ts` (index des victoires en combat de titre dérivé des shards `public/data/fights/{org}.json` — vainqueur résolu par égalité exacte, catégories EN → FR, régionales en nom brut, tri date desc) + export `getBoxerBelts` dans `lib/data/index.ts` + section UI « Ceintures par organisation » dans `app/boxeurs/[slug]/page.tsx`.
+- **Acceptation** : ✅ Usyk → 7 ceintures IBF (5× Poids lourds 2021→2025 + 2× Poids lourds-légers 2018) ; Canelo → rien (pas de combat de titre capturé dans les shards — le mock fournit ses titres actuels) ; couverture limitée à ce que les shards contiennent (IBF riche : 1213 combats de titre ; WBA/WBC/WBO/CSAC partiels).
+
 ### 2.5 Améliorations UX/animations
 - **Objectif** : transitions de page (View Transitions ou AnimatePresence autour de `main`), marquee des grands noms, micro-animations KO, dark/light toggle, respect `prefers-reduced-motion` partout.
 - **Fichiers** : `app/layout.tsx`, `components/`, `app/globals.css`.

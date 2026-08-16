@@ -216,6 +216,15 @@ quand elle a des combats**. Logique à rendre paramétrable dès maintenant
   lus en statique par `ShardsFightsProvider` (priorité 3, zéro réseau,
   dédup inter-sources par id SHA-256) — le mock ne sert plus que les
   combats à venir et l'enrichissement des stars (TASKS 2.6).
+- **Combats à venir À JOUR (2.7)** : la fiction du mock (cotes inventées,
+  dates figées) est écartée quand l'Odds API répond ; le label source ne
+  ment plus (« oddsapi », pas « oddsapi + mock »).
+- **Ceintures par organisation (2.8)** : historique dérivé des shards
+  (victoires en combat de titre) affiché sur chaque profil (ex. Usyk → 7
+  ceintures IBF datées).
+- **Répertoire crédible (2.7)** : tri par défaut hybride (rang → palmarès →
+  nom) et fusion sans troncature — les 24 stars (avec vrais records
+  Wikipedia) ouvrent la liste, fini les 0-0-0 en page 1.
 
 ### ⚠️ Limites à assumer (produit)
 - Big Balls : `record` null → les boxeurs non-mock affichent 0-0-0 (honnête

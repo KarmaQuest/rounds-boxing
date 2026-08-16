@@ -224,6 +224,32 @@ describe("applyFilters", () => {
     expect(out[out.length - 1]!.name).toBe("Sans Rang");
   });
 
+  it("sans rang : palmarès réel d'abord, puis ordre alphabétique (plus de 0-0-0 en tête)", () => {
+    const noRank = [
+      mkFighter({ name: "Aaron Wade", record: { wins: 0, losses: 0, draws: 0, ko: 0 } }),
+      mkFighter({ name: "Aaron Davis", record: { wins: 49, losses: 6, draws: 0, ko: 30 } }),
+      mkFighter({ name: "Aaron Bowen", record: { wins: 8, losses: 1, draws: 0, ko: 6 } }),
+      mkFighter({ name: "Aaron Pryor", record: { wins: 39, losses: 1, draws: 0, ko: 35 } }),
+    ];
+    const out = applyFilters(noRank, {});
+    expect(out.map((f) => f.name)).toEqual([
+      "Aaron Davis", // 49 victoires
+      "Aaron Pryor", // 39
+      "Aaron Bowen", // 8
+      "Aaron Wade", // 0-0-0 en dernier
+    ]);
+  });
+
+  it("les boxeurs classés passent devant, même avec un petit palmarès", () => {
+    const mix = [
+      mkFighter({ name: "Aaron Davis", record: { wins: 49, losses: 6, draws: 0, ko: 30 } }),
+      mkFighter({ name: "Champion Classé", rank: 7, record: { wins: 21, losses: 0, draws: 0, ko: 20 } }),
+    ];
+    const out = applyFilters(mix, {});
+    expect(out[0]!.name).toBe("Champion Classé");
+    expect(out[1]!.name).toBe("Aaron Davis");
+  });
+
   it("applique la limite", () => {
     const out = applyFilters(fighters, { limit: 2 });
     expect(out).toHaveLength(2);

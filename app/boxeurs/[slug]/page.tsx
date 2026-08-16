@@ -2,9 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Crown, Ruler, Scale, Calendar, Flag, Swords } from "lucide-react";
-import { getBoxeur, getCombatsAvenir, getCombatsRecents } from "@/lib/data";
+import {
+  getBoxeur,
+  getBoxerBelts,
+  getCombatsAvenir,
+  getCombatsRecents,
+} from "@/lib/data";
 import type { Fight } from "@/lib/data/types";
 import { koPct } from "@/lib/data/utils";
+import { formatDate } from "@/lib/utils";
 import { Avatar } from "@/components/avatar";
 import { JsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
@@ -52,9 +58,10 @@ export default async function FighterPage({ params }: PageProps) {
   const { fighter, source } = await getBoxeur(slug);
   if (!fighter) notFound();
 
-  const [recent, upcoming] = await Promise.all([
+  const [recent, upcoming, belts] = await Promise.all([
     getCombatsRecents(30),
     getCombatsAvenir(10),
+    getBoxerBelts(slug),
   ]);
 
   const fightsWith = (fights: Fight[], name: string) =>
@@ -159,6 +166,46 @@ export default async function FighterPage({ params }: PageProps) {
           </div>
         </div>
       </Reveal>
+
+      {/* ── Ceintures par organisation ──────────────────── */}
+      {belts.length > 0 && (
+        <Reveal delay={0.03}>
+          <section className="mt-6 rounded-2xl border border-line/60 bg-panel p-6 panel-glow">
+            <h2 className="mb-5 font-display text-sm uppercase tracking-[0.3em] text-fog">
+              Ceintures par organisation
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {belts.map((org) => (
+                <div
+                  key={org.org}
+                  className="rounded-xl border border-line/60 bg-panel-2 p-4"
+                >
+                  <p className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-gold/10 px-2.5 py-1 text-xs font-bold text-gold ring-1 ring-gold/30">
+                    <Crown size={11} aria-hidden /> {org.label}
+                  </p>
+                  <ul className="space-y-1.5">
+                    {org.wins.map((w, i) => (
+                      <li
+                        key={`${w.date}-${i}`}
+                        className="flex items-baseline justify-between gap-2 text-xs"
+                      >
+                        <span className="font-semibold text-snow">{w.belt}</span>
+                        <span className="shrink-0 text-fog">
+                          {formatDate(w.date)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-[11px] text-fog">
+              Ceintures remportées en combat de titre, d’après les résultats
+              officiels des organisations (pipeline).
+            </p>
+          </section>
+        </Reveal>
+      )}
 
       {/* ── Palmarès ─────────────────────────────────────── */}
       <div className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_1fr]">

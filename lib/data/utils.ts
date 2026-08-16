@@ -261,10 +261,15 @@ export function applyFilters(fighters: Fighter[], filters: FighterFilters): Figh
     case "height":
       out = [...out].sort((a, b) => b.heightCm - a.heightCm);
       break;
-    default: // rank
-      out = [...out].sort(
-        (a, b) => (a.rank ?? Infinity) - (b.rank ?? Infinity)
-      );
+    default: // rank → les boxeurs classés d'abord, puis palmarès réel,
+      // puis ordre alphabétique (évite une page 1 pleine de 0-0-0)
+      out = [...out].sort((a, b) => {
+        const ra = a.rank ?? Infinity;
+        const rb = b.rank ?? Infinity;
+        if (ra !== rb) return ra - rb;
+        if (b.record.wins !== a.record.wins) return b.record.wins - a.record.wins;
+        return a.name.localeCompare(b.name);
+      });
   }
 
   // pagination (TASKS 2.1) : offset + limite

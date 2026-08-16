@@ -62,6 +62,8 @@ function mergeFighter(
     source: record === existing.record ? existing.source : incoming.source,
     titles: incoming.titles.length > 0 ? incoming.titles : existing.titles,
     bio: incoming.bio ?? existing.bio,
+    // le rank (p4p du mock, ou futur rang réel) ne doit jamais être écrasé
+    // par un `undefined` d'une source qui n'en fournit pas
     rank: incoming.rank ?? existing.rank,
     promoter: incoming.promoter ?? existing.promoter,
   };
@@ -157,8 +159,12 @@ class ProviderRouter {
       }
     }
 
+    // ⚠️ Pas de slice ici : la limite sert à cadrer les FETCH des providers,
+    // pas la fusion. Couper à `limit` laisserait les ajouts Wikipedia (stars
+    // absentes du pool Big Balls) hors du pool — la pagination/tri se font
+    // dans applyFilters (index.ts).
     return {
-      fighters: dedupeFighters([...merged.values()]).slice(0, limit),
+      fighters: dedupeFighters([...merged.values()]),
       source: sources.length > 0 ? sources.join(" + ") : "aucune",
     };
   }
@@ -218,6 +224,7 @@ class ProviderRouter {
 
   async upcomingFights(limit = 20): Promise<{ fights: Fight[]; source: string }> {
     const merged = new Map<string, Fight>();
+    const realKeys = new Set<string>(); // paires venues d'une source RÉELLE
     const sources: string[] = [];
 
     for (const provider of this.providers) {
@@ -232,6 +239,7 @@ class ProviderRouter {
       sources.push(provider.name);
       for (const fight of list) {
         const key = fightKey(fight);
+        if (provider.name !== "mock") realKeys.add(key);
         const existing = merged.get(key);
         if (!existing) {
           merged.set(key, fight);
@@ -245,11 +253,15 @@ class ProviderRouter {
       }
     }
 
-    // on ne propose que des combats réellement à venir (les dates figées
-    // du mock finiraient par être dépassées — AUDIT P2), et les grosses
-    // affiches passent en tête (TASKS 1.4)
+    // Les combats à venir doivent être À JOUR : quand une source réelle
+    // (Odds API) répond, on écarte les affiches FICTIVES du mock (dates
+    // figées, cotes inventées) qui n'ont aucun équivalent réel. Le mock ne
+    // sert plus que d'ENRICHISSEMENT des vrais combats (titre, venue) et de
+    // filet de sécurité si aucune source réelle ne répond.
+    const hasReal = sources.some((s) => s !== "mock");
     const now = Date.now();
     const fights = [...merged.values()]
+      .filter((f) => !hasReal || f.source !== "mock" || realKeys.has(fightKey(f)))
       .filter((f) => new Date(f.date).getTime() > now)
       .sort(
         (a, b) =>
@@ -258,7 +270,16 @@ class ProviderRouter {
       )
       .slice(0, limit);
 
-    return { fights, source: sources.length > 0 ? sources.join(" + ") : "aucune" };
+    // Le label source reflète ce qui est RÉELLEMENT servi : quand une source
+    // réelle répond, les fiches mock servies ne sont que des enrichissements
+    // → on n'affiche que les sources réelles (pas « + mock »).
+    const served = hasReal
+      ? sources.filter((s) => s !== "mock")
+      : sources;
+    return {
+      fights,
+      source: served.length > 0 ? served.join(" + ") : "aucune",
+    };
   }
 
   async recentFights(limit = 20): Promise<{ fights: Fight[]; source: string }> {
