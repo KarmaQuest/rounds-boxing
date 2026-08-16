@@ -68,10 +68,11 @@
 - **Fichiers** : `lib/data/types.ts` (nouveau type `FightHistory`), `lib/data/providers/*`, page `[slug]`.
 - **Acceptation** : un boxeur du mock affiche ≥ 10 combats avec méthode/round/date.
 
-### 2.3 Records réels quand Big Balls les publiera — ⏳ dépend de Big Balls (recordPriority déjà en place)
-- **Objectif** : brancher `GET /v1/athletes/:id/record?sport=boxing` (annoncé « coming soon ») et cesser de dépendre du mock pour les palmarès.
-- **Fichiers** : `bigballs.ts` (nouvelle méthode `getRecord`), fusion dans `router.ts`.
-- **Acceptation** : le palmarès affiché vient de la source réelle quand dispo, le mock reste le fallback.
+### 2.3 Records réels — ✅ FAIT via Wikipedia (le mock n'est plus la source des palmarès)
+- **Objectif** : cesser de dépendre du mock pour les palmarès des boxeurs connus.
+- **Fichiers** : `lib/data/providers/wikipedia.ts` (provider `wikipedia`, priorité 2) + `wikipedia-parse.ts` (parser d'infobox fr/en) + `wikipedia-records.json` (snapshot committé des 24 stars) + `scripts/refresh-wikipedia.ts` (régénère le snapshot) ; fusion dans `router.ts` (palmarès réel + données physiques réelles priment, le mock ne comble que les trous) ; attribution CC BY-SA dans le footer.
+- **Acceptation** : ✅ Usyk **25-0-0** (KO 16, Southpaw, 191/198 cm) au lieu de 23-0-0 mock ; Crawford **42-0-0**, Inoue **33-0-0**, Canelo **63-3-2**… vérifiés via `/api/boxeurs`. Zéro requête réseau en runtime (snapshot).
+- **Rafraîchissement** : `npx tsx scripts/refresh-wikipedia.ts` (~1 min) puis commit du JSON. Si Big Balls publie un jour `record` : ajouter `getRecord` dans `bigballs.ts`, le routeur priorisera déjà la source réelle (`recordPriority`).
 
 ### 2.4 SEO & partage — ✅ FAIT (sauf carte OG par combat, à la demande)
 - **Objectif** : sitemap.xml, opengraph-image (cartes de partage par boxeur), JSON-LD (Person/SportsEvent).

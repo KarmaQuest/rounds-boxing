@@ -9,9 +9,10 @@
 animations (Framer Motion), loader d'intro, skeletons, et un **système de
 filtres ultra-rapide** (instantané côté client, synchronisé dans l'URL).
 
-BoxRec n'ayant pas d'API officielle, le site agrège **3 APIs de boxe** avec
-une couche de routage intelligente : fusion multi-source, bascule automatique
-en cas de limite atteinte, quota quotidien et cache TTL.
+BoxRec n'ayant pas d'API officielle, le site agrège **plusieurs sources de
+boxe** (Big Balls, TheSportsDB, The Odds API, **Wikipedia** pour les
+palmarès) avec une couche de routage intelligente : fusion multi-source,
+bascule automatique en cas de limite atteinte, quota quotidien et cache TTL.
 
 Le projet vit dans **`boxing-app/`** (sous-dossier du workspace, car le nom
 du dossier racine « Freebuff » contient des majuscules, interdites par npm).
@@ -105,7 +106,11 @@ boxing-app/
 │           ├── mock.ts       # 24 boxeurs de démo + combats (filet de sécurité + enrichissement)
 │           ├── bigballs.ts   # Big Balls Sports Data (validé live)
 │           ├── thesportsdb.ts# TheSportsDB (validé live)
-│           └── oddsapi.ts    # The Odds API (validé live)
+│           ├── oddsapi.ts    # The Odds API (validé live)
+│           ├── wikipedia.ts  # Palmarès réels des stars (snapshot committé, zéro réseau)
+│           ├── wikipedia-parse.ts  # parser d'infobox fr/en (record, taille, allonge, garde…)
+│           ├── wikipedia-types.ts  # type WikipediaRecord
+│           ├── wikipedia-records.json # SNAPSHOT des 24 stars (régénéré par scripts/refresh-wikipedia.ts)
 ├── .env.local                # ⚠️ clés API (gitignoré) — NE JAMAIS COMMITER
 ├── .env.example              # modèle des variables
 ├── .data/quota.json          # compteurs de quota (gitignoré, créé au runtime)
@@ -124,9 +129,10 @@ Composant : `components/json-ld.tsx` (injection JSON-LD)
 | Besoin | Source primaire | Secours | Limite gratuite |
 | --- | --- | --- | --- |
 | Profils boxeurs | **Big Balls Sports Data** | TheSportsDB → mock | 1 000 req/j (2 000 avec GitHub) |
+| **Palmarès réels (V-D-N-KO, taille, garde)** | **Wikipedia** (infobox, snapshot committé) | mock | illimité (zéro réseau en runtime) |
 | Combats à venir + cotes | **The Odds API** | mock | 500 crédits/mois (~16 req/j) |
 | Résultats récents | mock (TheSportsDB quand il le fournira) | — | — |
-| Enrichissement (palmarès, ceintures, bios) | **mock** (jeu de données) | — | — |
+| Enrichissement (ceintures, bios, rang) | **mock** (jeu de données) | — | — |
 
 ### 4.2 Comment fonctionne le `ProviderRouter`
 
@@ -137,10 +143,13 @@ de **toutes** les sources capables puis les **fusionne** (`lib/data/providers/ro
    arrive en dernier et **enrichit** les stars : un Usyk venu de Big Balls
    garde sa taille/dob réels mais reçoit son palmarès 23-0, ses ceintures et
    sa bio depuis le mock. `mergeFighter(existing, incoming, "first")` : le
-   palmarès réel prime dès qu'il contient des combats (Big Balls renvoie
-   `record: null` tant que les résultats ne sont pas publiés → le mock
-   enrichit ; `recordPriority` est paramétrable et testé). L'ID **BoxRec**
-   (`external_ids.boxrec`) est préservé.
+   palmarès réel prime dès qu'il contient des combats (Wikipedia fournit les
+   vrais records ; Big Balls renvoie `record: null` → le mock enrichit ;
+   `recordPriority` est paramétrable et testé). **Les données physiques
+   d'une source réelle priment aussi** (taille, allonge, garde, surnom : le
+   mock ne comble que les trous et ne peut pas écraser par `undefined`).
+   L'ID **BoxRec** (`external_ids.boxrec`) est préservé, et le **label
+   `source` suit le palmarès retenu** (pas le dernier provider).
 2. **Fusion combats** : dédup par paire de noms (`fightKey`), on garde la
    fiche la plus riche (venue, titre, catégorie du mock) mais **les cotes
    réelles priment** (Odds API).
@@ -226,7 +235,8 @@ interface Fight {
 - **Dashboard quotas** : `/debug` + `/api/health` + alerte console à 80 %
 - **ErrorBoundaries** : `error.tsx` global + par boxeur (bouton retry)
 - **Multi-sources** : fusion + enrichissement (voir §4), section explicative sur l'accueil
-- **Tests (Vitest)** : `npm test` → 80 tests (routeur : fusion, quota, circuit, cache ; `applyFilters` ; persistance disque du quota ; parser news RSS/Atom/YT)
+- **Palmarès réels (Wikipedia)** : provider `wikipedia` (priorité 2) — infobox fr/en parsées (record V-D-N-KO, taille, allonge, garde, catégorie, surnom), **snapshot committé** des 24 stars (zéro réseau en runtime), régénérable via `npx tsx scripts/refresh-wikipedia.ts`. Attribution CC BY-SA au footer. Usyk 25-0-0, Crawford 42-0-0, Canelo 63-3-2… (voir `docs/DATA-SOURCES.md`)
+- **Tests (Vitest)** : `npm test` → **111 tests** (routeur : fusion, quota, circuit, cache ; `applyFilters` ; persistance disque du quota ; parser news RSS/Atom/YT ; parser infobox Wikipedia)
 - **SEO** : sitemap.xml (127 URLs), robots.txt, canonical partout, **noindex des URL filtrées** `/boxeurs?…`, OG images (générique + par boxeur, police Anton self-hosted), JSON-LD (Person / SportsEvent / WebSite)
 
 ## 8. État de vérification (15/08/2026)
@@ -235,7 +245,7 @@ interface Fight {
 | --- | --- |
 | `npm run build` (TypeScript inclus) | ✅ |
 | `npm run lint` (ESLint) | ✅ 0 problème |
-| `npm test` (Vitest) | ✅ 80 tests |
+| `npm test` (Vitest) | ✅ 111 tests |
 | Pages : `/`, `/boxeurs`, `/combats`, `/boxeurs/[slug]`, `/comparateur`, `/debug` | ✅ 200 |
 | Pagination API (`limit=24&offset=0/24/48`) | ✅ 24/page cohérentes |
 | Recherche floue API (`q=uzyk`, `q=canlo`) | ✅ Usyk / Canelo trouvés |
@@ -248,7 +258,7 @@ interface Fight {
 | `/dashboard` sans session | ✅ 307 → `/connexion?next=/dashboard` (proxy) |
 | `/connexion` `/inscription` `/comparateur` `/debug` | ✅ 200 |
 | 404 profil inconnu (prod) | ✅ 404 (⚠️ avec `loading.tsx` le streaming renvoyait 200 → supprimé volontairement) |
-| `/api/boxeurs` | ✅ source `bigballs + mock`, 124 boxeurs |
+| `/api/boxeurs` | ✅ source `bigballs + wikipedia + mock` (Usyk 25-0-0 réel) |
 | `/api/boxeurs?q=canelo` | ✅ source `bigballs + thesportsdb + mock` |
 | `/api/combats?scope=upcoming` | ✅ source `oddsapi + mock`, cotes réelles |
 | Rendu navigateur (Chrome headless) | ✅ hydratation OK, compteurs/chips/cartes présents |

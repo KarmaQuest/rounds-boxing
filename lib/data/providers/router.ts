@@ -50,9 +50,16 @@ function mergeFighter(
         : existing.record;
 
   return {
+    // La source suivante (Wikipedia minimal, mock) comble les trous…
     ...incoming,
+    // …mais la source arrivée en premier (priorité haute : Big Balls,
+    // Wikipedia) GARDE ses champs — jamais d'écrasement d'un champ réel
+    // par `undefined` (ex. une fiche Wikipedia minimale sans bio ni pays)
+    ...existing,
     boxrecId: incoming.boxrecId ?? existing.boxrecId,
     record,
+    // le label source suit le palmarès retenu (pas le dernier provider)
+    source: record === existing.record ? existing.source : incoming.source,
     titles: incoming.titles.length > 0 ? incoming.titles : existing.titles,
     bio: incoming.bio ?? existing.bio,
     rank: incoming.rank ?? existing.rank,
