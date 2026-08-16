@@ -70,5 +70,17 @@
     "method": "PTS",
     "rounds": 0,
     "is_title_fight": false
+  },
+  {
+    "id": "d4f4027ae55a25292e059d7324742aa24010e395aabcc6320138b93c9e1cfba6",
+    "date": "2026-07-31",
+    "location": "Dar-Es-Salaam, Tanzania",
+    "weight_class": "Bantamweight",
+    "fighter_a": "Ibrahim Mafia",
+    "fighter_b": "Samuel Martei",
+    "winner": "Ibrahim Mafia",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true
   }
 ]

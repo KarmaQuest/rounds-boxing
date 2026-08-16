@@ -1,0 +1,62 @@
+[
+  {
+    "date": "2026-08-10",
+    "location": "Orlando, Florida",
+    "weight_class": "bantamweight",
+    "fighter_a": "Dina Thorslund",
+    "fighter_b": "Cherneka Johnson",
+    "winner": "Dina Thorslund",
+    "method": "UD",
+    "rounds": 10,
+    "is_title_fight": true,
+    "source": "wbc"
+  },
+  {
+    "date": "2026-08-04",
+    "location": "",
+    "weight_class": "Lightweight",
+    "fighter_a": "William “Camarón” Zepeda",
+    "fighter_b": "Lamont Roach Jr.",
+    "winner": "William “Camarón” Zepeda",
+    "method": "UD",
+    "rounds": 0,
+    "is_title_fight": true,
+    "source": "wbc"
+  },
+  {
+    "date": "2026-08-02",
+    "location": "Las Vegas",
+    "weight_class": "Lightweight",
+    "fighter_a": "William Zepeda",
+    "fighter_b": "Lamont Roach Jr.",
+    "winner": "William Zepeda",
+    "method": "UD",
+    "rounds": 12,
+    "is_title_fight": true,
+    "source": "wbc"
+  },
+  {
+    "date": "2026-07-31",
+    "location": "Dar-Es-Salaam, Tanzania",
+    "weight_class": "Bantamweight",
+    "fighter_a": "Ibrahim Mafia",
+    "fighter_b": "Samuel Martei",
+    "winner": "Ibrahim Mafia",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true,
+    "source": "wbc"
+  },
+  {
+    "date": "2026-07-31",
+    "location": "Dar-Es-Salaam, Tanzania",
+    "weight_class": "",
+    "fighter_a": "Mchanja Yohana",
+    "fighter_b": "John Vincent Moriana (Lauriaga",
+    "winner": "Mchanja Yohana",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true,
+    "source": "wbc"
+  }
+]

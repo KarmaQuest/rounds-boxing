@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-16T13:28:22Z",
+  "generated_at": "2026-08-16T16:11:34Z",
   "organizations": {
     "csac": {
       "name": "California State Athletic Commission",
@@ -34,8 +34,8 @@
     "wbc": {
       "name": "World Boxing Council",
       "abbr": "WBC",
-      "date_last_sync": "2026-08-16T13:28:22Z",
-      "total_fights": 6
+      "date_last_sync": "2026-08-16T16:11:34Z",
+      "total_fights": 7
     },
     "wbo": {
       "name": "World Boxing Organization",
@@ -44,6 +44,6 @@
       "total_fights": 1
     }
   },
-  "total_fights": 1853,
-  "total_unique": 1853
+  "total_fights": 1854,
+  "total_unique": 1854
 }
