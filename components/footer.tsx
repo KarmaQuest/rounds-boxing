@@ -36,6 +36,7 @@ export function Footer() {
                 <li>Big Balls Sports Data</li>
                 <li>TheSportsDB</li>
                 <li>The Odds API</li>
+                <li>Wikipedia (palmarès)</li>
               </ul>
             </div>
           </div>
@@ -43,6 +44,7 @@ export function Footer() {
 
         <p className="mt-8 border-t border-line-soft pt-6 text-xs text-fog">
           Démo — les palmarès affichés sans clé API sont approximatifs.
+          Palmarès des boxeurs connus : Wikipedia (CC BY-SA).
           Projet Next.js · React · Tailwind · Framer Motion.
         </p>
       </div>

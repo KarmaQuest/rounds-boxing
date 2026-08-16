@@ -1,0 +1,74 @@
+[
+  {
+    "id": "59891e6297d9059a2a8164f299ebec843b13f919d36e53ec1948bd52e146e70b",
+    "date": "2026-08-12",
+    "location": "",
+    "weight_class": "Light Heavyweight",
+    "fighter_a": "Ping Tai Ng",
+    "fighter_b": "Somphot Seesa",
+    "winner": "Ping Tai Ng",
+    "method": "TKO",
+    "rounds": 5,
+    "is_title_fight": true
+  },
+  {
+    "id": "1105f29bbeb7530f1eace8fb44f537faf4bafa5af5056893879c1a59b8c3764c",
+    "date": "2026-08-12",
+    "location": "",
+    "weight_class": "Super Flyweight",
+    "fighter_a": "Hayate Hanada",
+    "fighter_b": "Vanlalenkawitera",
+    "winner": "Hayate Hanada",
+    "method": "SD",
+    "rounds": 0,
+    "is_title_fight": true
+  },
+  {
+    "id": "9229a7d2c2de888d68c37b1ae54569d21d40a60c8205484b80c19d7ced96cf85",
+    "date": "2026-08-12",
+    "location": "",
+    "weight_class": "Flyweight",
+    "fighter_a": "Ryo Mandokoro",
+    "fighter_b": "Wei Song",
+    "winner": "Ryo Mandokoro",
+    "method": "TKO",
+    "rounds": 8,
+    "is_title_fight": true
+  },
+  {
+    "id": "a2f55dbbd1b62dbcd1dcbad80510b5aa94d267c223fb20c93adadc9e1a55a1e6",
+    "date": "2026-08-10",
+    "location": "",
+    "weight_class": "Bantamweight",
+    "fighter_a": "Dina Thorslund",
+    "fighter_b": "Cherneka Johnson",
+    "winner": "Dina Thorslund",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true
+  },
+  {
+    "id": "120b4d1f0ae4843ec089c110853dd258a4fd4fa9bd6ffcccc320135b6d82ca60",
+    "date": "2026-08-02",
+    "location": "",
+    "weight_class": "Lightweight",
+    "fighter_a": "William Zepeda",
+    "fighter_b": "Lamont Roach Jr",
+    "winner": "William Zepeda",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true
+  },
+  {
+    "id": "e30bef11452ab937f32dd69dbe3eb40685efa9740724435465e4021100833077",
+    "date": "2026-07-31",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "Mchanja Yohana",
+    "fighter_b": "John Vincent Moriana",
+    "winner": "Mchanja Yohana",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": false
+  }
+]

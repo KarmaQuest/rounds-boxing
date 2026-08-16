@@ -36,6 +36,9 @@ yarn-error.log*
 # état runtime local (compteurs de quota API)
 .data/
 
+# artefacts de scratch (dump du pool Big Balls, etc.)
+tmp-pool.json
+
 # vercel
 .vercel
 

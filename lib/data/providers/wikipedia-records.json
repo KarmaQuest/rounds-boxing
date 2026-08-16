@@ -1,0 +1,7296 @@
+{
+  "oleksandr-usyk": {
+    "name": "Oleksandr Usyk",
+    "record": {
+      "wins": 25,
+      "losses": 0,
+      "draws": 0,
+      "ko": 16
+    },
+    "heightCm": 191,
+    "reachCm": 198,
+    "stance": "Southpaw",
+    "nickname": "The Cat"
+  },
+  "tyson-fury": {
+    "name": "Tyson Fury",
+    "record": {
+      "wins": 34,
+      "losses": 2,
+      "draws": 1,
+      "ko": 24
+    },
+    "heightCm": 206,
+    "reachCm": 216,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The Gypsy King"
+  },
+  "daniel-dubois": {
+    "name": "Daniel Dubois",
+    "record": {
+      "wins": 23,
+      "losses": 3,
+      "draws": 0,
+      "ko": 22
+    },
+    "heightCm": 196,
+    "reachCm": 198,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Dynamite Triple D"
+  },
+  "tony-yoka": {
+    "name": "Tony Yoka",
+    "record": {
+      "wins": 15,
+      "losses": 3,
+      "draws": 0,
+      "ko": 10
+    },
+    "heightCm": 201,
+    "reachCm": 208
+  },
+  "jai-opetaia": {
+    "name": "Jai Opetaia",
+    "record": {
+      "wins": 30,
+      "losses": 0,
+      "draws": 0,
+      "ko": 23
+    },
+    "heightCm": 188,
+    "reachCm": 193
+  },
+  "dmitry-bivol": {
+    "name": "Dmitry Bivol",
+    "record": {
+      "wins": 25,
+      "losses": 1,
+      "draws": 0,
+      "ko": 12
+    },
+    "heightCm": 183,
+    "reachCm": 183
+  },
+  "david-benavidez": {
+    "name": "David Benavidez",
+    "record": {
+      "wins": 32,
+      "losses": 0,
+      "draws": 0,
+      "ko": 26
+    },
+    "heightCm": 184,
+    "reachCm": 189,
+    "nickname": "El Bandera Roja"
+  },
+  "canelo-alvarez": {
+    "name": "Canelo Álvarez",
+    "record": {
+      "wins": 63,
+      "losses": 3,
+      "draws": 2,
+      "ko": 39
+    },
+    "heightCm": 171,
+    "reachCm": 179,
+    "stance": "Orthodoxe",
+    "nickname": "Canelo"
+  },
+  "terence-crawford": {
+    "name": "Terence Crawford",
+    "record": {
+      "wins": 42,
+      "losses": 0,
+      "draws": 0,
+      "ko": 31
+    },
+    "heightCm": 173,
+    "reachCm": 188,
+    "nickname": "Hunter / Bud"
+  },
+  "vergil-ortiz-jr": {
+    "name": "Vergil Ortiz Jr",
+    "record": {
+      "wins": 24,
+      "losses": 0,
+      "draws": 0,
+      "ko": 22
+    },
+    "heightCm": 178,
+    "reachCm": 178,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters",
+    "nickname": "The Texas Machine"
+  },
+  "jaron-ennis": {
+    "name": "Jaron Ennis",
+    "record": {
+      "wins": 36,
+      "losses": 0,
+      "draws": 0,
+      "ko": 32
+    },
+    "heightCm": 178,
+    "reachCm": 188,
+    "nickname": "Boots"
+  },
+  "souleymane-cissokho": {
+    "name": "Souleymane Cissokho",
+    "record": {
+      "wins": 18,
+      "losses": 0,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 179,
+    "reachCm": 179
+  },
+  "devin-haney": {
+    "name": "Devin Haney",
+    "record": {
+      "wins": 33,
+      "losses": 0,
+      "draws": 0,
+      "ko": 15
+    },
+    "heightCm": 173,
+    "reachCm": 180,
+    "nickname": "{{lang|en|The Dream}}"
+  },
+  "ryan-garcia": {
+    "name": "Ryan Garcia",
+    "record": {
+      "wins": 25,
+      "losses": 2,
+      "draws": 0,
+      "ko": 20
+    },
+    "heightCm": 174,
+    "reachCm": 178,
+    "nickname": "The Flash King Ryan"
+  },
+  "gervonta-davis": {
+    "name": "Gervonta Davis",
+    "record": {
+      "wins": 30,
+      "losses": 0,
+      "draws": 1,
+      "ko": 28
+    },
+    "heightCm": 166,
+    "reachCm": 171,
+    "nickname": "Tank"
+  },
+  "shakur-stevenson": {
+    "name": "Shakur Stevenson",
+    "record": {
+      "wins": 25,
+      "losses": 0,
+      "draws": 0,
+      "ko": 11
+    },
+    "heightCm": 173,
+    "reachCm": 173,
+    "stance": "Southpaw"
+  },
+  "vasyl-lomachenko": {
+    "name": "Vasyl Lomachenko",
+    "record": {
+      "wins": 18,
+      "losses": 3,
+      "draws": 0,
+      "ko": 12
+    },
+    "heightCm": 170,
+    "reachCm": 166,
+    "nickname": "Hi-Tech The Matrix Loma"
+  },
+  "naoya-inoue": {
+    "name": "Naoya Inoue",
+    "record": {
+      "wins": 33,
+      "losses": 0,
+      "draws": 0,
+      "ko": 27
+    },
+    "heightCm": 165,
+    "reachCm": 171,
+    "stance": "Orthodoxe",
+    "nickname": "The Monster"
+  },
+  "irish-teddy-mann": {
+    "name": "\"Irish\" Teddy Mann",
+    "record": {
+      "wins": 27,
+      "losses": 15,
+      "draws": 0,
+      "ko": 14
+    },
+    "heightCm": 178,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens"
+  },
+  "aaron-alameda": {
+    "name": "Aarón Alameda",
+    "record": {
+      "wins": 30,
+      "losses": 3,
+      "draws": 0,
+      "ko": 17
+    },
+    "reachCm": 170,
+    "stance": "Southpaw",
+    "weightClass": "Poids super-coqs",
+    "nickname": "Fantasma"
+  },
+  "aaron-bowen": {
+    "name": "Aaron Bowen",
+    "record": {
+      "wins": 8,
+      "losses": 1,
+      "draws": 0,
+      "ko": 6
+    },
+    "heightCm": 191,
+    "weightClass": "Poids moyens"
+  },
+  "aaron-davis": {
+    "name": "Aaron Davis",
+    "record": {
+      "wins": 49,
+      "losses": 6,
+      "draws": 0,
+      "ko": 31
+    },
+    "heightCm": 188,
+    "nickname": "Superman"
+  },
+  "aaron-garcia": {
+    "name": "Aaron Garcia",
+    "record": {
+      "wins": 14,
+      "losses": 4,
+      "draws": 2,
+      "ko": 4
+    },
+    "heightCm": 172,
+    "reachCm": 174,
+    "stance": "Orthodoxe",
+    "nickname": "El Gavilan"
+  },
+  "aaron-herrera": {
+    "name": "Aaron Herrera",
+    "record": {
+      "wins": 35,
+      "losses": 11,
+      "draws": 1,
+      "ko": 24
+    },
+    "heightCm": 182,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "nickname": "La Joya de Zací"
+  },
+  "aaron-mckenna": {
+    "name": "Aaron McKenna",
+    "record": {
+      "wins": 21,
+      "losses": 0,
+      "draws": 0,
+      "ko": 10
+    },
+    "heightCm": 191,
+    "reachCm": 191,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "Silencer"
+  },
+  "aaron-pryor": {
+    "name": "Aaron Pryor",
+    "record": {
+      "wins": 39,
+      "losses": 1,
+      "draws": 0,
+      "ko": 35
+    },
+    "heightCm": 169,
+    "nickname": "The Hawk"
+  },
+  "aaron-torres": {
+    "name": "Aaron Torres",
+    "record": {
+      "wins": 16,
+      "losses": 6,
+      "draws": 0
+    },
+    "stance": "Orthodoxe"
+  },
+  "abass-baraou": {
+    "name": "Abass Baraou",
+    "record": {
+      "wins": 17,
+      "losses": 2,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 177,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters"
+  },
+  "abdelkader-ould-makhloufi": {
+    "name": "Abdelkader Ould Makhloufi",
+    "record": {
+      "wins": 47,
+      "losses": 9,
+      "draws": 2,
+      "ko": 21
+    }
+  },
+  "abderrazak-houya": {
+    "name": "Abderrazak Houya",
+    "record": {
+      "wins": 14,
+      "losses": 2,
+      "draws": 0,
+      "ko": 2
+    },
+    "heightCm": 177,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers"
+  },
+  "abdon-mewoli": {
+    "name": "Abdon Mewoli",
+    "record": {
+      "wins": 4,
+      "losses": 13,
+      "draws": 0
+    },
+    "weightClass": "Poids légers"
+  },
+  "abdul-barry-awad": {
+    "name": "Abdul Barry Awad",
+    "record": {
+      "wins": 28,
+      "losses": 2,
+      "draws": 0,
+      "ko": 17
+    },
+    "heightCm": 169,
+    "reachCm": 170
+  },
+  "abdul-rasheed-baloch": {
+    "name": "Abdul Rasheed Baloch",
+    "record": {
+      "wins": 98,
+      "losses": 18,
+      "draws": 0,
+      "ko": 85
+    },
+    "stance": "Orthodoxe",
+    "nickname": "Black Mamba"
+  },
+  "abdul-tebazalwa": {
+    "name": "Abdul Tebazalwa",
+    "record": {
+      "wins": 13,
+      "losses": 7,
+      "draws": 0,
+      "ko": 10
+    },
+    "heightCm": 173,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-coqs",
+    "nickname": "Cobra"
+  },
+  "abdullah-mason": {
+    "name": "Abdullah Mason",
+    "record": {
+      "wins": 21,
+      "losses": 0,
+      "draws": 0,
+      "ko": 18
+    },
+    "weightClass": "Poids légers"
+  },
+  "abdullah-ramadan": {
+    "name": "Abdullah Ramadan",
+    "record": {
+      "wins": 15,
+      "losses": 12,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 185,
+    "reachCm": 191
+  },
+  "abe-attell": {
+    "name": "Abe Attell",
+    "record": {
+      "wins": 108,
+      "losses": 18,
+      "draws": 23,
+      "ko": 39
+    },
+    "weightClass": "Poids plumes",
+    "nickname": "The Little Hebrew"
+  },
+  "abe-goldstein": {
+    "name": "Abe Goldstein",
+    "record": {
+      "wins": 101,
+      "losses": 24,
+      "draws": 9,
+      "ko": 35
+    },
+    "heightCm": 165
+  },
+  "abe-simon": {
+    "name": "Abe Simon",
+    "record": {
+      "wins": 36,
+      "losses": 10,
+      "draws": 1,
+      "ko": 25
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The Ape"
+  },
+  "abie-bain": {
+    "name": "Abie Bain",
+    "record": {
+      "wins": 66,
+      "losses": 36,
+      "draws": 6,
+      "ko": 24
+    },
+    "stance": "Orthodoxe"
+  },
+  "ablaikhan-zhussupov": {
+    "name": "Ablaikhan Zhussupov",
+    "record": {
+      "wins": 62,
+      "losses": 11,
+      "draws": 0,
+      "ko": 0
+    },
+    "heightCm": 179
+  },
+  "abmerk-shindjuu": {
+    "name": "Abmerk Shindjuu",
+    "record": {
+      "wins": 16,
+      "losses": 6,
+      "draws": 2,
+      "ko": 6
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mouches",
+    "nickname": "Scorpion Dam"
+  },
+  "abner-cotto": {
+    "name": "Abner Cotto",
+    "record": {
+      "wins": 23,
+      "losses": 4,
+      "draws": 0,
+      "ko": 12
+    },
+    "heightCm": 175,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers",
+    "nickname": "Pin"
+  },
+  "abner-mares": {
+    "name": "Abner Mares",
+    "record": {
+      "wins": 31,
+      "losses": 3,
+      "draws": 2,
+      "ko": 15
+    },
+    "heightCm": 164,
+    "reachCm": 168
+  },
+  "abner-teixeira": {
+    "name": "Abner Teixeira",
+    "record": {
+      "wins": 1,
+      "losses": 0,
+      "draws": 0,
+      "ko": 1
+    },
+    "heightCm": 193,
+    "stance": "Orthodoxe"
+  },
+  "abraham-han": {
+    "name": "Abraham Han",
+    "record": {
+      "wins": 26,
+      "losses": 4,
+      "draws": 1,
+      "ko": 16
+    },
+    "heightCm": 183,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters",
+    "nickname": "Abie"
+  },
+  "abraham-jacob-hollandersky": {
+    "name": "Abraham Jacob Hollandersky",
+    "record": {
+      "wins": 25,
+      "losses": 40,
+      "draws": 26,
+      "ko": 7
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters",
+    "nickname": "Abe the Newsboy"
+  },
+  "abraham-nova": {
+    "name": "Abraham Nova",
+    "record": {
+      "wins": 24,
+      "losses": 4,
+      "draws": 1,
+      "ko": 17
+    },
+    "heightCm": 175,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-plumes",
+    "nickname": "Supernova"
+  },
+  "abraham-perez": {
+    "name": "Abraham Perez",
+    "record": {
+      "wins": 15,
+      "losses": 0,
+      "draws": 0,
+      "ko": 7
+    },
+    "heightCm": 165,
+    "reachCm": 171,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mouches"
+  },
+  "achmed-jakubowitsch-kotijew": {
+    "name": "Achmed Jakubowitsch Kotijew",
+    "record": {
+      "wins": 27,
+      "losses": 2,
+      "draws": 0,
+      "ko": 15
+    },
+    "heightCm": 173,
+    "weightClass": "Poids welters"
+  },
+  "ada-velez": {
+    "name": "Ada Vélez",
+    "record": {
+      "wins": 20,
+      "losses": 5,
+      "draws": 3,
+      "ko": 6
+    },
+    "heightCm": 160,
+    "reachCm": 157,
+    "stance": "Southpaw",
+    "weightClass": "Poids super-coqs",
+    "nickname": "Ace"
+  },
+  "adailton-de-jesus": {
+    "name": "Adailton de Jesus",
+    "record": {
+      "wins": 31,
+      "losses": 8,
+      "draws": 0,
+      "ko": 25
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-plumes",
+    "nickname": "Precipicio"
+  },
+  "adam-azim": {
+    "name": "Adam Azim",
+    "record": {
+      "wins": 15,
+      "losses": 0,
+      "draws": 0,
+      "ko": 12
+    },
+    "heightCm": 180,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers",
+    "nickname": "The Assassin"
+  },
+  "adam-balski": {
+    "name": "Adam Balski",
+    "record": {
+      "wins": 21,
+      "losses": 3,
+      "draws": 0,
+      "ko": 12
+    },
+    "heightCm": 188,
+    "reachCm": 191,
+    "stance": "Orthodoxe"
+  },
+  "adam-etches": {
+    "name": "Adam Etches",
+    "record": {
+      "wins": 20,
+      "losses": 2,
+      "draws": 0,
+      "ko": 17
+    },
+    "heightCm": 29,
+    "reachCm": 180,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "The Bomber"
+  },
+  "adam-flores": {
+    "name": "Adam Flores",
+    "record": {
+      "wins": 9,
+      "losses": 5,
+      "draws": 0,
+      "ko": 6
+    },
+    "heightCm": 192,
+    "reachCm": 197,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The Bomb"
+  },
+  "adam-fogerty": {
+    "name": "Adam Fogerty",
+    "record": {
+      "wins": 18,
+      "losses": 1,
+      "draws": 0
+    }
+  },
+  "adam-harper": {
+    "name": "Adam Harper",
+    "record": {
+      "wins": 9,
+      "losses": 2,
+      "draws": 0
+    },
+    "heightCm": 175,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters",
+    "nickname": "Hurricane"
+  },
+  "adam-kownacki": {
+    "name": "Adam Kownacki",
+    "record": {
+      "wins": 20,
+      "losses": 4,
+      "draws": 0,
+      "ko": 15
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Babyface"
+  },
+  "adam-richards": {
+    "name": "Adam Richards",
+    "record": {
+      "wins": 23,
+      "losses": 3,
+      "draws": 0,
+      "ko": 15
+    },
+    "heightCm": 188,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The Swamp Donkey"
+  },
+  "adela-celeste-peralta": {
+    "name": "Adela Celeste Peralta",
+    "record": {
+      "wins": 8,
+      "losses": 2,
+      "draws": 0,
+      "ko": 1
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers",
+    "nickname": "La Bestia (\"The Beast\")"
+  },
+  "adelaida-ruiz": {
+    "name": "Adelaida Ruiz",
+    "record": {
+      "wins": 19,
+      "losses": 1,
+      "draws": 1,
+      "ko": 8
+    },
+    "heightCm": 163,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-mouches",
+    "nickname": "La Cobra (The Cobra)"
+  },
+  "adey-lewis": {
+    "name": "Adey Lewis",
+    "record": {
+      "wins": 19,
+      "losses": 5,
+      "draws": 1,
+      "ko": 12
+    },
+    "weightClass": "Poids coqs",
+    "nickname": "Mighty Atom"
+  },
+  "adil-anwar": {
+    "name": "Adil Anwar",
+    "record": {
+      "wins": 22,
+      "losses": 7,
+      "draws": 0,
+      "ko": 8
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters",
+    "nickname": "Platinum Kid"
+  },
+  "adilson-rodrigues": {
+    "name": "Adílson Rodrigues",
+    "record": {
+      "wins": 77,
+      "losses": 7,
+      "draws": 1,
+      "ko": 61
+    },
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Maguila"
+  },
+  "adlan-abdurashidov": {
+    "name": "Adlan Abdurashidov",
+    "record": {
+      "wins": 5,
+      "losses": 0,
+      "draws": 0,
+      "ko": 3
+    },
+    "heightCm": 172,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers"
+  },
+  "adnan-amar": {
+    "name": "Adnan Amar",
+    "record": {
+      "wins": 26,
+      "losses": 3,
+      "draws": 0,
+      "ko": 7
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters",
+    "nickname": "Nanito"
+  },
+  "adolf-heuser": {
+    "name": "Adolf Heuser",
+    "record": {
+      "wins": 88,
+      "losses": 21,
+      "draws": 17,
+      "ko": 44
+    },
+    "heightCm": 173,
+    "weightClass": "Poids lourds",
+    "nickname": "Bulldog of the Rhine, The Bonn Tornado"
+  },
+  "adolph-wolgast": {
+    "name": "Adolph Wolgast",
+    "record": {
+      "wins": 80,
+      "losses": 32,
+      "draws": 23,
+      "ko": 40
+    },
+    "heightCm": 164,
+    "weightClass": "Poids légers",
+    "nickname": "Michigan Wildcat"
+  },
+  "adolpho-washington": {
+    "name": "Adolpho Washington",
+    "record": {
+      "wins": 31,
+      "losses": 9,
+      "draws": 2,
+      "ko": 17
+    },
+    "heightCm": 182
+  },
+  "adonis-rivas": {
+    "name": "Adonis Rivas",
+    "record": {
+      "wins": 22,
+      "losses": 15,
+      "draws": 4,
+      "ko": 10
+    },
+    "nickname": "Caballo"
+  },
+  "adonis-stevenson": {
+    "name": "Adonis Stevenson",
+    "record": {
+      "wins": 29,
+      "losses": 2,
+      "draws": 1,
+      "ko": 24
+    },
+    "heightCm": 180,
+    "nickname": "Superman"
+  },
+  "adrian-curiel": {
+    "name": "Adrian Curiel",
+    "record": {
+      "wins": 24,
+      "losses": 5,
+      "draws": 1,
+      "ko": 5
+    },
+    "nickname": "Gatito"
+  },
+  "adrian-diaconu": {
+    "name": "Adrian Diaconu",
+    "record": {
+      "wins": 27,
+      "losses": 3,
+      "draws": 0,
+      "ko": 15
+    },
+    "heightCm": 175,
+    "nickname": "The Shark"
+  },
+  "adrian-dodson": {
+    "name": "Adrian Dodson",
+    "record": {
+      "wins": 25,
+      "losses": 6,
+      "draws": 0,
+      "ko": 17
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids super-moyens"
+  },
+  "adrian-granados": {
+    "name": "Adrián Granados",
+    "record": {
+      "wins": 21,
+      "losses": 9,
+      "draws": 3,
+      "ko": 15
+    },
+    "reachCm": 182,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters",
+    "nickname": "Tigre"
+  },
+  "adrian-granat": {
+    "name": "Adrian Granat",
+    "record": {
+      "wins": 15,
+      "losses": 2,
+      "draws": 0,
+      "ko": 14
+    },
+    "heightCm": 201,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Gäddan (\"The Pike\")"
+  },
+  "adrian-hernandez": {
+    "name": "Adrián Hernández",
+    "record": {
+      "wins": 30,
+      "losses": 5,
+      "draws": 1,
+      "ko": 19
+    },
+    "heightCm": 162,
+    "reachCm": 163,
+    "weightClass": "Poids mouches",
+    "nickname": "El Confesor"
+  },
+  "adrian-mora": {
+    "name": "Adrian Mora",
+    "record": {
+      "wins": 20,
+      "losses": 1,
+      "draws": 1,
+      "ko": 12
+    },
+    "heightCm": 183,
+    "reachCm": 198,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters",
+    "nickname": "Juanito"
+  },
+  "adrian-taihia": {
+    "name": "Adrian Taihia",
+    "record": {
+      "wins": 15,
+      "losses": 5,
+      "draws": 2,
+      "ko": 7
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "The Terrah"
+  },
+  "adriana-araujo": {
+    "name": "Adriana Araújo",
+    "record": {
+      "wins": 6,
+      "losses": 1,
+      "draws": 0,
+      "ko": 1
+    },
+    "heightCm": 167,
+    "reachCm": 174,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers"
+  },
+  "adrien-broner": {
+    "name": "Adrien Broner",
+    "record": {
+      "wins": 35,
+      "losses": 5,
+      "draws": 1,
+      "ko": 24
+    },
+    "heightCm": 168,
+    "reachCm": 175,
+    "nickname": "The Problem"
+  },
+  "agapito-gomez": {
+    "name": "Agapito Gómez",
+    "record": {
+      "wins": 17,
+      "losses": 3,
+      "draws": 0,
+      "ko": 6
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs"
+  },
+  "agapito-sanchez": {
+    "name": "Agapito Sánchez",
+    "record": {
+      "wins": 36,
+      "losses": 11,
+      "draws": 3,
+      "ko": 18
+    },
+    "heightCm": 162,
+    "nickname": "El Ciclón"
+  },
+  "agit-kabayel": {
+    "name": "Agit Kabayel",
+    "record": {
+      "wins": 27,
+      "losses": 0,
+      "draws": 0,
+      "ko": 19
+    },
+    "heightCm": 191,
+    "reachCm": 203,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "agnaldo-nunes": {
+    "name": "Agnaldo Nunes",
+    "record": {
+      "wins": 19,
+      "losses": 1,
+      "draws": 0,
+      "ko": 8
+    },
+    "heightCm": 170,
+    "reachCm": 169,
+    "stance": "Southpaw",
+    "weightClass": "Poids super-plumes"
+  },
+  "agustin-mauro-gauto": {
+    "name": "Agustin Mauro Gauto",
+    "record": {
+      "wins": 20,
+      "losses": 2,
+      "draws": 0,
+      "ko": 14
+    },
+    "heightCm": 163,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-mouches",
+    "nickname": "El Avion"
+  },
+  "ahmad-kaddour": {
+    "name": "Ahmad Kaddour",
+    "record": {
+      "wins": 27,
+      "losses": 2,
+      "draws": 1,
+      "ko": 10
+    },
+    "heightCm": 183,
+    "weightClass": "Poids moyens",
+    "nickname": "Babyface"
+  },
+  "ahmed-dine": {
+    "name": "Ahmed Dine",
+    "record": {
+      "wins": 12,
+      "losses": 8,
+      "draws": 2,
+      "ko": 5
+    },
+    "heightCm": 178
+  },
+  "ahmed-elbiali": {
+    "name": "Ahmed Elbiali",
+    "record": {
+      "wins": 24,
+      "losses": 1,
+      "draws": 0,
+      "ko": 19
+    },
+    "heightCm": 183,
+    "reachCm": 185,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "The Egyptian"
+  },
+  "aidos-yerbossynuly": {
+    "name": "Aidos Yerbossynuly",
+    "record": {
+      "wins": 16,
+      "losses": 1,
+      "draws": 0,
+      "ko": 11
+    },
+    "heightCm": 182,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-moyens"
+  },
+  "aiman-abu-bakar": {
+    "name": "Aiman Abu Bakar",
+    "record": {
+      "wins": 13,
+      "losses": 2,
+      "draws": 1,
+      "ko": 7
+    },
+    "heightCm": 170,
+    "reachCm": 178,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-plumes",
+    "nickname": "AB"
+  },
+  "aj-banal": {
+    "name": "AJ Banal",
+    "record": {
+      "wins": 35,
+      "losses": 2,
+      "draws": 1,
+      "ko": 23
+    },
+    "stance": "Southpaw",
+    "nickname": "Bazooka, AJ"
+  },
+  "ajose-olusegun": {
+    "name": "Ajose Olusegun",
+    "record": {
+      "wins": 32,
+      "losses": 2,
+      "draws": 0,
+      "ko": 14
+    },
+    "heightCm": 170,
+    "reachCm": 175,
+    "stance": "Southpaw",
+    "weightClass": "Poids super-légers",
+    "nickname": "The Gun"
+  },
+  "akaash-bhatia": {
+    "name": "Akaash Bhatia",
+    "record": {
+      "wins": 14,
+      "losses": 1,
+      "draws": 0,
+      "ko": 5
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids plumes",
+    "nickname": "Kash The Bash"
+  },
+  "akeem-anifowoshe": {
+    "name": "Akeem Anifowoshe",
+    "record": {
+      "wins": 23,
+      "losses": 1,
+      "draws": 0,
+      "ko": 18
+    },
+    "nickname": "Kid Akeem"
+  },
+  "akeem-ennis-brown": {
+    "name": "Akeem Ennis-Brown",
+    "record": {
+      "wins": 15,
+      "losses": 1,
+      "draws": 0,
+      "ko": 1
+    },
+    "heightCm": 180,
+    "reachCm": 178,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers",
+    "nickname": "Riiddy"
+  },
+  "akifumi-shimoda": {
+    "name": "Akifumi Shimoda",
+    "record": {
+      "wins": 31,
+      "losses": 6,
+      "draws": 2,
+      "ko": 14
+    },
+    "heightCm": 171
+  },
+  "akinobu-hiranaka": {
+    "name": "Akinobu Hiranaka",
+    "record": {
+      "wins": 20,
+      "losses": 2,
+      "draws": 0,
+      "ko": 18
+    },
+    "heightCm": 170,
+    "reachCm": 178
+  },
+  "akira-yaegashi": {
+    "name": "Akira Yaegashi",
+    "record": {
+      "wins": 28,
+      "losses": 7,
+      "draws": 0,
+      "ko": 16
+    },
+    "heightCm": 160,
+    "reachCm": 165
+  },
+  "al-bourke": {
+    "name": "Al Bourke",
+    "record": {
+      "wins": 39,
+      "losses": 4,
+      "draws": 1
+    },
+    "stance": "Orthodoxe"
+  },
+  "al-cole": {
+    "name": "Al Cole",
+    "record": {
+      "wins": 35,
+      "losses": 16,
+      "draws": 3,
+      "ko": 16
+    },
+    "heightCm": 193,
+    "nickname": "Ice"
+  },
+  "al-davis": {
+    "name": "Al Davis",
+    "record": {
+      "wins": 65,
+      "losses": 10,
+      "draws": 4,
+      "ko": 46
+    },
+    "stance": "Southpaw",
+    "nickname": "Bummy"
+  },
+  "al-ford": {
+    "name": "Al Ford",
+    "record": {
+      "wins": 55,
+      "losses": 19,
+      "draws": 0,
+      "ko": 19
+    },
+    "stance": "Orthodoxe"
+  },
+  "al-foreman": {
+    "name": "Al Foreman",
+    "record": {
+      "wins": 112,
+      "losses": 22,
+      "draws": 12
+    },
+    "nickname": "Bert \"Kid\" Harris"
+  },
+  "al-hostak": {
+    "name": "Al Hostak",
+    "record": {
+      "wins": 63,
+      "losses": 9,
+      "draws": 12,
+      "ko": 42
+    },
+    "heightCm": 183,
+    "weightClass": "Poids moyens",
+    "nickname": "Savage Slav"
+  },
+  "al-korovou": {
+    "name": "Al Korovou",
+    "record": {
+      "wins": 24,
+      "losses": 15,
+      "draws": 1
+    },
+    "stance": "Orthodoxe"
+  },
+  "al-mccoy": {
+    "name": "Al McCoy",
+    "record": {
+      "wins": 73,
+      "losses": 51,
+      "draws": 33,
+      "ko": 27
+    },
+    "heightCm": 173,
+    "weightClass": "Poids moyens"
+  },
+  "al-mello": {
+    "name": "Al Mello",
+    "record": {
+      "wins": 42,
+      "losses": 10,
+      "draws": 0,
+      "ko": 22
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids welters",
+    "nickname": "The Lowell Tiger"
+  },
+  "al-phillips": {
+    "name": "Al Phillips",
+    "record": {
+      "wins": 77,
+      "losses": 6,
+      "draws": 3,
+      "ko": 33
+    },
+    "stance": "Orthodoxe",
+    "nickname": "The Aldgate Tiger"
+  },
+  "al-seeger": {
+    "name": "Al Seeger",
+    "record": {
+      "wins": 28,
+      "losses": 4,
+      "draws": 0,
+      "ko": 22
+    },
+    "heightCm": 175,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-coqs",
+    "nickname": "The Quiet Storm"
+  },
+  "al-singer": {
+    "name": "Al Singer",
+    "record": {
+      "wins": 62,
+      "losses": 9,
+      "draws": 2,
+      "ko": 26
+    },
+    "heightCm": 164,
+    "weightClass": "Poids légers",
+    "nickname": "The Battling Bronco of the Bronx"
+  },
+  "al-sund": {
+    "name": "Al Sund",
+    "record": {
+      "wins": 203,
+      "losses": 2,
+      "draws": 2
+    },
+    "weightClass": "Poids coqs",
+    "nickname": "Kid Sunn, Marty Sullivan"
+  },
+  "ala-villamor": {
+    "name": "Ala Villamor",
+    "record": {
+      "wins": 29,
+      "losses": 2,
+      "draws": 1,
+      "ko": 26
+    },
+    "stance": "Southpaw",
+    "nickname": "Ala"
+  },
+  "alain-bonnamie": {
+    "name": "Alain Bonnamie",
+    "record": {
+      "wins": 21,
+      "losses": 9,
+      "draws": 3,
+      "ko": 12
+    },
+    "heightCm": 178
+  },
+  "alan-bosworth": {
+    "name": "Alan Bosworth",
+    "record": {
+      "wins": 20,
+      "losses": 16,
+      "draws": 2,
+      "ko": 6
+    },
+    "weightClass": "Poids super-légers",
+    "nickname": "Bozzy"
+  },
+  "alan-minter": {
+    "name": "Alan Minter",
+    "record": {
+      "wins": 39,
+      "losses": 9,
+      "draws": 0,
+      "ko": 23
+    },
+    "heightCm": 175,
+    "weightClass": "Poids moyens",
+    "nickname": "Boom Boom"
+  },
+  "alan-richardson": {
+    "name": "Alan Richardson",
+    "record": {
+      "wins": 17,
+      "losses": 9,
+      "draws": 1,
+      "ko": 5
+    },
+    "weightClass": "Poids plumes"
+  },
+  "alan-rudkin": {
+    "name": "Alan Rudkin",
+    "record": {
+      "wins": 42,
+      "losses": 8,
+      "draws": 0
+    },
+    "weightClass": "Poids coqs"
+  },
+  "alan-sanchez": {
+    "name": "Alan Sanchez",
+    "record": {
+      "wins": 21,
+      "losses": 5,
+      "draws": 1,
+      "ko": 10
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters"
+  },
+  "alantez-fox": {
+    "name": "Alantez Fox",
+    "record": {
+      "wins": 28,
+      "losses": 6,
+      "draws": 1,
+      "ko": 13
+    },
+    "heightCm": 193,
+    "reachCm": 201,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-moyens",
+    "nickname": "SlyAza"
+  },
+  "albert-batyrgaziev": {
+    "name": "Albert Batyrgaziev",
+    "record": {
+      "wins": 12,
+      "losses": 1,
+      "draws": 0,
+      "ko": 8
+    },
+    "heightCm": 166,
+    "stance": "Southpaw",
+    "weightClass": "Poids plumes",
+    "nickname": "AL BA"
+  },
+  "albert-belanger": {
+    "name": "Albert Belanger",
+    "record": {
+      "wins": 40,
+      "losses": 20,
+      "draws": 10,
+      "ko": 15
+    },
+    "heightCm": 163,
+    "weightClass": "Poids mouches"
+  },
+  "albert-bell": {
+    "name": "Albert Bell",
+    "record": {
+      "wins": 28,
+      "losses": 1,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 183,
+    "reachCm": 185,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-plumes",
+    "nickname": "Prince"
+  },
+  "albert-finch": {
+    "name": "Albert Finch",
+    "record": {
+      "wins": 72,
+      "losses": 21,
+      "draws": 9,
+      "ko": 21
+    },
+    "weightClass": "Poids mi-lourds"
+  },
+  "albert-kraus": {
+    "name": "Albert Kraus",
+    "record": {
+      "wins": 58,
+      "losses": 14,
+      "draws": 3,
+      "ko": 29
+    },
+    "heightCm": 7600,
+    "nickname": "The Hurricane"
+  },
+  "albert-pagara": {
+    "name": "Albert Pagara",
+    "record": {
+      "wins": 37,
+      "losses": 3,
+      "draws": 0,
+      "ko": 26
+    },
+    "stance": "Orthodoxe",
+    "nickname": "Prince Prince Albert"
+  },
+  "albert-ramirez": {
+    "name": "Albert Ramírez",
+    "record": {
+      "wins": 23,
+      "losses": 0,
+      "draws": 0,
+      "ko": 19
+    },
+    "heightCm": 182,
+    "reachCm": 191,
+    "stance": "Southpaw",
+    "weightClass": "Poids mi-lourds"
+  },
+  "albert-sosnowski": {
+    "name": "Albert Sosnowski",
+    "record": {
+      "wins": 49,
+      "losses": 9,
+      "draws": 2,
+      "ko": 29
+    },
+    "heightCm": 189,
+    "weightClass": "Poids lourds",
+    "nickname": "The Dragon"
+  },
+  "alberto-colajanni": {
+    "name": "Alberto Colajanni",
+    "record": {
+      "wins": 18,
+      "losses": 1,
+      "draws": 0,
+      "ko": 2
+    },
+    "heightCm": 181,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-moyens"
+  },
+  "alberto-davila": {
+    "name": "Alberto Dávila",
+    "record": {
+      "wins": 56,
+      "losses": 10,
+      "draws": 0,
+      "ko": 26
+    },
+    "heightCm": 160,
+    "weightClass": "Poids coqs",
+    "nickname": "Tweety"
+  },
+  "alberto-garza": {
+    "name": "Alberto Garza",
+    "record": {
+      "wins": 26,
+      "losses": 9,
+      "draws": 1,
+      "ko": 21
+    },
+    "heightCm": 180,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-plumes",
+    "nickname": "Q"
+  },
+  "alberto-guevara": {
+    "name": "Alberto Guevara",
+    "record": {
+      "wins": 28,
+      "losses": 9,
+      "draws": 0,
+      "ko": 13
+    },
+    "heightCm": 168,
+    "reachCm": 170,
+    "nickname": "Metro"
+  },
+  "alberto-jimenez": {
+    "name": "Alberto Jiménez",
+    "record": {
+      "wins": 34,
+      "losses": 5,
+      "draws": 3,
+      "ko": 29
+    },
+    "heightCm": 157,
+    "weightClass": "Poids mouches",
+    "nickname": "Ratón"
+  },
+  "alberto-machado": {
+    "name": "Alberto Machado",
+    "record": {
+      "wins": 21,
+      "losses": 2,
+      "draws": 0,
+      "ko": 17
+    },
+    "heightCm": 178,
+    "reachCm": 183,
+    "nickname": "El Explosivo"
+  },
+  "alberto-melian": {
+    "name": "Alberto Melián",
+    "record": {
+      "wins": 11,
+      "losses": 2,
+      "draws": 1,
+      "ko": 7
+    },
+    "heightCm": 170,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids plumes",
+    "nickname": "Impacto"
+  },
+  "alberto-palmetta": {
+    "name": "Alberto Palmetta",
+    "record": {
+      "wins": 19,
+      "losses": 3,
+      "draws": 0,
+      "ko": 13
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids welters"
+  },
+  "alberto-puello": {
+    "name": "Alberto Puello",
+    "record": {
+      "wins": 24,
+      "losses": 1,
+      "draws": 0,
+      "ko": 10
+    },
+    "heightCm": 175,
+    "reachCm": 180
+  },
+  "alberto-rossel": {
+    "name": "Alberto Rossel",
+    "record": {
+      "wins": 32,
+      "losses": 9,
+      "draws": 0,
+      "ko": 13
+    },
+    "heightCm": 155,
+    "nickname": "Chiquito"
+  },
+  "alberto-sandoval": {
+    "name": "Alberto Sandoval",
+    "record": {
+      "wins": 32,
+      "losses": 5,
+      "draws": 0,
+      "ko": 21
+    },
+    "heightCm": 175,
+    "reachCm": 180,
+    "stance": "Orthodoxe",
+    "nickname": "SuperFly"
+  },
+  "aldana-lopez": {
+    "name": "Aldana López",
+    "record": {
+      "wins": 10,
+      "losses": 0,
+      "draws": 0,
+      "ko": 0
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mouches",
+    "nickname": "La Avispa"
+  },
+  "aldo-bentini": {
+    "name": "Aldo Bentini",
+    "record": {
+      "wins": 19,
+      "losses": 6,
+      "draws": 3,
+      "ko": 1
+    },
+    "weightClass": "Poids légers"
+  },
+  "aldo-traversaro": {
+    "name": "Aldo Traversaro",
+    "record": {
+      "wins": 44,
+      "losses": 4,
+      "draws": 6,
+      "ko": 31
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds"
+  },
+  "alejandra-jimenez": {
+    "name": "Alejandra Jiménez",
+    "record": {
+      "wins": 12,
+      "losses": 0,
+      "draws": 1,
+      "ko": 9
+    },
+    "heightCm": 180,
+    "reachCm": 171,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "La Tigre"
+  },
+  "alejandra-oliveras": {
+    "name": "Alejandra Oliveras",
+    "record": {
+      "wins": 33,
+      "losses": 3,
+      "draws": 2,
+      "ko": 16
+    },
+    "heightCm": 155,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers",
+    "nickname": "Locomotora (\"Locomotive\")"
+  },
+  "alejandro-barrera": {
+    "name": "Alejandro Barrera",
+    "record": {
+      "wins": 27,
+      "losses": 6,
+      "draws": 0,
+      "ko": 17
+    },
+    "heightCm": 185,
+    "reachCm": 191,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters",
+    "nickname": "El Elegido"
+  },
+  "alejandro-berrio": {
+    "name": "Alejandro Berrio",
+    "record": {
+      "wins": 40,
+      "losses": 17,
+      "draws": 0,
+      "ko": 34
+    },
+    "heightCm": 185,
+    "nickname": "Ñaco"
+  },
+  "alejandro-felix-montiel": {
+    "name": "Alejandro Felix Montiel",
+    "record": {
+      "wins": 51,
+      "losses": 8,
+      "draws": 0,
+      "ko": 30
+    },
+    "heightCm": 171,
+    "reachCm": 178,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-coqs",
+    "nickname": "Rude Boy"
+  },
+  "alejandro-garcia": {
+    "name": "Alejandro García",
+    "record": {
+      "wins": 26,
+      "losses": 5,
+      "draws": 1,
+      "ko": 24
+    },
+    "heightCm": 176,
+    "nickname": "Terra"
+  },
+  "alejandro-gonzalez-jr": {
+    "name": "Alejandro González, Jr.",
+    "record": {
+      "wins": 25,
+      "losses": 3,
+      "draws": 3,
+      "ko": 15
+    },
+    "heightCm": 170,
+    "reachCm": 170,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs",
+    "nickname": "La Cobríta"
+  },
+  "alejandro-hernandez": {
+    "name": "Alejandro Hernandez",
+    "record": {
+      "wins": 31,
+      "losses": 13,
+      "draws": 2,
+      "ko": 16
+    },
+    "heightCm": 168,
+    "reachCm": 168,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs",
+    "nickname": "Payasito"
+  },
+  "alejandro-martin-gonzalez": {
+    "name": "Alejandro Martín González",
+    "record": {
+      "wins": 49,
+      "losses": 5,
+      "draws": 1,
+      "ko": 33
+    },
+    "heightCm": 173
+  },
+  "alejandro-perez": {
+    "name": "Alejandro Pérez",
+    "record": {
+      "wins": 19,
+      "losses": 4,
+      "draws": 1,
+      "ko": 13
+    },
+    "heightCm": 172,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "nickname": "El Alacrán"
+  },
+  "alejandro-sanabria": {
+    "name": "Alejandro Sanabria",
+    "record": {
+      "wins": 34,
+      "losses": 2,
+      "draws": 1,
+      "ko": 25
+    },
+    "heightCm": 177,
+    "stance": "Orthodoxe",
+    "nickname": "Flacucho/Flaquita"
+  },
+  "aleksandar-aleksandrov": {
+    "name": "Aleksandar Aleksandrov",
+    "record": {
+      "wins": 0,
+      "losses": 1,
+      "draws": 0,
+      "ko": 0
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mouches"
+  },
+  "aleksandr-besputin": {
+    "name": "Aleksandr Besputin",
+    "record": {
+      "wins": 15,
+      "losses": 0,
+      "draws": 0,
+      "ko": 11
+    },
+    "heightCm": 170,
+    "reachCm": 173,
+    "stance": "Southpaw",
+    "weightClass": "Poids welters"
+  },
+  "aleksandr-makhmutov": {
+    "name": "Aleksandr Makhmutov",
+    "record": {
+      "wins": 42,
+      "losses": 8,
+      "draws": 1,
+      "ko": 21
+    },
+    "heightCm": 157
+  },
+  "aleksandr-miroshnichenko": {
+    "name": "Aleksandr Miroshnichenko",
+    "record": {
+      "wins": 21,
+      "losses": 1,
+      "draws": 0,
+      "ko": 15
+    },
+    "heightCm": 193
+  },
+  "aleksey-egorov": {
+    "name": "Aleksey Egorov",
+    "record": {
+      "wins": 12,
+      "losses": 2,
+      "draws": 0,
+      "ko": 8
+    },
+    "heightCm": 185,
+    "reachCm": 187,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds-légers"
+  },
+  "aleksy-kuziemski": {
+    "name": "Aleksy Kuziemski",
+    "record": {
+      "wins": 23,
+      "losses": 5,
+      "draws": 0,
+      "ko": 7
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "Ali"
+  },
+  "alen-babic": {
+    "name": "Alen Babić",
+    "record": {
+      "wins": 12,
+      "losses": 2,
+      "draws": 0,
+      "ko": 11
+    },
+    "heightCm": 185,
+    "reachCm": 188,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The Savage"
+  },
+  "alesia-graf": {
+    "name": "Alesia Graf",
+    "record": {
+      "wins": 29,
+      "losses": 8,
+      "draws": 0,
+      "ko": 13
+    },
+    "heightCm": 170,
+    "reachCm": 160,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-coqs",
+    "nickname": "The Tigress"
+  },
+  "alessandro-mazzinghi": {
+    "name": "Alessandro Mazzinghi",
+    "record": {
+      "wins": 64,
+      "losses": 3,
+      "draws": 0,
+      "ko": 42
+    },
+    "heightCm": 173
+  },
+  "alessio-furlan": {
+    "name": "Alessio Furlan",
+    "record": {
+      "wins": 27,
+      "losses": 18,
+      "draws": 5,
+      "ko": 9
+    },
+    "stance": "Orthodoxe",
+    "nickname": "Il Guerriero di Rocca Canavese (\"The Warrior from Rocca Canavese\")"
+  },
+  "alessio-sakara": {
+    "name": "Alessio Sakara",
+    "record": {
+      "wins": 18,
+      "losses": 11,
+      "draws": 0
+    },
+    "nickname": "{{lang|en|Legionarius}}"
+  },
+  "alex-arthur": {
+    "name": "Alex Arthur",
+    "record": {
+      "wins": 31,
+      "losses": 3,
+      "draws": 0,
+      "ko": 21
+    },
+    "heightCm": 175,
+    "reachCm": 175,
+    "nickname": "Amazing"
+  },
+  "alex-blanchard": {
+    "name": "Alex Blanchard",
+    "record": {
+      "wins": 40,
+      "losses": 4,
+      "draws": 4,
+      "ko": 33
+    },
+    "heightCm": 194,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds"
+  },
+  "alex-buxton": {
+    "name": "Alex Buxton",
+    "record": {
+      "wins": 78,
+      "losses": 43,
+      "draws": 5,
+      "ko": 53
+    }
+  },
+  "alex-de-jesus": {
+    "name": "Alex de Jesús",
+    "record": {
+      "wins": 21,
+      "losses": 2,
+      "draws": 0,
+      "ko": 13
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids super-légers",
+    "nickname": "El Pollo"
+  },
+  "alex-dickson": {
+    "name": "Alex Dickson",
+    "record": {
+      "wins": 18,
+      "losses": 3,
+      "draws": 1,
+      "ko": 4
+    },
+    "heightCm": 175,
+    "stance": "Orthodoxe"
+  },
+  "alex-dilmaghani": {
+    "name": "Alex Dilmaghani",
+    "record": {
+      "wins": 20,
+      "losses": 3,
+      "draws": 1,
+      "ko": 7
+    },
+    "heightCm": 173,
+    "stance": "Southpaw",
+    "weightClass": "Poids légers"
+  },
+  "alex-garcia": {
+    "name": "Alex García",
+    "record": {
+      "wins": 40,
+      "losses": 6,
+      "draws": 1,
+      "ko": 29
+    },
+    "heightCm": 188,
+    "reachCm": 198,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Jaws The San Fernando Hammer"
+  },
+  "alex-hilton": {
+    "name": "Alex Hilton",
+    "record": {
+      "wins": 37,
+      "losses": 11,
+      "draws": 0
+    },
+    "weightClass": "Poids moyens"
+  },
+  "alex-leapai": {
+    "name": "Alex Leapai",
+    "record": {
+      "wins": 31,
+      "losses": 7,
+      "draws": 4,
+      "ko": 25
+    },
+    "heightCm": 190,
+    "weightClass": "Poids lourds",
+    "nickname": "The Lionheart"
+  },
+  "alex-miskirtchian": {
+    "name": "Alex Miskirtchian",
+    "record": {
+      "wins": 28,
+      "losses": 6,
+      "draws": 1,
+      "ko": 11
+    },
+    "weightClass": "Poids plumes",
+    "nickname": "Boum Boum"
+  },
+  "alex-moon": {
+    "name": "Alex Moon",
+    "record": {
+      "wins": 19,
+      "losses": 6,
+      "draws": 2
+    },
+    "stance": "Orthodoxe",
+    "nickname": "The Full-Moon"
+  },
+  "alex-ramos": {
+    "name": "Alex Ramos",
+    "record": {
+      "wins": 39,
+      "losses": 10,
+      "draws": 2,
+      "ko": 24
+    },
+    "heightCm": 178,
+    "nickname": "The Bronx Bomber"
+  },
+  "alex-sanchez": {
+    "name": "Alex Sánchez",
+    "record": {
+      "wins": 31,
+      "losses": 8,
+      "draws": 1,
+      "ko": 21
+    },
+    "heightCm": 159,
+    "reachCm": 163,
+    "nickname": "El nene"
+  },
+  "alex-saucedo": {
+    "name": "Alex Saucedo",
+    "record": {
+      "wins": 30,
+      "losses": 2,
+      "draws": 0,
+      "ko": 19
+    },
+    "heightCm": 178,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters",
+    "nickname": "El Cholo"
+  },
+  "alex-stewart": {
+    "name": "Alex Stewart",
+    "record": {
+      "wins": 43,
+      "losses": 10,
+      "draws": 0,
+      "ko": 40
+    },
+    "heightCm": 191,
+    "reachCm": 199,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The Destroyer"
+  },
+  "alexander-abraham": {
+    "name": "Alexander Abraham",
+    "record": {
+      "wins": 25,
+      "losses": 0,
+      "draws": 1,
+      "ko": 17
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters"
+  },
+  "alexander-alexeev": {
+    "name": "Alexander Alexeev",
+    "record": {
+      "wins": 24,
+      "losses": 3,
+      "draws": 1,
+      "ko": 20
+    },
+    "heightCm": 188
+  },
+  "alexander-awdijan": {
+    "name": "Alexander Awdijan",
+    "record": {
+      "wins": 18,
+      "losses": 1,
+      "draws": 1,
+      "ko": 7
+    },
+    "heightCm": 191,
+    "weightClass": "Poids super-moyens",
+    "nickname": "Alexander Awdijan"
+  },
+  "alexander-dimitrenko": {
+    "name": "Alexander Dimitrenko",
+    "record": {
+      "wins": 41,
+      "losses": 6,
+      "draws": 0,
+      "ko": 26
+    },
+    "heightCm": 201,
+    "weightClass": "Poids lourds",
+    "nickname": "Sascha, Baby Face"
+  },
+  "alexander-emelianenko": {
+    "name": "Alexander Emelianenko",
+    "record": {
+      "wins": 22,
+      "losses": 6,
+      "draws": 0,
+      "ko": 14
+    }
+  },
+  "alexander-flores": {
+    "name": "Alexander Flores",
+    "record": {
+      "wins": 21,
+      "losses": 6,
+      "draws": 1,
+      "ko": 19
+    },
+    "heightCm": 193,
+    "reachCm": 201,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The Great"
+  },
+  "alexander-frenkel": {
+    "name": "Alexander Frenkel",
+    "record": {
+      "wins": 23,
+      "losses": 0,
+      "draws": 0,
+      "ko": 18
+    },
+    "heightCm": 186,
+    "reachCm": 180,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds-légers"
+  },
+  "alexander-gurov": {
+    "name": "Alexander Gurov",
+    "record": {
+      "wins": 42,
+      "losses": 6,
+      "draws": 1,
+      "ko": 33
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids lourds-légers"
+  },
+  "alexander-gustafsson": {
+    "name": "Alexander Gustafsson",
+    "record": {
+      "wins": 18,
+      "losses": 8,
+      "draws": 0
+    },
+    "heightCm": 196,
+    "reachCm": 201,
+    "nickname": "{{lang|en|The Mauler}}"
+  },
+  "alexander-ireland": {
+    "name": "Alexander Ireland",
+    "record": {
+      "wins": 17,
+      "losses": 9,
+      "draws": 3
+    }
+  },
+  "alexander-munoz": {
+    "name": "Alexander Muñoz",
+    "record": {
+      "wins": 41,
+      "losses": 10,
+      "draws": 0,
+      "ko": 31
+    },
+    "heightCm": 166,
+    "reachCm": 174,
+    "nickname": "El Explosivo"
+  },
+  "alexander-petkovic": {
+    "name": "Alexander Petkovic",
+    "record": {
+      "wins": 50,
+      "losses": 4,
+      "draws": 4,
+      "ko": 27
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Alex"
+  },
+  "alexander-povetkin": {
+    "name": "Alexander Povetkin",
+    "record": {
+      "wins": 36,
+      "losses": 3,
+      "draws": 1,
+      "ko": 25
+    },
+    "heightCm": 188,
+    "reachCm": 191,
+    "nickname": "Russian Vityaz"
+  },
+  "alexandr-deviatov": {
+    "name": "Alexandr Deviatov",
+    "record": {
+      "wins": 16,
+      "losses": 0,
+      "draws": 0,
+      "ko": 14
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers"
+  },
+  "alexandro-santiago": {
+    "name": "Alexandro Santiago",
+    "record": {
+      "wins": 28,
+      "losses": 4,
+      "draws": 5,
+      "ko": 14
+    },
+    "heightCm": 159,
+    "reachCm": 166,
+    "nickname": "Peque"
+  },
+  "alexandru-marin": {
+    "name": "Alexandru Marin",
+    "record": {
+      "wins": 18,
+      "losses": 0,
+      "draws": 0,
+      "ko": 11
+    },
+    "heightCm": 170,
+    "reachCm": 173,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs",
+    "nickname": "The Spartan"
+  },
+  "alexei-collado": {
+    "name": "Alexei Collado",
+    "record": {
+      "wins": 26,
+      "losses": 3,
+      "draws": 0,
+      "ko": 23
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers",
+    "nickname": "The Hurricane"
+  },
+  "alexey-soloviev": {
+    "name": "Alexey Soloviev",
+    "record": {
+      "wins": 18,
+      "losses": 0,
+      "draws": 0,
+      "ko": 12
+    },
+    "heightCm": 190,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "alexis-arguello": {
+    "name": "Alexis Argüello",
+    "record": {
+      "wins": 77,
+      "losses": 8,
+      "draws": 0,
+      "ko": 62
+    },
+    "heightCm": 178,
+    "nickname": "El Flaco Explosivo"
+  },
+  "alexis-barriere": {
+    "name": "Alexis Barriere",
+    "record": {
+      "wins": 12,
+      "losses": 1,
+      "draws": 0,
+      "ko": 10
+    },
+    "heightCm": 193,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "alexis-diaz": {
+    "name": "Alexis Diaz",
+    "record": {
+      "wins": 28,
+      "losses": 5,
+      "draws": 0,
+      "ko": 18
+    },
+    "heightCm": 164,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-mouches",
+    "nickname": "Erguito"
+  },
+  "alf-pattenden": {
+    "name": "Alf Pattenden",
+    "record": {
+      "wins": 38,
+      "losses": 27,
+      "draws": 6,
+      "ko": 20
+    },
+    "weightClass": "Poids coqs"
+  },
+  "alfonso-blanco": {
+    "name": "Alfonso Blanco",
+    "record": {
+      "wins": 16,
+      "losses": 1,
+      "draws": 0,
+      "ko": 8
+    },
+    "heightCm": 185,
+    "reachCm": 189,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens"
+  },
+  "alfonso-frazer": {
+    "name": "Alfonso Frazer",
+    "record": {
+      "wins": 43,
+      "losses": 17,
+      "draws": 3,
+      "ko": 30
+    },
+    "heightCm": 173,
+    "nickname": "Peppermint"
+  },
+  "alfonso-gomez": {
+    "name": "Alfonso Gómez",
+    "record": {
+      "wins": 25,
+      "losses": 6,
+      "draws": 2,
+      "ko": 12
+    },
+    "stance": "Orthodoxe"
+  },
+  "alfonso-lopez": {
+    "name": "Alfonso López",
+    "record": {
+      "wins": 39,
+      "losses": 18,
+      "draws": 2,
+      "ko": 21
+    },
+    "heightCm": 160,
+    "nickname": "Piedrita / Small-tractor"
+  },
+  "alfonso-lopez-iii": {
+    "name": "Alfonso López III",
+    "record": {
+      "wins": 36,
+      "losses": 4,
+      "draws": 0,
+      "ko": 27
+    },
+    "heightCm": 185,
+    "reachCm": 193,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds-légers",
+    "nickname": "El Tigre"
+  },
+  "alfonso-ratliff": {
+    "name": "Alfonso Ratliff",
+    "record": {
+      "wins": 25,
+      "losses": 9,
+      "draws": 0,
+      "ko": 18
+    },
+    "heightCm": 193
+  },
+  "alfonso-zamora": {
+    "name": "Alfonso Zamora",
+    "record": {
+      "wins": 33,
+      "losses": 5,
+      "draws": 0,
+      "ko": 32
+    },
+    "heightCm": 162,
+    "weightClass": "Poids coqs"
+  },
+  "alfonso-zvenyika-lambarda": {
+    "name": "Alfonso Zvenyika Lambarda",
+    "record": {
+      "wins": 17,
+      "losses": 12,
+      "draws": 2
+    },
+    "heightCm": 175,
+    "nickname": "Mosquito"
+  },
+  "alfred-flury": {
+    "name": "Alfred Flury",
+    "record": {
+      "wins": 31,
+      "losses": 20,
+      "draws": 11,
+      "ko": 9
+    },
+    "weightClass": "Poids moyens"
+  },
+  "alfred-jones": {
+    "name": "Alfred Jones",
+    "record": {
+      "wins": 12,
+      "losses": 1,
+      "draws": 0,
+      "ko": 7
+    },
+    "weightClass": "Poids moyens",
+    "nickname": "Tiger Cat"
+  },
+  "alfred-kotey": {
+    "name": "Alfred Kotey",
+    "record": {
+      "wins": 26,
+      "losses": 16,
+      "draws": 1,
+      "ko": 17
+    },
+    "heightCm": 165,
+    "nickname": "Cobra"
+  },
+  "alfred-russell": {
+    "name": "Alfred Russell",
+    "record": {
+      "wins": 5,
+      "losses": 6,
+      "draws": 0,
+      "ko": 0
+    },
+    "weightClass": "Poids mouches"
+  },
+  "alfredo-angulo": {
+    "name": "Alfredo Angulo",
+    "record": {
+      "wins": 26,
+      "losses": 8,
+      "draws": 0,
+      "ko": 21
+    },
+    "heightCm": 177,
+    "reachCm": 175,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "El Perro (\"The Dog\")"
+  },
+  "alfredo-escalera": {
+    "name": "Alfredo Escalera",
+    "record": {
+      "wins": 53,
+      "losses": 14,
+      "draws": 3,
+      "ko": 31
+    },
+    "heightCm": 173,
+    "nickname": "El Salsero"
+  },
+  "alfredo-evangelista": {
+    "name": "Alfredo Evangelista",
+    "record": {
+      "wins": 62,
+      "losses": 13,
+      "draws": 4,
+      "ko": 41
+    },
+    "heightCm": 187,
+    "weightClass": "Poids lourds",
+    "nickname": "Lynx de Montevideo"
+  },
+  "alfredo-layne": {
+    "name": "Alfredo Layne",
+    "record": {
+      "wins": 15,
+      "losses": 12,
+      "draws": 0,
+      "ko": 12
+    },
+    "nickname": "Preciso"
+  },
+  "alfredo-porzio": {
+    "name": "Alfredo Porzio",
+    "record": {
+      "wins": 4,
+      "losses": 2,
+      "draws": 1,
+      "ko": 1
+    },
+    "weightClass": "Poids lourds"
+  },
+  "alfredo-xeque": {
+    "name": "Alfredo Xeque",
+    "record": {
+      "wins": 17,
+      "losses": 2,
+      "draws": 2,
+      "ko": 4
+    },
+    "reachCm": 79,
+    "weightClass": "Poids mi-mouches"
+  },
+  "alfredo-zuany": {
+    "name": "Alfredo Zuany",
+    "record": {
+      "wins": 34,
+      "losses": 3,
+      "draws": 1,
+      "ko": 21
+    },
+    "heightCm": 192,
+    "reachCm": 199,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Zurdo Chihuahua"
+  },
+  "ali-bagautinov": {
+    "name": "Ali Bagautinov",
+    "record": {
+      "wins": 14,
+      "losses": 5,
+      "draws": 0
+    },
+    "heightCm": 162,
+    "weightClass": "Poids mouches",
+    "nickname": "{{lang|en|Puncher}}"
+  },
+  "ali-chebah": {
+    "name": "Ali Chebah",
+    "record": {
+      "wins": 36,
+      "losses": 2,
+      "draws": 0,
+      "ko": 29
+    },
+    "heightCm": 176,
+    "nickname": "The Angel"
+  },
+  "ali-eren-demirezen": {
+    "name": "Ali Eren Demirezen",
+    "record": {
+      "wins": 17,
+      "losses": 1,
+      "draws": 0,
+      "ko": 12
+    },
+    "stance": "Orthodoxe",
+    "nickname": "The Iceman"
+  },
+  "ali-feliz": {
+    "name": "Ali Feliz",
+    "record": {
+      "wins": 7,
+      "losses": 0,
+      "draws": 0,
+      "ko": 5
+    },
+    "heightCm": 188,
+    "reachCm": 193,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "ali-forbes": {
+    "name": "Ali Forbes",
+    "record": {
+      "wins": 14,
+      "losses": 10,
+      "draws": 1,
+      "ko": 7
+    },
+    "stance": "Orthodoxe"
+  },
+  "ali-funeka": {
+    "name": "Ali Funeka",
+    "record": {
+      "wins": 40,
+      "losses": 11,
+      "draws": 3,
+      "ko": 32
+    },
+    "heightCm": 185,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters",
+    "nickname": "Rush Hour"
+  },
+  "ali-hallab": {
+    "name": "Ali Hallab",
+    "record": {
+      "wins": 16,
+      "losses": 0,
+      "draws": 1,
+      "ko": 9
+    },
+    "heightCm": 168
+  },
+  "ali-ismailov": {
+    "name": "Ali Ismailov",
+    "record": {
+      "wins": 21,
+      "losses": 16,
+      "draws": 1,
+      "ko": 16
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds-légers",
+    "nickname": "Bronze Ali"
+  },
+  "ali-izmaylov": {
+    "name": "Ali Izmaylov",
+    "record": {
+      "wins": 15,
+      "losses": 0,
+      "draws": 0,
+      "ko": 10
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds"
+  },
+  "ali-raymi": {
+    "name": "Ali Raymi",
+    "record": {
+      "wins": 25,
+      "losses": 0,
+      "draws": 0,
+      "ko": 25
+    },
+    "heightCm": 173
+  },
+  "ali-srour": {
+    "name": "Ali Srour",
+    "record": {
+      "wins": 4,
+      "losses": 0,
+      "draws": 0,
+      "ko": 3
+    },
+    "heightCm": 170,
+    "weightClass": "Poids plumes"
+  },
+  "alicia-ashley": {
+    "name": "Alicia Ashley",
+    "record": {
+      "wins": 24,
+      "losses": 12,
+      "draws": 1,
+      "ko": 4
+    },
+    "heightCm": 164,
+    "stance": "Southpaw",
+    "weightClass": "Poids plumes",
+    "nickname": "Slick"
+  },
+  "alicia-melina": {
+    "name": "Alicia Melina",
+    "record": {
+      "wins": 13,
+      "losses": 1,
+      "draws": 0,
+      "ko": 8
+    },
+    "heightCm": 171,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers"
+  },
+  "alicia-napoleon": {
+    "name": "Alicia Napoleon",
+    "record": {
+      "wins": 12,
+      "losses": 2,
+      "draws": 0,
+      "ko": 7
+    },
+    "heightCm": 165,
+    "reachCm": 173,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids plumes",
+    "nickname": "The Empress"
+  },
+  "alimi-goitia": {
+    "name": "Alimi Goitia",
+    "record": {
+      "wins": 16,
+      "losses": 4,
+      "draws": 0,
+      "ko": 13
+    }
+  },
+  "allan-green": {
+    "name": "Allan Green",
+    "record": {
+      "wins": 35,
+      "losses": 6,
+      "draws": 0,
+      "ko": 22
+    },
+    "heightCm": 188,
+    "nickname": "Ghost Dog"
+  },
+  "allan-ranada": {
+    "name": "Allan Ranada",
+    "record": {
+      "wins": 18,
+      "losses": 22,
+      "draws": 1,
+      "ko": 10
+    },
+    "heightCm": 163,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs",
+    "nickname": "Granada"
+  },
+  "alo-kelly": {
+    "name": "Alo Kelly",
+    "record": {
+      "wins": 5,
+      "losses": 0,
+      "draws": 1,
+      "ko": 3
+    },
+    "weightClass": "Poids mi-lourds"
+  },
+  "aloizs-tumins": {
+    "name": "Aloizs Tumiņš",
+    "record": {
+      "wins": 200,
+      "losses": 0,
+      "draws": 0
+    }
+  },
+  "alonso-lopez": {
+    "name": "Alonso López",
+    "record": {
+      "wins": 13,
+      "losses": 0,
+      "draws": 3,
+      "ko": 5
+    },
+    "heightCm": 157,
+    "reachCm": 174,
+    "stance": "Orthodoxe",
+    "nickname": "Finito"
+  },
+  "alonzo-butler": {
+    "name": "Alonzo Butler",
+    "record": {
+      "wins": 34,
+      "losses": 3,
+      "draws": 2,
+      "ko": 25
+    },
+    "heightCm": 191,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Big Zo"
+  },
+  "alphonse-halimi": {
+    "name": "Alphonse Halimi",
+    "record": {
+      "wins": 42,
+      "losses": 8,
+      "draws": 1,
+      "ko": 21
+    },
+    "heightCm": 160,
+    "weightClass": "Poids coqs",
+    "nickname": "La petite terreur"
+  },
+  "alvaro-gaona": {
+    "name": "Álvaro Gaona",
+    "record": {
+      "wins": 14,
+      "losses": 7,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 183,
+    "reachCm": 194,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "La Cobra"
+  },
+  "alvaro-robles": {
+    "name": "Álvaro Robles",
+    "record": {
+      "wins": 19,
+      "losses": 7,
+      "draws": 0,
+      "ko": 17
+    },
+    "heightCm": 183,
+    "reachCm": 189,
+    "stance": "Orthodoxe",
+    "nickname": "Tyson"
+  },
+  "alvin-lewis": {
+    "name": "Alvin Lewis",
+    "record": {
+      "wins": 30,
+      "losses": 6,
+      "draws": 0,
+      "ko": 19
+    },
+    "heightCm": 191,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Blue"
+  },
+  "alycia-baumgardner": {
+    "name": "Alycia Baumgardner",
+    "record": {
+      "wins": 14,
+      "losses": 1,
+      "draws": 0,
+      "ko": 7
+    },
+    "heightCm": 168,
+    "nickname": "{{lang|en|The Bomb}}"
+  },
+  "alys-sanchez": {
+    "name": "Alys Sánchez",
+    "record": {
+      "wins": 17,
+      "losses": 7,
+      "draws": 1,
+      "ko": 6
+    },
+    "weightClass": "Poids plumes",
+    "nickname": "La China"
+  },
+  "alyssa-mendoza": {
+    "name": "Alyssa Mendoza",
+    "record": {
+      "wins": 39,
+      "losses": 12,
+      "draws": 0,
+      "ko": 11
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids plumes",
+    "nickname": "Wrecking Machine"
+  },
+  "amado-azar": {
+    "name": "Amado Azar",
+    "record": {
+      "wins": 53,
+      "losses": 6,
+      "draws": 7,
+      "ko": 22
+    },
+    "nickname": "Sapo"
+  },
+  "amado-ursua": {
+    "name": "Amado Ursua",
+    "record": {
+      "wins": 34,
+      "losses": 21,
+      "draws": 0,
+      "ko": 25
+    },
+    "heightCm": 156,
+    "nickname": "Panterita"
+  },
+  "amadou-m-barick-fall": {
+    "name": "Amadou M’barick Fall",
+    "record": {
+      "wins": 61,
+      "losses": 26,
+      "draws": 4,
+      "ko": 32
+    },
+    "heightCm": 179,
+    "nickname": "{{langue|en|Singular Senegalese}}"
+  },
+  "amanda-coulson": {
+    "name": "Amanda Coulson",
+    "record": {
+      "wins": 12,
+      "losses": 14,
+      "draws": 0,
+      "ko": 2
+    },
+    "weightClass": "Poids welters"
+  },
+  "amanda-galle": {
+    "name": "Amanda Galle",
+    "record": {
+      "wins": 13,
+      "losses": 1,
+      "draws": 1,
+      "ko": 1
+    },
+    "heightCm": 160,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs"
+  },
+  "amanda-serrano": {
+    "name": "Amanda Serrano",
+    "record": {
+      "wins": 46,
+      "losses": 2,
+      "draws": 1,
+      "ko": 30
+    },
+    "heightCm": 166,
+    "nickname": "{{lang|en|The Real Deal}}"
+  },
+  "amer-khan": {
+    "name": "Amer Khan",
+    "record": {
+      "wins": 13,
+      "losses": 0,
+      "draws": 0,
+      "ko": 1
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "Killa"
+  },
+  "amilcar-vidal": {
+    "name": "Amílcar Vidal",
+    "record": {
+      "wins": 17,
+      "losses": 1,
+      "draws": 0,
+      "ko": 13
+    },
+    "heightCm": 183,
+    "reachCm": 189,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "Pety"
+  },
+  "amin-asikainen": {
+    "name": "Amin Asikainen",
+    "record": {
+      "wins": 29,
+      "losses": 4,
+      "draws": 0,
+      "ko": 19
+    },
+    "heightCm": 180,
+    "nickname": "Idi"
+  },
+  "amina-zidani": {
+    "name": "Amina Zidani",
+    "record": {
+      "wins": 5,
+      "losses": 0,
+      "draws": 0,
+      "ko": 2
+    },
+    "heightCm": 165
+  },
+  "amir-anderson": {
+    "name": "Amir Anderson",
+    "record": {
+      "wins": 8,
+      "losses": 0,
+      "draws": 0,
+      "ko": 7
+    },
+    "heightCm": 183,
+    "reachCm": 193,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "Cashman"
+  },
+  "amir-imam": {
+    "name": "Amir Imam",
+    "record": {
+      "wins": 22,
+      "losses": 3,
+      "draws": 0,
+      "ko": 19
+    },
+    "heightCm": 179,
+    "reachCm": 188,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers",
+    "nickname": "Young Master"
+  },
+  "amir-khan": {
+    "name": "Amir Khan",
+    "record": {
+      "wins": 33,
+      "losses": 5,
+      "draws": 0,
+      "ko": 20
+    },
+    "heightCm": 174,
+    "nickname": "King Khan"
+  },
+  "amir-mansour": {
+    "name": "Amir Mansour",
+    "record": {
+      "wins": 23,
+      "losses": 3,
+      "draws": 1,
+      "ko": 16
+    },
+    "heightCm": 185,
+    "reachCm": 185,
+    "weightClass": "Poids lourds",
+    "nickname": "Hardcore"
+  },
+  "amnat-ruenroeng": {
+    "name": "Amnat Ruenroeng",
+    "record": {
+      "wins": 23,
+      "losses": 8,
+      "draws": 0,
+      "ko": 7
+    },
+    "heightCm": 164,
+    "reachCm": 177
+  },
+  "amy-andrew": {
+    "name": "Amy Andrew",
+    "record": {
+      "wins": 9,
+      "losses": 0,
+      "draws": 0
+    },
+    "heightCm": 170,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids plumes"
+  },
+  "amy-timlin": {
+    "name": "Amy Timlin",
+    "record": {
+      "wins": 5,
+      "losses": 1,
+      "draws": 1
+    },
+    "heightCm": 165,
+    "stance": "Orthodoxe"
+  },
+  "ana-esteche": {
+    "name": "Ana Esteche",
+    "record": {
+      "wins": 14,
+      "losses": 6,
+      "draws": 3,
+      "ko": 2
+    },
+    "heightCm": 168,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers",
+    "nickname": "La Monita"
+  },
+  "ana-maria-torres": {
+    "name": "Ana María Torres",
+    "record": {
+      "wins": 28,
+      "losses": 3,
+      "draws": 3,
+      "ko": 16
+    },
+    "heightCm": 163,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs",
+    "nickname": "La Guerrera"
+  },
+  "anabel-ortiz": {
+    "name": "Anabel Ortiz",
+    "record": {
+      "wins": 34,
+      "losses": 9,
+      "draws": 0,
+      "ko": 4
+    },
+    "heightCm": 152,
+    "reachCm": 159,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-mouches",
+    "nickname": "Avispa"
+  },
+  "anaclet-wamba": {
+    "name": "Anaclet Wamba",
+    "record": {
+      "wins": 46,
+      "losses": 2,
+      "draws": 1,
+      "ko": 23
+    },
+    "heightCm": 191
+  },
+  "anahi-ester-sanchez": {
+    "name": "Anahí Ester Sánchez",
+    "record": {
+      "wins": 24,
+      "losses": 6,
+      "draws": 0,
+      "ko": 13
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers",
+    "nickname": "La Indiecita"
+  },
+  "anatoly-alexandrov": {
+    "name": "Anatoly Alexandrov",
+    "record": {
+      "wins": 37,
+      "losses": 6,
+      "draws": 0,
+      "ko": 16
+    },
+    "heightCm": 168
+  },
+  "anauel-ngamissengue": {
+    "name": "Anauel Ngamissengue",
+    "record": {
+      "wins": 14,
+      "losses": 1,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 177
+  },
+  "anders-petersen": {
+    "name": "Anders Petersen",
+    "record": {
+      "wins": 26,
+      "losses": 17,
+      "draws": 8,
+      "ko": 4
+    },
+    "nickname": "Wonder kid"
+  },
+  "anderson-silva": {
+    "name": "Anderson Silva",
+    "record": {
+      "wins": 34,
+      "losses": 11,
+      "draws": 0
+    },
+    "reachCm": 197,
+    "nickname": "{{lang|en|The Spider}}"
+  },
+  "ando-mari": {
+    "name": "Andō Mari",
+    "record": {
+      "wins": 13,
+      "losses": 10,
+      "draws": 0,
+      "ko": 6
+    },
+    "heightCm": 154,
+    "reachCm": 160,
+    "stance": "Orthodoxe"
+  },
+  "andoni-gago": {
+    "name": "Andoni Gago",
+    "record": {
+      "wins": 25,
+      "losses": 5,
+      "draws": 4,
+      "ko": 7
+    },
+    "heightCm": 165,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers",
+    "nickname": "El Macho"
+  },
+  "andras-galfi": {
+    "name": "András Gálfi",
+    "record": {
+      "wins": 42,
+      "losses": 8,
+      "draws": 3,
+      "ko": 26
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "Gatto"
+  },
+  "andre-anderson": {
+    "name": "Andre Anderson",
+    "record": {
+      "wins": 17,
+      "losses": 19,
+      "draws": 9,
+      "ko": 14
+    },
+    "weightClass": "Poids lourds"
+  },
+  "andre-berto": {
+    "name": "Andre Berto",
+    "record": {
+      "wins": 32,
+      "losses": 6,
+      "draws": 0,
+      "ko": 24
+    },
+    "heightCm": 171,
+    "reachCm": 174
+  },
+  "andre-dirrell": {
+    "name": "Andre Dirrell",
+    "record": {
+      "wins": 26,
+      "losses": 3,
+      "draws": 0,
+      "ko": 16
+    },
+    "heightCm": 185,
+    "reachCm": 191,
+    "nickname": "The Matrix The Resurrected"
+  },
+  "andre-gorges": {
+    "name": "Andre Gorges",
+    "record": {
+      "wins": 12,
+      "losses": 3,
+      "draws": 0,
+      "ko": 7
+    },
+    "stance": "Southpaw",
+    "nickname": "Gorgeous"
+  },
+  "andre-purlette": {
+    "name": "Andre Purlette",
+    "record": {
+      "wins": 40,
+      "losses": 4,
+      "draws": 0,
+      "ko": 35
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Tombstone"
+  },
+  "andre-routis": {
+    "name": "Andre Routis",
+    "record": {
+      "wins": 54,
+      "losses": 24,
+      "draws": 7,
+      "ko": 12
+    },
+    "heightCm": 163
+  },
+  "andre-thysse": {
+    "name": "Andre Thysse",
+    "record": {
+      "wins": 20,
+      "losses": 8,
+      "draws": 0
+    },
+    "heightCm": 185,
+    "stance": "Orthodoxe"
+  },
+  "andre-ward": {
+    "name": "Andre Ward",
+    "record": {
+      "wins": 32,
+      "losses": 0,
+      "draws": 0,
+      "ko": 16
+    },
+    "heightCm": 183,
+    "reachCm": 180,
+    "nickname": "S.O.G."
+  },
+  "andrea-di-luisa": {
+    "name": "Andrea Di Luisa",
+    "record": {
+      "wins": 19,
+      "losses": 4,
+      "draws": 0,
+      "ko": 14
+    },
+    "heightCm": 182,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds"
+  },
+  "andrea-scarpa": {
+    "name": "Andrea Scarpa",
+    "record": {
+      "wins": 27,
+      "losses": 6,
+      "draws": 0,
+      "ko": 11
+    },
+    "heightCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers",
+    "nickname": "Sugar Ray"
+  },
+  "andreas-kotelnik": {
+    "name": "Andreas Kotelnik",
+    "record": {
+      "wins": 32,
+      "losses": 4,
+      "draws": 1,
+      "ko": 13
+    },
+    "heightCm": 171,
+    "nickname": "Kotelya"
+  },
+  "andreas-sidon": {
+    "name": "Andreas Sidon",
+    "record": {
+      "wins": 45,
+      "losses": 11,
+      "draws": 0,
+      "ko": 36
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "andrei-arlovski": {
+    "name": "Andrei Arlovski",
+    "record": {
+      "wins": 34,
+      "losses": 24,
+      "draws": 0
+    },
+    "weightClass": "Poids lourds",
+    "nickname": "{{lang|en|The Pit Bull}}"
+  },
+  "andres-campos": {
+    "name": "Andres Campos",
+    "record": {
+      "wins": 17,
+      "losses": 3,
+      "draws": 1,
+      "ko": 6
+    },
+    "heightCm": 9,
+    "reachCm": 164,
+    "stance": "Orthodoxe"
+  },
+  "andres-gutierrez": {
+    "name": "Andrés Gutiérrez",
+    "record": {
+      "wins": 40,
+      "losses": 2,
+      "draws": 2,
+      "ko": 26
+    },
+    "heightCm": 170,
+    "reachCm": 178,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers",
+    "nickname": "Jaguarcito"
+  },
+  "andrew-cain": {
+    "name": "Andrew Cain",
+    "record": {
+      "wins": 15,
+      "losses": 1,
+      "draws": 0,
+      "ko": 13
+    },
+    "heightCm": 163,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-coqs"
+  },
+  "andrew-cancio": {
+    "name": "Andrew Cancio",
+    "record": {
+      "wins": 21,
+      "losses": 5,
+      "draws": 2,
+      "ko": 16
+    },
+    "heightCm": 168,
+    "reachCm": 173,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids plumes",
+    "nickname": "El Chango"
+  },
+  "andrew-chiariglione": {
+    "name": "Andrew Chiariglione",
+    "record": {
+      "wins": 81,
+      "losses": 61,
+      "draws": 26,
+      "ko": 56
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Andrew Haynes"
+  },
+  "andrew-flintoff": {
+    "name": "Andrew Flintoff",
+    "record": {
+      "wins": 1,
+      "losses": 0,
+      "draws": 0,
+      "ko": 0
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Freddie"
+  },
+  "andrew-golota": {
+    "name": "Andrew Golota",
+    "record": {
+      "wins": 41,
+      "losses": 9,
+      "draws": 1,
+      "ko": 33
+    },
+    "heightCm": 193,
+    "weightClass": "Poids lourds"
+  },
+  "andrew-hernandez": {
+    "name": "Andrew Hernandez",
+    "record": {
+      "wins": 21,
+      "losses": 8,
+      "draws": 2,
+      "ko": 9
+    },
+    "heightCm": 178,
+    "reachCm": 178,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "Hurricane"
+  },
+  "andrew-jephtha": {
+    "name": "Andrew Jephtha",
+    "record": {
+      "wins": 32,
+      "losses": 27,
+      "draws": 6,
+      "ko": 21
+    },
+    "weightClass": "Poids welters"
+  },
+  "andrew-lewis": {
+    "name": "Andrew Lewis",
+    "record": {
+      "wins": 23,
+      "losses": 4,
+      "draws": 2,
+      "ko": 20
+    },
+    "heightCm": 173,
+    "nickname": "Six Heads"
+  },
+  "andrew-maynard": {
+    "name": "Andrew Maynard",
+    "record": {
+      "wins": 26,
+      "losses": 13,
+      "draws": 1,
+      "ko": 21
+    },
+    "heightCm": 185
+  },
+  "andrew-moloney": {
+    "name": "Andrew Moloney",
+    "record": {
+      "wins": 29,
+      "losses": 4,
+      "draws": 0,
+      "ko": 18
+    },
+    "heightCm": 165,
+    "reachCm": 165,
+    "nickname": "The Monster"
+  },
+  "andrew-murray": {
+    "name": "Andrew Murray",
+    "record": {
+      "wins": 27,
+      "losses": 7,
+      "draws": 1
+    },
+    "stance": "Southpaw",
+    "nickname": "The Eagle"
+  },
+  "andrew-selby": {
+    "name": "Andrew Selby",
+    "record": {
+      "wins": 13,
+      "losses": 1,
+      "draws": 0,
+      "ko": 7
+    },
+    "heightCm": 168
+  },
+  "andrew-tabiti": {
+    "name": "Andrew Tabiti",
+    "record": {
+      "wins": 20,
+      "losses": 2,
+      "draws": 0,
+      "ko": 16
+    },
+    "heightCm": 185,
+    "reachCm": 194,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds-légers",
+    "nickname": "The Beast"
+  },
+  "andrey-klimov": {
+    "name": "Andrey Klimov",
+    "record": {
+      "wins": 20,
+      "losses": 6,
+      "draws": 0,
+      "ko": 10
+    },
+    "heightCm": 178,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers"
+  },
+  "andrey-sirotkin": {
+    "name": "Andrey Sirotkin",
+    "record": {
+      "wins": 21,
+      "losses": 2,
+      "draws": 1,
+      "ko": 7
+    },
+    "heightCm": 173,
+    "stance": "Southpaw",
+    "weightClass": "Poids super-moyens"
+  },
+  "andrey-tsurkan": {
+    "name": "Andrey Tsurkan",
+    "record": {
+      "wins": 26,
+      "losses": 5,
+      "draws": 0,
+      "ko": 17
+    },
+    "weightClass": "Poids super-welters"
+  },
+  "andrey-zamkovoy": {
+    "name": "Andrey Zamkovoy",
+    "record": {
+      "wins": 118,
+      "losses": 19,
+      "draws": 0,
+      "ko": 4
+    },
+    "heightCm": 186,
+    "stance": "Southpaw",
+    "weightClass": "Poids welters"
+  },
+  "andriy-rudenko": {
+    "name": "Andriy Rudenko",
+    "record": {
+      "wins": 37,
+      "losses": 7,
+      "draws": 0,
+      "ko": 22
+    },
+    "heightCm": 184,
+    "reachCm": 186,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "andrzej-fonfara": {
+    "name": "Andrzej Fonfara",
+    "record": {
+      "wins": 30,
+      "losses": 5,
+      "draws": 0,
+      "ko": 18
+    },
+    "heightCm": 189,
+    "reachCm": 196,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "The Polish Prince"
+  },
+  "andrzej-wawrzyk": {
+    "name": "Andrzej Wawrzyk",
+    "record": {
+      "wins": 34,
+      "losses": 5,
+      "draws": 0,
+      "ko": 20
+    },
+    "heightCm": 195,
+    "reachCm": 201,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "andy-agosto": {
+    "name": "Andy Agosto",
+    "record": {
+      "wins": 15,
+      "losses": 3,
+      "draws": 0,
+      "ko": 7
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids super-mouches"
+  },
+  "andy-bell": {
+    "name": "Andy Bell",
+    "record": {
+      "wins": 11,
+      "losses": 7,
+      "draws": 0,
+      "ko": 3
+    },
+    "heightCm": 173,
+    "reachCm": 170,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs",
+    "nickname": "Bellie"
+  },
+  "andy-bowen": {
+    "name": "Andy Bowen",
+    "record": {
+      "wins": 16,
+      "losses": 3,
+      "draws": 7,
+      "ko": 7
+    },
+    "heightCm": 168,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers"
+  },
+  "andy-cruz-gomez": {
+    "name": "Andy Cruz Gómez",
+    "record": {
+      "wins": 7,
+      "losses": 1,
+      "draws": 0,
+      "ko": 4
+    },
+    "heightCm": 175,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers"
+  },
+  "andy-holligan": {
+    "name": "Andy Holligan",
+    "record": {
+      "wins": 27,
+      "losses": 3,
+      "draws": 0
+    }
+  },
+  "andy-lee": {
+    "name": "Andy Lee",
+    "record": {
+      "wins": 34,
+      "losses": 3,
+      "draws": 1,
+      "ko": 24
+    },
+    "heightCm": 188,
+    "nickname": "Irish"
+  },
+  "andy-morris": {
+    "name": "Andy Morris",
+    "record": {
+      "wins": 19,
+      "losses": 4,
+      "draws": 0,
+      "ko": 7
+    },
+    "heightCm": 169,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-plumes",
+    "nickname": "Wythenshaw Warrior"
+  },
+  "andy-murray": {
+    "name": "Andy Murray",
+    "record": {
+      "wins": 25,
+      "losses": 1,
+      "draws": 0,
+      "ko": 12
+    },
+    "stance": "Orthodoxe",
+    "nickname": "The Quiet Man"
+  },
+  "andy-ruiz-jr": {
+    "name": "Andy Ruiz Jr.",
+    "record": {
+      "wins": 35,
+      "losses": 2,
+      "draws": 1,
+      "ko": 22
+    },
+    "heightCm": 188,
+    "reachCm": 188,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Destroyer"
+  },
+  "andy-souwer": {
+    "name": "Andy Souwer",
+    "record": {
+      "wins": 132,
+      "losses": 7,
+      "draws": 0,
+      "ko": 84
+    },
+    "heightCm": 7700,
+    "nickname": "Le Destructeur Souwer Power"
+  },
+  "andy-straughn": {
+    "name": "Andy Straughn",
+    "record": {
+      "wins": 18,
+      "losses": 7,
+      "draws": 2,
+      "ko": 10
+    },
+    "weightClass": "Poids lourds-légers"
+  },
+  "andy-till": {
+    "name": "Andy Till",
+    "record": {
+      "wins": 19,
+      "losses": 5,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 175,
+    "weightClass": "Poids super-welters"
+  },
+  "angel-acosta": {
+    "name": "Ángel Acosta",
+    "record": {
+      "wins": 22,
+      "losses": 3,
+      "draws": 0,
+      "ko": 21
+    },
+    "heightCm": 163,
+    "reachCm": 161,
+    "nickname": "Tito"
+  },
+  "angel-chacon": {
+    "name": "Ángel Chacón",
+    "record": {
+      "wins": 37,
+      "losses": 9,
+      "draws": 0,
+      "ko": 16
+    },
+    "heightCm": 165,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "nickname": "Avispa"
+  },
+  "angel-espada": {
+    "name": "Ángel Espada",
+    "record": {
+      "wins": 44,
+      "losses": 11,
+      "draws": 4,
+      "ko": 27
+    },
+    "heightCm": 175,
+    "weightClass": "Poids welters",
+    "nickname": "Cholo"
+  },
+  "angel-hernandez": {
+    "name": "Angel Hernandez",
+    "record": {
+      "wins": 30,
+      "losses": 11,
+      "draws": 0,
+      "ko": 17
+    },
+    "heightCm": 173,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "El Toro"
+  },
+  "angel-leyes": {
+    "name": "Ángel Leyes",
+    "record": {
+      "wins": 59,
+      "losses": 23,
+      "draws": 9,
+      "ko": 30
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids plumes",
+    "nickname": "Payuca"
+  },
+  "angel-manfredy": {
+    "name": "Angel Manfredy",
+    "record": {
+      "wins": 43,
+      "losses": 8,
+      "draws": 1,
+      "ko": 32
+    },
+    "stance": "Orthodoxe",
+    "nickname": "El Diablo"
+  },
+  "angel-robinson-garcia": {
+    "name": "Angel Robinson Garcia",
+    "record": {
+      "wins": 138,
+      "losses": 80,
+      "draws": 21,
+      "ko": 55
+    }
+  },
+  "angela-carini": {
+    "name": "Angela Carini",
+    "record": {
+      "wins": 84,
+      "losses": 23,
+      "draws": 0,
+      "ko": 4
+    },
+    "heightCm": 171,
+    "stance": "Southpaw",
+    "weightClass": "Poids super-légers"
+  },
+  "angelina-lukas": {
+    "name": "Angelina Lukas",
+    "record": {
+      "wins": 16,
+      "losses": 2,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 167,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-mouches",
+    "nickname": "Barbie"
+  },
+  "angelique-duchemin": {
+    "name": "Angélique Duchemin",
+    "record": {
+      "wins": 14,
+      "losses": 0,
+      "draws": 0,
+      "ko": 3
+    },
+    "heightCm": 167,
+    "nickname": "La princesse des rings"
+  },
+  "angelo-leo": {
+    "name": "Angelo Leo",
+    "record": {
+      "wins": 26,
+      "losses": 1,
+      "draws": 0,
+      "ko": 12
+    },
+    "heightCm": 168,
+    "reachCm": 175,
+    "nickname": "El Chinito"
+  },
+  "angelo-pena": {
+    "name": "Angelo Peña",
+    "record": {
+      "wins": 13,
+      "losses": 0,
+      "draws": 0,
+      "ko": 7
+    },
+    "heightCm": 171,
+    "stance": "Southpaw",
+    "weightClass": "Poids légers",
+    "nickname": "The One"
+  },
+  "angelo-rottoli": {
+    "name": "Angelo Rottoli",
+    "record": {
+      "wins": 29,
+      "losses": 3,
+      "draws": 2,
+      "ko": 15
+    },
+    "nickname": "Ali"
+  },
+  "angelo-santana": {
+    "name": "Angelo Santana",
+    "record": {
+      "wins": 14,
+      "losses": 2,
+      "draws": 0,
+      "ko": 11
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids super-légers",
+    "nickname": "La Cobra"
+  },
+  "anisha-basheel": {
+    "name": "Anisha Basheel",
+    "record": {
+      "wins": 13,
+      "losses": 10,
+      "draws": 0,
+      "ko": 12
+    },
+    "heightCm": 173,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters",
+    "nickname": "Massacre"
+  },
+  "anita-christensen": {
+    "name": "Anita Christensen",
+    "record": {
+      "wins": 25,
+      "losses": 1,
+      "draws": 1,
+      "ko": 8
+    },
+    "heightCm": 165,
+    "reachCm": 166,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs"
+  },
+  "ann-marie-saccurato": {
+    "name": "Ann Marie Saccurato",
+    "record": {
+      "wins": 15,
+      "losses": 6,
+      "draws": 2,
+      "ko": 6
+    },
+    "heightCm": 169,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers"
+  },
+  "ann-wolfe": {
+    "name": "Ann Wolfe",
+    "record": {
+      "wins": 24,
+      "losses": 1,
+      "draws": 0,
+      "ko": 16
+    },
+    "heightCm": 175,
+    "nickname": "Brown Sugar"
+  },
+  "anne-sophie-mathis": {
+    "name": "Anne Sophie Mathis",
+    "record": {
+      "wins": 27,
+      "losses": 4,
+      "draws": 1,
+      "ko": 23
+    },
+    "heightCm": 178
+  },
+  "anselmo-moreno": {
+    "name": "Anselmo Moreno",
+    "record": {
+      "wins": 36,
+      "losses": 6,
+      "draws": 1,
+      "ko": 12
+    },
+    "heightCm": 168,
+    "reachCm": 177,
+    "nickname": "Chemito"
+  },
+  "antal-kocsis": {
+    "name": "Antal Kocsis",
+    "record": {
+      "wins": 22,
+      "losses": 13,
+      "draws": 5,
+      "ko": 4
+    },
+    "heightCm": 160
+  },
+  "anthony-bonsante": {
+    "name": "Anthony Bonsante",
+    "record": {
+      "wins": 34,
+      "losses": 13,
+      "draws": 3,
+      "ko": 18
+    },
+    "heightCm": 175,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-moyens",
+    "nickname": "The Bullet"
+  },
+  "anthony-crolla": {
+    "name": "Anthony Crolla",
+    "record": {
+      "wins": 35,
+      "losses": 7,
+      "draws": 3,
+      "ko": 13
+    },
+    "heightCm": 174,
+    "reachCm": 170,
+    "nickname": "Million Dollar"
+  },
+  "anthony-dirrell": {
+    "name": "Anthony Dirrell",
+    "record": {
+      "wins": 33,
+      "losses": 2,
+      "draws": 2,
+      "ko": 24
+    },
+    "heightCm": 184,
+    "nickname": "The Dog"
+  },
+  "anthony-hanshaw": {
+    "name": "Anthony Hanshaw",
+    "record": {
+      "wins": 23,
+      "losses": 4,
+      "draws": 2,
+      "ko": 14
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "The Tyger"
+  },
+  "anthony-joshua": {
+    "name": "Anthony Joshua",
+    "record": {
+      "wins": 30,
+      "losses": 4,
+      "draws": 0,
+      "ko": 27
+    },
+    "heightCm": 198,
+    "reachCm": 208,
+    "stance": "Orthodoxe",
+    "nickname": "AJ"
+  },
+  "anthony-martinez": {
+    "name": "Anthony Martinez",
+    "record": {
+      "wins": 20,
+      "losses": 2,
+      "draws": 0,
+      "ko": 18
+    },
+    "reachCm": 198,
+    "stance": "Orthodoxe",
+    "nickname": "White Chocolate"
+  },
+  "anthony-mundine": {
+    "name": "Anthony Mundine",
+    "record": {
+      "wins": 48,
+      "losses": 9,
+      "draws": 0,
+      "ko": 28
+    },
+    "heightCm": 180,
+    "nickname": "The Man"
+  },
+  "anthony-nelson": {
+    "name": "Anthony Nelson",
+    "record": {
+      "wins": 12,
+      "losses": 2,
+      "draws": 0,
+      "ko": 2
+    },
+    "stance": "Orthodoxe",
+    "nickname": "Babyface"
+  },
+  "anthony-ogogo": {
+    "name": "Anthony Ogogo",
+    "record": {
+      "wins": 11,
+      "losses": 1,
+      "draws": 0,
+      "ko": 7
+    },
+    "heightCm": 182,
+    "weightClass": "Poids moyens"
+  },
+  "anthony-olascuaga": {
+    "name": "Anthony Olascuaga",
+    "record": {
+      "wins": 12,
+      "losses": 1,
+      "draws": 0,
+      "ko": 9
+    },
+    "weightClass": "Poids mouches"
+  },
+  "anthony-peterson": {
+    "name": "Anthony Peterson",
+    "record": {
+      "wins": 39,
+      "losses": 1,
+      "draws": 1,
+      "ko": 25
+    },
+    "heightCm": 173,
+    "reachCm": 188,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers",
+    "nickname": "Hazardous"
+  },
+  "anthony-sims-jr": {
+    "name": "Anthony Sims Jr.",
+    "record": {
+      "wins": 23,
+      "losses": 2,
+      "draws": 0,
+      "ko": 20
+    },
+    "heightCm": 185,
+    "reachCm": 201,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "Magician"
+  },
+  "anthony-small": {
+    "name": "Anthony Small",
+    "record": {
+      "wins": 23,
+      "losses": 2,
+      "draws": 0,
+      "ko": 16
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters",
+    "nickname": "Sugar Ray Clay Jones Jr."
+  },
+  "anthony-thompson": {
+    "name": "Anthony Thompson",
+    "record": {
+      "wins": 24,
+      "losses": 3,
+      "draws": 0,
+      "ko": 18
+    },
+    "stance": "Orthodoxe",
+    "nickname": "The Messenger"
+  },
+  "anthony-villanueva": {
+    "name": "Anthony Villanueva",
+    "record": {
+      "wins": 1,
+      "losses": 3,
+      "draws": 0
+    },
+    "heightCm": 165,
+    "weightClass": "Poids plumes"
+  },
+  "anthony-yarde": {
+    "name": "Anthony Yarde",
+    "record": {
+      "wins": 27,
+      "losses": 4,
+      "draws": 0,
+      "ko": 24
+    },
+    "heightCm": 27,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "The Beast from the East"
+  },
+  "anthony-yigit": {
+    "name": "Anthony Yigit",
+    "record": {
+      "wins": 29,
+      "losses": 4,
+      "draws": 1,
+      "ko": 10
+    },
+    "heightCm": 171,
+    "reachCm": 168,
+    "stance": "Southpaw",
+    "weightClass": "Poids welters",
+    "nickname": "Digit Yigit, Can You Dig It"
+  },
+  "antoine-douglas": {
+    "name": "Antoine Douglas",
+    "record": {
+      "wins": 22,
+      "losses": 2,
+      "draws": 1,
+      "ko": 16
+    },
+    "heightCm": 183,
+    "reachCm": 188,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "Action"
+  },
+  "antoine-martin": {
+    "name": "Antoine Martin",
+    "record": {
+      "wins": 30,
+      "losses": 9,
+      "draws": 4,
+      "ko": 17
+    },
+    "weightClass": "Poids mouches"
+  },
+  "anton-christoforidis": {
+    "name": "Anton Christoforidis",
+    "record": {
+      "wins": 53,
+      "losses": 15,
+      "draws": 8,
+      "ko": 13
+    },
+    "heightCm": 173
+  },
+  "anton-josipovic": {
+    "name": "Anton Josipović",
+    "record": {
+      "wins": 8,
+      "losses": 2,
+      "draws": 0,
+      "ko": 4
+    },
+    "heightCm": 180
+  },
+  "anton-raadik": {
+    "name": "Anton Raadik",
+    "record": {
+      "wins": 37,
+      "losses": 25,
+      "draws": 1,
+      "ko": 26
+    },
+    "heightCm": 175,
+    "weightClass": "Poids moyens"
+  },
+  "antonin-decarie": {
+    "name": "Antonin Décarie",
+    "record": {
+      "wins": 31,
+      "losses": 2,
+      "draws": 0,
+      "ko": 10
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters"
+  },
+  "antonio-amaya": {
+    "name": "Antonio Amaya",
+    "record": {
+      "wins": 48,
+      "losses": 22,
+      "draws": 0,
+      "ko": 10
+    }
+  },
+  "antonio-avelar": {
+    "name": "Antonio Avelar",
+    "record": {
+      "wins": 39,
+      "losses": 13,
+      "draws": 1,
+      "ko": 32
+    },
+    "heightCm": 163
+  },
+  "antonio-brancalion": {
+    "name": "Antonio Brancalion",
+    "record": {
+      "wins": 32,
+      "losses": 8,
+      "draws": 2,
+      "ko": 8
+    },
+    "heightCm": 185,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds"
+  },
+  "antonio-cermeno": {
+    "name": "Antonio Cermeño",
+    "record": {
+      "wins": 45,
+      "losses": 7,
+      "draws": 0,
+      "ko": 31
+    },
+    "heightCm": 177,
+    "nickname": "El Coloso"
+  },
+  "antonio-cervantes": {
+    "name": "Antonio Cervantes",
+    "record": {
+      "wins": 91,
+      "losses": 12,
+      "draws": 3,
+      "ko": 44
+    },
+    "heightCm": 175,
+    "nickname": "Kid Pambelé"
+  },
+  "antonio-de-la-fuente": {
+    "name": "Antonio De La Fuente",
+    "record": {
+      "wins": 73,
+      "losses": 33,
+      "draws": 10,
+      "ko": 44
+    },
+    "heightCm": 192,
+    "reachCm": 201,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Tony Fuente"
+  },
+  "antonio-demarco": {
+    "name": "Antonio DeMarco",
+    "record": {
+      "wins": 33,
+      "losses": 9,
+      "draws": 1,
+      "ko": 24
+    },
+    "heightCm": 178,
+    "reachCm": 180,
+    "nickname": "Tony de Marco"
+  },
+  "antonio-diaz": {
+    "name": "Antonio Díaz",
+    "record": {
+      "wins": 47,
+      "losses": 6,
+      "draws": 1,
+      "ko": 30
+    },
+    "heightCm": 180,
+    "reachCm": 184,
+    "stance": "Orthodoxe",
+    "nickname": "Toño"
+  },
+  "antonio-escalante": {
+    "name": "Antonio Escalante",
+    "record": {
+      "wins": 29,
+      "losses": 8,
+      "draws": 0,
+      "ko": 20
+    },
+    "heightCm": 172,
+    "reachCm": 180,
+    "stance": "Orthodoxe",
+    "nickname": "Tony"
+  },
+  "antonio-esparragoza": {
+    "name": "Antonio Esparragoza",
+    "record": {
+      "wins": 30,
+      "losses": 2,
+      "draws": 4,
+      "ko": 27
+    },
+    "heightCm": 170,
+    "reachCm": 175,
+    "weightClass": "Poids plumes"
+  },
+  "antonio-gomez": {
+    "name": "Antonio Gomez",
+    "record": {
+      "wins": 43,
+      "losses": 7,
+      "draws": 2,
+      "ko": 20
+    },
+    "heightCm": 168,
+    "weightClass": "Poids plumes"
+  },
+  "antonio-hernandez-duenez": {
+    "name": "Antonio Hernández Duéñez",
+    "record": {
+      "wins": 53,
+      "losses": 24,
+      "draws": 0,
+      "ko": 42
+    },
+    "heightCm": 165,
+    "nickname": "Monito"
+  },
+  "antonio-larell-davis": {
+    "name": "Antonio Larell Davis",
+    "record": {
+      "wins": 18,
+      "losses": 3,
+      "draws": 1,
+      "ko": 11
+    },
+    "reachCm": 182,
+    "stance": "Southpaw",
+    "nickname": "T-Rex"
+  },
+  "antonio-lozada-jr": {
+    "name": "Antonio Lozada, Jr.",
+    "record": {
+      "wins": 40,
+      "losses": 5,
+      "draws": 1,
+      "ko": 34
+    },
+    "heightCm": 183,
+    "reachCm": 187,
+    "stance": "Orthodoxe",
+    "nickname": "Cañitas"
+  },
+  "antonio-margarrito": {
+    "name": "Antonio Margarrito",
+    "record": {
+      "wins": 41,
+      "losses": 8,
+      "draws": 0,
+      "ko": 27
+    },
+    "heightCm": 180,
+    "nickname": "Tony"
+  },
+  "antonio-nieves": {
+    "name": "Antonio Nieves",
+    "record": {
+      "wins": 20,
+      "losses": 4,
+      "draws": 2,
+      "ko": 11
+    },
+    "heightCm": 163,
+    "reachCm": 174,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs",
+    "nickname": "Carita"
+  },
+  "antonio-orozco": {
+    "name": "Antonio Orozco",
+    "record": {
+      "wins": 28,
+      "losses": 2,
+      "draws": 0,
+      "ko": 17
+    },
+    "heightCm": 170,
+    "reachCm": 178,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters",
+    "nickname": "Relentless"
+  },
+  "antonio-rivera": {
+    "name": "Antonio Rivera",
+    "record": {
+      "wins": 36,
+      "losses": 13,
+      "draws": 3,
+      "ko": 32
+    },
+    "heightCm": 165,
+    "nickname": "Tonito"
+  },
+  "antonio-rodrigo-nogueira": {
+    "name": "Antônio Rodrigo Nogueira",
+    "record": {
+      "wins": 34,
+      "losses": 10,
+      "draws": 0
+    },
+    "weightClass": "Poids lourds",
+    "nickname": "{{lang|pt|Minotauro}} {{lang|en|Big Nog}}"
+  },
+  "antonio-rogerio-nogueira": {
+    "name": "Antônio Rogério Nogueira",
+    "record": {
+      "wins": 22,
+      "losses": 8,
+      "draws": 0
+    },
+    "nickname": "{{lang|en|Lil Nog}}"
+  },
+  "antonio-roldan": {
+    "name": "Antonio Roldán",
+    "record": {
+      "wins": 3,
+      "losses": 2,
+      "draws": 1,
+      "ko": 2
+    }
+  },
+  "antonio-tarver": {
+    "name": "Antonio Tarver",
+    "record": {
+      "wins": 31,
+      "losses": 6,
+      "draws": 1,
+      "ko": 22
+    },
+    "heightCm": 188,
+    "nickname": "Magic Man"
+  },
+  "antonio-vargas": {
+    "name": "Antonio Vargas",
+    "record": {
+      "wins": 19,
+      "losses": 2,
+      "draws": 1,
+      "ko": 11
+    },
+    "heightCm": 166,
+    "reachCm": 168,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs"
+  },
+  "antony-fowler": {
+    "name": "Antony Fowler",
+    "record": {
+      "wins": 16,
+      "losses": 2,
+      "draws": 0,
+      "ko": 12
+    },
+    "heightCm": 180,
+    "reachCm": 180,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "The Machine"
+  },
+  "anwar-oshana": {
+    "name": "Anwar Oshana",
+    "record": {
+      "wins": 23,
+      "losses": 5,
+      "draws": 0,
+      "ko": 13
+    },
+    "heightCm": 180,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-moyens"
+  },
+  "anyetei-laryea": {
+    "name": "Anyetei Laryea",
+    "record": {
+      "wins": 18,
+      "losses": 6,
+      "draws": 0
+    },
+    "nickname": "The Chameleon"
+  },
+  "apichet-petchmanee": {
+    "name": "Apichet Petchmanee",
+    "record": {
+      "wins": 16,
+      "losses": 2,
+      "draws": 0,
+      "ko": 5
+    },
+    "heightCm": 175,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers"
+  },
+  "apidej-sit-hrun": {
+    "name": "Apidej Sit Hrun",
+    "record": {
+      "wins": 13,
+      "losses": 5,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 178,
+    "weightClass": "Poids welters",
+    "nickname": "Narong Throngmangee"
+  },
+  "apollo-sweet": {
+    "name": "Apollo Sweet",
+    "record": {
+      "wins": 13,
+      "losses": 4,
+      "draws": 3
+    },
+    "stance": "Southpaw"
+  },
+  "apti-davtayev": {
+    "name": "Apti Davtayev",
+    "record": {
+      "wins": 20,
+      "losses": 1,
+      "draws": 1,
+      "ko": 19
+    },
+    "heightCm": 196,
+    "reachCm": 199,
+    "weightClass": "Poids lourds"
+  },
+  "aquiles-guzman": {
+    "name": "Aquiles Guzmán",
+    "record": {
+      "wins": 14,
+      "losses": 14,
+      "draws": 3,
+      "ko": 8
+    },
+    "weightClass": "Poids mouches"
+  },
+  "arash-usmanee": {
+    "name": "Arash Usmanee",
+    "record": {
+      "wins": 21,
+      "losses": 2,
+      "draws": 1,
+      "ko": 10
+    },
+    "heightCm": 173,
+    "reachCm": 188,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-plumes"
+  },
+  "archie-moore": {
+    "name": "Archie Moore",
+    "record": {
+      "wins": 186,
+      "losses": 23,
+      "draws": 10,
+      "ko": 132
+    },
+    "heightCm": 180,
+    "nickname": "Old Mongoose"
+  },
+  "archie-sharp": {
+    "name": "Archie Sharp",
+    "record": {
+      "wins": 26,
+      "losses": 2,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 175,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers",
+    "nickname": "Sharpshooter"
+  },
+  "ardin-diale": {
+    "name": "Ardin Diale",
+    "record": {
+      "wins": 35,
+      "losses": 17,
+      "draws": 4,
+      "ko": 17
+    },
+    "heightCm": 160,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mouches",
+    "nickname": "The Jackal"
+  },
+  "arely-mucino": {
+    "name": "Arely Muciño",
+    "record": {
+      "wins": 32,
+      "losses": 5,
+      "draws": 2,
+      "ko": 11
+    },
+    "heightCm": 160,
+    "reachCm": 163,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mouches",
+    "nickname": "Ametralladora"
+  },
+  "argenis-mendez": {
+    "name": "Argenis Mendez",
+    "record": {
+      "wins": 25,
+      "losses": 5,
+      "draws": 1,
+      "ko": 12
+    },
+    "heightCm": 175,
+    "reachCm": 178
+  },
+  "arif-magomedov": {
+    "name": "Arif Magomedov",
+    "record": {
+      "wins": 18,
+      "losses": 3,
+      "draws": 0,
+      "ko": 11
+    },
+    "heightCm": 178,
+    "reachCm": 175,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "The Predator"
+  },
+  "aris-ambriz": {
+    "name": "Aris Ambríz",
+    "record": {
+      "wins": 16,
+      "losses": 3,
+      "draws": 1,
+      "ko": 8
+    },
+    "heightCm": 182,
+    "reachCm": 185,
+    "stance": "Orthodoxe",
+    "nickname": "Killer"
+  },
+  "aristides-perez": {
+    "name": "Aristides Perez",
+    "record": {
+      "wins": 31,
+      "losses": 12,
+      "draws": 2,
+      "ko": 17
+    },
+    "reachCm": 182,
+    "stance": "Southpaw",
+    "nickname": "Papa"
+  },
+  "arlen-lopez": {
+    "name": "Arlen López",
+    "record": {
+      "wins": 2,
+      "losses": 0,
+      "draws": 0,
+      "ko": 2
+    },
+    "heightCm": 178
+  },
+  "armand-krajnc": {
+    "name": "Armand Krajnc",
+    "record": {
+      "wins": 29,
+      "losses": 3,
+      "draws": 0,
+      "ko": 21
+    },
+    "heightCm": 181,
+    "nickname": "Lion"
+  },
+  "armando-muniz": {
+    "name": "Armando Muñíz",
+    "record": {
+      "wins": 44,
+      "losses": 14,
+      "draws": 1,
+      "ko": 30
+    },
+    "heightCm": 172,
+    "reachCm": 180,
+    "stance": "Orthodoxe"
+  },
+  "armando-resendiz": {
+    "name": "Armando Reséndiz",
+    "record": {
+      "wins": 16,
+      "losses": 3,
+      "draws": 0,
+      "ko": 11
+    },
+    "heightCm": 180,
+    "reachCm": 175,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-moyens",
+    "nickname": "Toro (\"Bull\")"
+  },
+  "armando-robles": {
+    "name": "Armando Robles",
+    "record": {
+      "wins": 31,
+      "losses": 7,
+      "draws": 2,
+      "ko": 18
+    },
+    "heightCm": 180,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "nickname": "Chato"
+  },
+  "armando-santos": {
+    "name": "Armando Santos",
+    "record": {
+      "wins": 15,
+      "losses": 5,
+      "draws": 1,
+      "ko": 8
+    },
+    "heightCm": 165,
+    "reachCm": 165,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mouches",
+    "nickname": "Cobra"
+  },
+  "armando-torres": {
+    "name": "Armando Torres",
+    "record": {
+      "wins": 25,
+      "losses": 18,
+      "draws": 0,
+      "ko": 19
+    },
+    "heightCm": 165,
+    "stance": "Orthodoxe",
+    "nickname": "Ichiro Ozeki"
+  },
+  "arno-kolblin": {
+    "name": "Arno Kölblin",
+    "record": {
+      "wins": 50,
+      "losses": 20,
+      "draws": 8,
+      "ko": 20
+    },
+    "weightClass": "Poids lourds"
+  },
+  "arnold-barboza-jr": {
+    "name": "Arnold Barboza Jr.",
+    "record": {
+      "wins": 33,
+      "losses": 1,
+      "draws": 0,
+      "ko": 11
+    },
+    "heightCm": 175,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters"
+  },
+  "arnold-gjergjaj": {
+    "name": "Arnold Gjergjaj",
+    "record": {
+      "wins": 38,
+      "losses": 3,
+      "draws": 0,
+      "ko": 27
+    },
+    "heightCm": 196,
+    "reachCm": 201,
+    "weightClass": "Poids lourds",
+    "nickname": "The Cobra"
+  },
+  "arnold-taylor": {
+    "name": "Arnold Taylor",
+    "record": {
+      "wins": 40,
+      "losses": 8,
+      "draws": 1,
+      "ko": 17
+    },
+    "heightCm": 170
+  },
+  "arnold-vanderlyde": {
+    "name": "Arnold Vanderlyde",
+    "record": {
+      "wins": 233,
+      "losses": 20,
+      "draws": 1
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids lourds"
+  },
+  "arsen-goulamirian": {
+    "name": "Arsen Goulamirian",
+    "record": {
+      "wins": 27,
+      "losses": 1,
+      "draws": 0,
+      "ko": 18
+    },
+    "heightCm": 186,
+    "nickname": "Feroz"
+  },
+  "arsen-martirosian": {
+    "name": "Arsen Martirosian",
+    "record": {
+      "wins": 18,
+      "losses": 5,
+      "draws": 0,
+      "ko": 8
+    },
+    "nickname": "Le petit taureau d’Erevan"
+  },
+  "arslanbek-makhmudov": {
+    "name": "Arslanbek Makhmudov",
+    "record": {
+      "wins": 21,
+      "losses": 3,
+      "draws": 0,
+      "ko": 19
+    },
+    "heightCm": 197,
+    "reachCm": 194,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Lion"
+  },
+  "art-aragon": {
+    "name": "Art Aragon",
+    "record": {
+      "wins": 90,
+      "losses": 20,
+      "draws": 6,
+      "ko": 62
+    },
+    "heightCm": 178,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers",
+    "nickname": "Golden Boy"
+  },
+  "art-hafey": {
+    "name": "Art Hafey",
+    "record": {
+      "wins": 54,
+      "losses": 8,
+      "draws": 4,
+      "ko": 36
+    },
+    "heightCm": 157,
+    "reachCm": 160,
+    "stance": "Orthodoxe",
+    "nickname": "Irish Art The Toy Tiger"
+  },
+  "art-hovhannisyan": {
+    "name": "Art Hovhannisyan",
+    "record": {
+      "wins": 18,
+      "losses": 4,
+      "draws": 3,
+      "ko": 10
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-plumes",
+    "nickname": "Lionheart"
+  },
+  "art-lasky": {
+    "name": "Art Lasky",
+    "record": {
+      "wins": 44,
+      "losses": 9,
+      "draws": 6,
+      "ko": 34
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "artem-chebotarev": {
+    "name": "Artem Chebotarev",
+    "record": {
+      "wins": 6,
+      "losses": 0,
+      "draws": 0,
+      "ko": 4
+    },
+    "heightCm": 185,
+    "weightClass": "Poids moyens"
+  },
+  "artem-dalakian": {
+    "name": "Artem Dalakian",
+    "record": {
+      "wins": 21,
+      "losses": 1,
+      "draws": 0,
+      "ko": 15
+    },
+    "heightCm": 164,
+    "weightClass": "Poids mouches"
+  },
+  "artem-harutyunyan": {
+    "name": "Artem Harutyunyan",
+    "record": {
+      "wins": 12,
+      "losses": 2,
+      "draws": 0,
+      "ko": 7
+    },
+    "heightCm": 172,
+    "weightClass": "Poids super-légers",
+    "nickname": "The Original"
+  },
+  "artem-karpets": {
+    "name": "Artem Karpets",
+    "record": {
+      "wins": 21,
+      "losses": 16,
+      "draws": 0,
+      "ko": 6
+    },
+    "heightCm": 182,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens"
+  },
+  "artem-suslenkov": {
+    "name": "Artem Suslenkov",
+    "record": {
+      "wins": 15,
+      "losses": 0,
+      "draws": 0,
+      "ko": 10
+    },
+    "heightCm": 185,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "artemio-reyes": {
+    "name": "Artemio Reyes",
+    "record": {
+      "wins": 23,
+      "losses": 2,
+      "draws": 0,
+      "ko": 19
+    },
+    "heightCm": 183,
+    "reachCm": 183,
+    "weightClass": "Poids welters",
+    "nickname": "King"
+  },
+  "arthur-abraham": {
+    "name": "Arthur Abraham",
+    "record": {
+      "wins": 47,
+      "losses": 6,
+      "draws": 0,
+      "ko": 30
+    },
+    "heightCm": 175,
+    "reachCm": 183,
+    "nickname": "King Arthur"
+  },
+  "arthur-biyarslanov": {
+    "name": "Arthur Biyarslanov",
+    "record": {
+      "wins": 20,
+      "losses": 0,
+      "draws": 0,
+      "ko": 16
+    },
+    "heightCm": 175,
+    "stance": "Southpaw",
+    "weightClass": "Poids super-légers",
+    "nickname": "The Chechen Wolf"
+  },
+  "arthur-king": {
+    "name": "Arthur King",
+    "record": {
+      "wins": 63,
+      "losses": 13,
+      "draws": 0
+    },
+    "stance": "Orthodoxe",
+    "nickname": "Little Arthur (alias)"
+  },
+  "arthur-mayisela": {
+    "name": "Arthur Mayisela",
+    "record": {
+      "wins": 20,
+      "losses": 4,
+      "draws": 2
+    },
+    "stance": "Orthodoxe",
+    "nickname": "The Fighting Prince The People's Champ"
+  },
+  "arthur-pelkey": {
+    "name": "Arthur Pelkey",
+    "record": {
+      "wins": 27,
+      "losses": 23,
+      "draws": 6,
+      "ko": 17
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "arthur-villanueva": {
+    "name": "Arthur Villanueva",
+    "record": {
+      "wins": 35,
+      "losses": 6,
+      "draws": 1,
+      "ko": 20
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-mouches",
+    "nickname": "King Arthur\" \"El Matador"
+  },
+  "arthur-williams": {
+    "name": "Arthur Williams",
+    "record": {
+      "wins": 46,
+      "losses": 16,
+      "draws": 1,
+      "ko": 30
+    },
+    "heightCm": 188,
+    "nickname": "King"
+  },
+  "arthur-wyns": {
+    "name": "Arthur Wyns",
+    "record": {
+      "wins": 79,
+      "losses": 23,
+      "draws": 13,
+      "ko": 53
+    },
+    "heightCm": 161,
+    "weightClass": "Poids plumes"
+  },
+  "artie-levine": {
+    "name": "Artie Levine",
+    "record": {
+      "wins": 53,
+      "losses": 15,
+      "draws": 5,
+      "ko": 38
+    },
+    "stance": "Orthodoxe",
+    "nickname": "Artie"
+  },
+  "artur-akavov": {
+    "name": "Artur Akavov",
+    "record": {
+      "wins": 20,
+      "losses": 4,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 176,
+    "stance": "Southpaw",
+    "weightClass": "Poids moyens",
+    "nickname": "Wolverine"
+  },
+  "artur-bazeyan": {
+    "name": "Artur Bazeyan",
+    "record": {
+      "wins": 2,
+      "losses": 0,
+      "draws": 0,
+      "ko": 1
+    }
+  },
+  "artur-beterbiev": {
+    "name": "Artur Beterbiev",
+    "record": {
+      "wins": 21,
+      "losses": 1,
+      "draws": 0,
+      "ko": 20
+    },
+    "heightCm": 182,
+    "reachCm": 185,
+    "nickname": "Thor"
+  },
+  "artur-grigorian": {
+    "name": "Artur Grigorian",
+    "record": {
+      "wins": 38,
+      "losses": 1,
+      "draws": 0,
+      "ko": 22
+    },
+    "heightCm": 171,
+    "weightClass": "Poids légers",
+    "nickname": "King Artur"
+  },
+  "artur-mann": {
+    "name": "Artur Mann",
+    "record": {
+      "wins": 25,
+      "losses": 5,
+      "draws": 0,
+      "ko": 13
+    },
+    "heightCm": 185,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds-légers",
+    "nickname": "Thunder"
+  },
+  "arturo-badillo": {
+    "name": "Arturo Badillo",
+    "record": {
+      "wins": 21,
+      "losses": 10,
+      "draws": 0,
+      "ko": 19
+    },
+    "heightCm": 174,
+    "reachCm": 178,
+    "stance": "Orthodoxe",
+    "nickname": "Fuerte"
+  },
+  "arturo-frias": {
+    "name": "Arturo Frias",
+    "record": {
+      "wins": 28,
+      "losses": 5,
+      "draws": 0,
+      "ko": 8
+    },
+    "heightCm": 170,
+    "weightClass": "Poids légers"
+  },
+  "arturo-gatti": {
+    "name": "Arturo Gatti",
+    "record": {
+      "wins": 40,
+      "losses": 9,
+      "draws": 0,
+      "ko": 31
+    },
+    "reachCm": 171,
+    "nickname": "{{langue|en|Thunder}}"
+  },
+  "arturo-godoy": {
+    "name": "Arturo Godoy",
+    "record": {
+      "wins": 92,
+      "losses": 22,
+      "draws": 12,
+      "ko": 52
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "arturo-gomez": {
+    "name": "Arturo Gómez",
+    "record": {
+      "wins": 20,
+      "losses": 25,
+      "draws": 5,
+      "ko": 9
+    },
+    "heightCm": 173,
+    "reachCm": 180,
+    "stance": "Orthodoxe"
+  },
+  "arturo-morua": {
+    "name": "Arturo Morua",
+    "record": {
+      "wins": 26,
+      "losses": 15,
+      "draws": 1,
+      "ko": 15
+    },
+    "heightCm": 178,
+    "reachCm": 180,
+    "stance": "Orthodoxe",
+    "nickname": "El Silencioso"
+  },
+  "asa-sandell": {
+    "name": "Åsa Sandell",
+    "record": {
+      "wins": 6,
+      "losses": 3,
+      "draws": 2,
+      "ko": 3
+    },
+    "heightCm": 185,
+    "weightClass": "Poids moyens"
+  },
+  "asa-stevens": {
+    "name": "Asa Stevens",
+    "record": {
+      "wins": 1,
+      "losses": 0,
+      "draws": 0,
+      "ko": 0
+    },
+    "heightCm": 165,
+    "stance": "Southpaw",
+    "weightClass": "Poids coqs"
+  },
+  "asadkhuja-muydinkhujaev": {
+    "name": "Asadkhuja Muydinkhujaev",
+    "record": {
+      "wins": 2,
+      "losses": 0,
+      "draws": 0,
+      "ko": 1
+    },
+    "heightCm": 174,
+    "stance": "Southpaw",
+    "weightClass": "Poids welters"
+  },
+  "ashley-brace": {
+    "name": "Ashley Brace",
+    "record": {
+      "wins": 8,
+      "losses": 0,
+      "draws": 1,
+      "ko": 3
+    },
+    "heightCm": 157,
+    "stance": "Orthodoxe"
+  },
+  "ashley-lane": {
+    "name": "Ashley Lane",
+    "record": {
+      "wins": 18,
+      "losses": 11,
+      "draws": 2,
+      "ko": 3
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids plumes",
+    "nickname": "Flash"
+  },
+  "ashley-sexton": {
+    "name": "Ashley Sexton",
+    "record": {
+      "wins": 16,
+      "losses": 2,
+      "draws": 2,
+      "ko": 5
+    },
+    "stance": "Orthodoxe",
+    "nickname": "Flash Ash"
+  },
+  "ashley-theophane": {
+    "name": "Ashley Theophane",
+    "record": {
+      "wins": 50,
+      "losses": 9,
+      "draws": 1
+    },
+    "heightCm": 173,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters",
+    "nickname": "Treasure"
+  },
+  "ashton-sylve": {
+    "name": "Ashton Sylve",
+    "record": {
+      "wins": 14,
+      "losses": 1,
+      "draws": 0,
+      "ko": 10
+    },
+    "heightCm": 173,
+    "reachCm": 173,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers",
+    "nickname": "H2O"
+  },
+  "aslambek-idigov": {
+    "name": "Aslambek Idigov",
+    "record": {
+      "wins": 23,
+      "losses": 1,
+      "draws": 0,
+      "ko": 7
+    },
+    "heightCm": 173,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-moyens",
+    "nickname": "The Hulk"
+  },
+  "asley-gonzalez-macias": {
+    "name": "Asley Gonzalez Macias",
+    "record": {
+      "wins": 17,
+      "losses": 2,
+      "draws": 0,
+      "ko": 7
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mouches",
+    "nickname": "La Chiquita (\"The Little Girl\")"
+  },
+  "asror-vohidov": {
+    "name": "Asror Vohidov",
+    "record": {
+      "wins": 7,
+      "losses": 0,
+      "draws": 0,
+      "ko": 3
+    },
+    "heightCm": 168,
+    "stance": "Southpaw",
+    "weightClass": "Poids super-coqs"
+  },
+  "aston-palicte": {
+    "name": "Aston Palicte",
+    "record": {
+      "wins": 28,
+      "losses": 6,
+      "draws": 1,
+      "ko": 23
+    },
+    "heightCm": 170,
+    "reachCm": 176,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-mouches",
+    "nickname": "Mighty"
+  },
+  "atagun-yalc-nkaya": {
+    "name": "Atagün Yalçınkaya",
+    "record": {
+      "wins": 4,
+      "losses": 0,
+      "draws": 0,
+      "ko": 4
+    },
+    "heightCm": 165
+  },
+  "ato-plodzicki-faoagali": {
+    "name": "Ato Plodzicki-Faoagali",
+    "record": {
+      "wins": 2,
+      "losses": 0,
+      "draws": 0,
+      "ko": 1
+    },
+    "heightCm": 185
+  },
+  "attila-levin": {
+    "name": "Attila Levin",
+    "record": {
+      "wins": 34,
+      "losses": 4,
+      "draws": 0,
+      "ko": 27
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The Hun"
+  },
+  "audley-harrison": {
+    "name": "Audley Harrison",
+    "record": {
+      "wins": 31,
+      "losses": 7,
+      "draws": 0,
+      "ko": 23
+    },
+    "heightCm": 198,
+    "nickname": "A-Force"
+  },
+  "aurel-toma": {
+    "name": "Aurel Toma",
+    "record": {
+      "wins": 51,
+      "losses": 17,
+      "draws": 12,
+      "ko": 16
+    },
+    "heightCm": 163
+  },
+  "aureliano-bolognesi": {
+    "name": "Aureliano Bolognesi",
+    "record": {
+      "wins": 17,
+      "losses": 2,
+      "draws": 2,
+      "ko": 3
+    },
+    "heightCm": 170,
+    "weightClass": "Poids légers"
+  },
+  "austin-rice": {
+    "name": "Austin Rice",
+    "record": {
+      "wins": 45,
+      "losses": 24,
+      "draws": 57,
+      "ko": 11
+    },
+    "stance": "Orthodoxe",
+    "nickname": "The Connecticut Ironman"
+  },
+  "austin-trout": {
+    "name": "Austin Trout",
+    "record": {
+      "wins": 37,
+      "losses": 5,
+      "draws": 1,
+      "ko": 18
+    },
+    "heightCm": 177,
+    "reachCm": 185,
+    "stance": "Southpaw",
+    "weightClass": "Poids moyens",
+    "nickname": "No Doubt"
+  },
+  "austin-williams": {
+    "name": "Austin Williams",
+    "record": {
+      "wins": 20,
+      "losses": 2,
+      "draws": 0,
+      "ko": 13
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "Ammo"
+  },
+  "avenamar-peralta": {
+    "name": "Avenamar Peralta",
+    "record": {
+      "wins": 103,
+      "losses": 32,
+      "draws": 15,
+      "ko": 64
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds"
+  },
+  "avni-y-ld-r-m": {
+    "name": "Avni Yıldırım",
+    "record": {
+      "wins": 29,
+      "losses": 5,
+      "draws": 0,
+      "ko": 18
+    },
+    "heightCm": 182,
+    "reachCm": 178,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "Mr. Robot"
+  },
+  "avtandil-khurtsidze": {
+    "name": "Avtandil Khurtsidze",
+    "record": {
+      "wins": 34,
+      "losses": 3,
+      "draws": 3,
+      "ko": 23
+    },
+    "heightCm": 163,
+    "reachCm": 185,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "Tazman"
+  },
+  "axel-schulz": {
+    "name": "Axel Schulz",
+    "record": {
+      "wins": 26,
+      "losses": 5,
+      "draws": 1,
+      "ko": 11
+    },
+    "heightCm": 191,
+    "reachCm": 193,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Der sanfte Riese (\"The Gentle Giant\")"
+  },
+  "ayaka-miyao": {
+    "name": "Ayaka Miyao",
+    "record": {
+      "wins": 25,
+      "losses": 10,
+      "draws": 2,
+      "ko": 6
+    },
+    "heightCm": 154,
+    "reachCm": 151,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-mouches"
+  },
+  "ayanda-ndulani": {
+    "name": "Ayanda Ndulani",
+    "record": {
+      "wins": 13,
+      "losses": 3,
+      "draws": 1,
+      "ko": 4
+    },
+    "stance": "Orthodoxe"
+  },
+  "ayse-cag-r-r": {
+    "name": "Ayşe Çağırır",
+    "record": {
+      "wins": 18,
+      "losses": 10,
+      "draws": 0,
+      "ko": 0
+    },
+    "heightCm": 160,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-mouches"
+  },
+  "ayub-kalule": {
+    "name": "Ayub Kalule",
+    "record": {
+      "wins": 46,
+      "losses": 4,
+      "draws": 0,
+      "ko": 23
+    },
+    "heightCm": 173
+  },
+  "azat-hovhannisyan": {
+    "name": "Azat Hovhannisyan",
+    "record": {
+      "wins": 21,
+      "losses": 6,
+      "draws": 0,
+      "ko": 17
+    },
+    "heightCm": 168,
+    "reachCm": 165,
+    "nickname": "Crazy A"
+  },
+  "azinga-fuzile": {
+    "name": "Azinga Fuzile",
+    "record": {
+      "wins": 17,
+      "losses": 2,
+      "draws": 0,
+      "ko": 11
+    },
+    "heightCm": 170,
+    "reachCm": 178,
+    "stance": "Southpaw",
+    "weightClass": "Poids super-plumes",
+    "nickname": "Golden Boy"
+  },
+  "aziz-raguig": {
+    "name": "Aziz Raguig",
+    "record": {
+      "wins": 118,
+      "losses": 8,
+      "draws": 4,
+      "ko": 41
+    },
+    "heightCm": 186,
+    "nickname": "The Scorpion"
+  },
+  "azizbek-abdugofurov": {
+    "name": "Azizbek Abdugofurov",
+    "record": {
+      "wins": 14,
+      "losses": 1,
+      "draws": 0,
+      "ko": 5
+    },
+    "heightCm": 178,
+    "weightClass": "Poids super-moyens",
+    "nickname": "AAA"
+  },
+  "azumah-nelson": {
+    "name": "Azumah Nelson",
+    "record": {
+      "wins": 39,
+      "losses": 6,
+      "draws": 2,
+      "ko": 28
+    },
+    "heightCm": 165,
+    "nickname": "The Professor"
+  },
+  "b-j-flores": {
+    "name": "B. J. Flores",
+    "record": {
+      "wins": 34,
+      "losses": 4,
+      "draws": 1,
+      "ko": 21
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds-légers",
+    "nickname": "El Peligroso"
+  },
+  "baby-arizmendi": {
+    "name": "Baby Arizmendi",
+    "record": {
+      "wins": 77,
+      "losses": 28,
+      "draws": 16,
+      "ko": 13
+    },
+    "heightCm": 164,
+    "nickname": "Baby"
+  },
+  "baby-yack": {
+    "name": "Baby Yack",
+    "record": {
+      "wins": 23,
+      "losses": 13,
+      "draws": 1,
+      "ko": 4
+    },
+    "heightCm": 165,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids coqs",
+    "nickname": "Baby Yack"
+  },
+  "bader-samreen": {
+    "name": "Bader Samreen",
+    "record": {
+      "wins": 11,
+      "losses": 0,
+      "draws": 0,
+      "ko": 8
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers",
+    "nickname": "The Master"
+  },
+  "badien-hasso": {
+    "name": "Badien Hasso",
+    "record": {
+      "wins": 23,
+      "losses": 0,
+      "draws": 0,
+      "ko": 12
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "Bad Man The Kurdish Lion"
+  },
+  "badou-jack": {
+    "name": "Badou Jack",
+    "record": {
+      "wins": 29,
+      "losses": 4,
+      "draws": 3,
+      "ko": 17
+    },
+    "heightCm": 185,
+    "reachCm": 185,
+    "nickname": "The Ripper"
+  },
+  "badru-lusambya": {
+    "name": "Badru Lusambya",
+    "record": {
+      "wins": 25,
+      "losses": 3,
+      "draws": 2,
+      "ko": 23
+    },
+    "stance": "Southpaw",
+    "nickname": "Mr. Crush"
+  },
+  "bae-ki-suk": {
+    "name": "Bae Ki-suk",
+    "record": {
+      "wins": 7,
+      "losses": 7,
+      "draws": 1,
+      "ko": 4
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-mouches"
+  },
+  "baek-in-chul": {
+    "name": "Baek In-chul",
+    "record": {
+      "wins": 47,
+      "losses": 3,
+      "draws": 0,
+      "ko": 43
+    },
+    "heightCm": 178
+  },
+  "baek-jong-kwon": {
+    "name": "Baek Jong-kwon",
+    "record": {
+      "wins": 23,
+      "losses": 1,
+      "draws": 1,
+      "ko": 20
+    },
+    "heightCm": 175,
+    "reachCm": 168
+  },
+  "bahubali": {
+    "name": "Bahubali",
+    "record": {
+      "wins": 6,
+      "losses": 2,
+      "draws": 0,
+      "ko": 5
+    },
+    "heightCm": 198,
+    "stance": "Orthodoxe"
+  },
+  "bai-elorde": {
+    "name": "Bai Elorde",
+    "record": {
+      "wins": 24,
+      "losses": 2,
+      "draws": 1,
+      "ko": 11
+    },
+    "heightCm": 170,
+    "stance": "Southpaw",
+    "weightClass": "Poids légers",
+    "nickname": "Bai"
+  },
+  "bakary-samake": {
+    "name": "Bakary Samake",
+    "record": {
+      "wins": 19,
+      "losses": 1,
+      "draws": 0,
+      "ko": 11
+    },
+    "heightCm": 180,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters"
+  },
+  "bakhodir-jalolov": {
+    "name": "Bakhodir Jalolov",
+    "record": {
+      "wins": 16,
+      "losses": 0,
+      "draws": 0,
+      "ko": 14
+    },
+    "heightCm": 201,
+    "reachCm": 202
+  },
+  "bakhodur-usmonov": {
+    "name": "Bakhodur Usmonov",
+    "record": {
+      "wins": 12,
+      "losses": 1,
+      "draws": 0,
+      "ko": 5
+    },
+    "heightCm": 174
+  },
+  "bakhram-murtazaliev": {
+    "name": "Bakhram Murtazaliev",
+    "record": {
+      "wins": 23,
+      "losses": 1,
+      "draws": 1,
+      "ko": 17
+    },
+    "heightCm": 182,
+    "reachCm": 188
+  },
+  "balazs-bacskai": {
+    "name": "Balázs Bacskai",
+    "record": {
+      "wins": 14,
+      "losses": 0,
+      "draws": 0,
+      "ko": 8
+    },
+    "heightCm": 177,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "Benji"
+  },
+  "baltasar-sangchili": {
+    "name": "Baltasar Sangchili",
+    "record": {
+      "wins": 78,
+      "losses": 20,
+      "draws": 12,
+      "ko": 36
+    },
+    "heightCm": 155,
+    "nickname": "The Spanish Bulldog (Le bulldog espagnol)"
+  },
+  "bandsman-jack-blake": {
+    "name": "Bandsman Jack Blake",
+    "record": {
+      "wins": 9,
+      "losses": 8,
+      "draws": 0,
+      "ko": 4
+    },
+    "heightCm": 177,
+    "weightClass": "Poids moyens"
+  },
+  "barbados-joe-walcott": {
+    "name": "Barbados Joe Walcott",
+    "record": {
+      "wins": 98,
+      "losses": 34,
+      "draws": 25,
+      "ko": 58
+    },
+    "heightCm": 156,
+    "nickname": "Barbados Demon"
+  },
+  "barbara-buttrick": {
+    "name": "Barbara Buttrick",
+    "record": {
+      "wins": 30,
+      "losses": 1,
+      "draws": 1
+    },
+    "heightCm": 150,
+    "nickname": "Battling Barbara, The Mighty Atom of the Ring"
+  },
+  "barney-aaron": {
+    "name": "Barney Aaron",
+    "record": {
+      "wins": 7,
+      "losses": 4,
+      "draws": 0
+    },
+    "stance": "Orthodoxe",
+    "nickname": "The Star of the East"
+  },
+  "barney-ross": {
+    "name": "Barney Ross",
+    "record": {
+      "wins": 74,
+      "losses": 4,
+      "draws": 3,
+      "ko": 22
+    },
+    "heightCm": 170
+  },
+  "barrington-francis": {
+    "name": "Barrington Francis",
+    "record": {
+      "wins": 23,
+      "losses": 9,
+      "draws": 4
+    },
+    "stance": "Orthodoxe"
+  },
+  "barry-brown": {
+    "name": "Barry Brown",
+    "record": {
+      "wins": 27,
+      "losses": 4,
+      "draws": 0
+    },
+    "stance": "Southpaw"
+  },
+  "barry-jones": {
+    "name": "Barry Jones",
+    "record": {
+      "wins": 18,
+      "losses": 1,
+      "draws": 1,
+      "ko": 0
+    },
+    "heightCm": 170
+  },
+  "barry-mcguigan": {
+    "name": "Barry McGuigan",
+    "record": {
+      "wins": 32,
+      "losses": 3,
+      "draws": 0,
+      "ko": 28
+    },
+    "heightCm": 168,
+    "weightClass": "Poids plumes",
+    "nickname": "The Clones Cyclone"
+  },
+  "barry-michael": {
+    "name": "Barry Michael",
+    "record": {
+      "wins": 48,
+      "losses": 9,
+      "draws": 3,
+      "ko": 15
+    },
+    "heightCm": 163,
+    "nickname": "Swettenham"
+  },
+  "barry-morrison": {
+    "name": "Barry Morrison",
+    "record": {
+      "wins": 19,
+      "losses": 6,
+      "draws": 0,
+      "ko": 8
+    },
+    "heightCm": 170,
+    "reachCm": 178,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers",
+    "nickname": "The Bizness"
+  },
+  "battling-levinsky": {
+    "name": "Battling Levinsky",
+    "record": {
+      "wins": 196,
+      "losses": 54,
+      "draws": 38,
+      "ko": 31
+    },
+    "heightCm": 180,
+    "nickname": "Barney Williams"
+  },
+  "battling-nelson": {
+    "name": "Battling Nelson",
+    "record": {
+      "wins": 72,
+      "losses": 33,
+      "draws": 24,
+      "ko": 40
+    },
+    "heightCm": 171,
+    "weightClass": "Poids légers",
+    "nickname": "The Durable Dane"
+  },
+  "battling-shaw": {
+    "name": "Battling Shaw",
+    "record": {
+      "wins": 71,
+      "losses": 27,
+      "draws": 9,
+      "ko": 32
+    },
+    "heightCm": 170
+  },
+  "batuhan-gozgec": {
+    "name": "Batuhan Gözgeç",
+    "record": {
+      "wins": 10,
+      "losses": 4,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 171,
+    "reachCm": 174,
+    "stance": "Southpaw",
+    "weightClass": "Poids welters"
+  },
+  "bayron-molina": {
+    "name": "Bayron Molina",
+    "record": {
+      "wins": 3,
+      "losses": 0,
+      "draws": 0
+    }
+  },
+  "beatriz-ferreira": {
+    "name": "Beatriz Ferreira",
+    "record": {
+      "wins": 8,
+      "losses": 1,
+      "draws": 0,
+      "ko": 2
+    },
+    "heightCm": 163,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids légers",
+    "nickname": "The Beast"
+  },
+  "beau-jack": {
+    "name": "Beau Jack",
+    "record": {
+      "wins": 88,
+      "losses": 24,
+      "draws": 5,
+      "ko": 43
+    },
+    "heightCm": 168,
+    "weightClass": "Poids légers"
+  },
+  "beethaeven-scottland": {
+    "name": "Beethaeven Scottland",
+    "record": {
+      "wins": 20,
+      "losses": 7,
+      "draws": 2,
+      "ko": 9
+    },
+    "heightCm": 175,
+    "reachCm": 183,
+    "stance": "Southpaw",
+    "weightClass": "Poids super-moyens",
+    "nickname": "Honey Bee"
+  },
+  "beibis-mendoza": {
+    "name": "Beibis Mendoza",
+    "record": {
+      "wins": 30,
+      "losses": 4,
+      "draws": 0,
+      "ko": 24
+    },
+    "heightCm": 163,
+    "reachCm": 173,
+    "nickname": "Candela"
+  },
+  "beibut-shumenov": {
+    "name": "Beibut Shumenov",
+    "record": {
+      "wins": 18,
+      "losses": 2,
+      "draws": 0,
+      "ko": 12
+    },
+    "heightCm": 188,
+    "reachCm": 188
+  },
+  "bek-nurmaganbet": {
+    "name": "Bek Nurmaganbet",
+    "record": {
+      "wins": 15,
+      "losses": 0,
+      "draws": 0,
+      "ko": 11
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids super-moyens"
+  },
+  "bektemir-melikuziev": {
+    "name": "Bektemir Melikuziev",
+    "record": {
+      "wins": 10,
+      "losses": 1,
+      "draws": 0,
+      "ko": 8
+    },
+    "heightCm": 175
+  },
+  "bekzad-nurdauletov": {
+    "name": "Bekzad Nurdauletov",
+    "record": {
+      "wins": 4,
+      "losses": 0,
+      "draws": 0,
+      "ko": 2
+    },
+    "heightCm": 188,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds"
+  },
+  "belinda-laracuente": {
+    "name": "Belinda Laracuente",
+    "record": {
+      "wins": 26,
+      "losses": 28,
+      "draws": 3,
+      "ko": 9
+    },
+    "weightClass": "Poids super-coqs"
+  },
+  "ben-crocker": {
+    "name": "Ben Crocker",
+    "record": {
+      "wins": 16,
+      "losses": 1,
+      "draws": 1,
+      "ko": 3
+    },
+    "weightClass": "Poids super-légers"
+  },
+  "ben-foord": {
+    "name": "Ben Foord",
+    "record": {
+      "wins": 40,
+      "losses": 15,
+      "draws": 4
+    }
+  },
+  "ben-jeby": {
+    "name": "Ben Jeby",
+    "record": {
+      "wins": 54,
+      "losses": 14,
+      "draws": 4,
+      "ko": 22
+    },
+    "heightCm": 178,
+    "weightClass": "Poids moyens"
+  },
+  "ben-jordan": {
+    "name": "Ben Jordan",
+    "record": {
+      "wins": 16,
+      "losses": 1,
+      "draws": 1,
+      "ko": 7
+    },
+    "weightClass": "Poids plumes"
+  },
+  "ben-mcculloch": {
+    "name": "Ben McCulloch",
+    "record": {
+      "wins": 14,
+      "losses": 1,
+      "draws": 0,
+      "ko": 11
+    },
+    "weightClass": "Poids super-moyens"
+  },
+  "ben-tackie": {
+    "name": "Ben Tackie",
+    "record": {
+      "wins": 29,
+      "losses": 11,
+      "draws": 1,
+      "ko": 17
+    },
+    "heightCm": 175,
+    "nickname": "Wonder"
+  },
+  "ben-villaflor": {
+    "name": "Ben Villaflor",
+    "record": {
+      "wins": 56,
+      "losses": 6,
+      "draws": 6,
+      "ko": 31
+    },
+    "heightCm": 166
+  },
+  "benedicto-villablanca": {
+    "name": "Benedicto Villablanca",
+    "record": {
+      "wins": 34,
+      "losses": 11,
+      "draws": 0,
+      "ko": 16
+    }
+  },
+  "benjamin-brain": {
+    "name": "Benjamin Brain",
+    "record": {
+      "wins": 7,
+      "losses": 0,
+      "draws": 1
+    },
+    "heightCm": 179,
+    "weightClass": "Poids lourds",
+    "nickname": "Big Ben"
+  },
+  "benjamin-flores": {
+    "name": "Benjamín Flores",
+    "record": {
+      "wins": 19,
+      "losses": 4,
+      "draws": 0,
+      "ko": 6
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-coqs"
+  },
+  "benjamin-whittaker": {
+    "name": "Benjamin Whittaker",
+    "record": {
+      "wins": 12,
+      "losses": 0,
+      "draws": 1,
+      "ko": 9
+    },
+    "heightCm": 191,
+    "reachCm": 191,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds"
+  },
+  "bennetto-payne": {
+    "name": "Bennetto Payne",
+    "record": {
+      "wins": 74,
+      "losses": 36,
+      "draws": 7,
+      "ko": 58
+    },
+    "heightCm": 183,
+    "reachCm": 188,
+    "stance": "Orthodoxe",
+    "nickname": "The Aztec Assassin Indian Benny Deathpaine"
+  },
+  "bennie-briscoe": {
+    "name": "Bennie Briscoe",
+    "record": {
+      "wins": 66,
+      "losses": 24,
+      "draws": 5,
+      "ko": 53
+    },
+    "reachCm": 180,
+    "stance": "Orthodoxe",
+    "nickname": "Bad"
+  },
+  "benny-bass": {
+    "name": "Benny Bass",
+    "record": {
+      "wins": 192,
+      "losses": 40,
+      "draws": 8,
+      "ko": 71
+    },
+    "heightCm": 156,
+    "nickname": "Little Fish"
+  },
+  "benny-goldberg": {
+    "name": "Benny Goldberg",
+    "record": {
+      "wins": 38,
+      "losses": 2,
+      "draws": 2,
+      "ko": 11
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids coqs",
+    "nickname": "The Fighting Jew"
+  },
+  "benny-gould": {
+    "name": "Benny Gould",
+    "record": {
+      "wins": 24,
+      "losses": 27,
+      "draws": 12,
+      "ko": 5
+    },
+    "heightCm": 165,
+    "weightClass": "Poids plumes",
+    "nickname": "Kid Gold"
+  },
+  "benny-leonard": {
+    "name": "Benny Leonard",
+    "record": {
+      "wins": 183,
+      "losses": 19,
+      "draws": 11,
+      "ko": 70
+    },
+    "heightCm": 165,
+    "weightClass": "Poids légers",
+    "nickname": "Ghetto Wizard"
+  },
+  "benny-lynch": {
+    "name": "Benny Lynch",
+    "record": {
+      "wins": 88,
+      "losses": 14,
+      "draws": 17,
+      "ko": 34
+    },
+    "heightCm": 160,
+    "reachCm": 165,
+    "weightClass": "Poids mouches"
+  },
+  "benny-paret": {
+    "name": "Benny Paret",
+    "record": {
+      "wins": 35,
+      "losses": 12,
+      "draws": 3,
+      "ko": 11
+    },
+    "heightCm": 171,
+    "weightClass": "Poids welters",
+    "nickname": "Kid"
+  },
+  "benny-urquidez": {
+    "name": "Benny Urquidez",
+    "record": {
+      "wins": 57,
+      "losses": 1,
+      "draws": 0,
+      "ko": 49
+    },
+    "nickname": "The Jet"
+  },
+  "benoit-gaudet": {
+    "name": "Benoit Gaudet",
+    "record": {
+      "wins": 23,
+      "losses": 2,
+      "draws": 0,
+      "ko": 10
+    },
+    "reachCm": 182,
+    "stance": "Orthodoxe",
+    "nickname": "Quebec Punch"
+  },
+  "benson-henderson": {
+    "name": "Benson Henderson",
+    "record": {
+      "wins": 30,
+      "losses": 12,
+      "draws": 0
+    },
+    "reachCm": 180,
+    "nickname": "{{lang|en|Smooth}} Bendo"
+  },
+  "bep-van-klaveren": {
+    "name": "Bep van Klaveren",
+    "record": {
+      "wins": 80,
+      "losses": 21,
+      "draws": 9,
+      "ko": 22
+    },
+    "heightCm": 173,
+    "nickname": "The Dutch Windmill"
+  },
+  "berkrerk-chartvanchai": {
+    "name": "Berkrerk Chartvanchai",
+    "record": {
+      "wins": 29,
+      "losses": 8,
+      "draws": 3,
+      "ko": 6
+    },
+    "heightCm": 168,
+    "weightClass": "Poids mouches"
+  },
+  "bermane-stiverne": {
+    "name": "Bermane Stiverne",
+    "record": {
+      "wins": 25,
+      "losses": 5,
+      "draws": 1,
+      "ko": 21
+    },
+    "heightCm": 188,
+    "weightClass": "Poids lourds",
+    "nickname": "B. WARE"
+  },
+  "bernabe-concepcion": {
+    "name": "Bernabe Concepcion",
+    "record": {
+      "wins": 34,
+      "losses": 7,
+      "draws": 2,
+      "ko": 20
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids plumes",
+    "nickname": "The Real Deal Kamaong Llave (\"Wrench Fist\")"
+  },
+  "bernabe-villacampo": {
+    "name": "Bernabe Villacampo",
+    "record": {
+      "wins": 39,
+      "losses": 21,
+      "draws": 5,
+      "ko": 26
+    },
+    "weightClass": "Poids mouches"
+  },
+  "bernard-benton": {
+    "name": "Bernard Benton",
+    "record": {
+      "wins": 21,
+      "losses": 6,
+      "draws": 1,
+      "ko": 9
+    },
+    "heightCm": 182,
+    "nickname": "The Bull"
+  },
+  "bernard-dunne": {
+    "name": "Bernard Dunne",
+    "record": {
+      "wins": 28,
+      "losses": 2,
+      "draws": 0,
+      "ko": 15
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-coqs",
+    "nickname": "The Dublin Dynamo"
+  },
+  "bernard-hopkins": {
+    "name": "Bernard Hopkins",
+    "record": {
+      "wins": 55,
+      "losses": 8,
+      "draws": 2,
+      "ko": 32
+    },
+    "heightCm": 185,
+    "reachCm": 180,
+    "nickname": "The Executioner B-Hop The Alien"
+  },
+  "bernard-inom": {
+    "name": "Bernard Inom",
+    "record": {
+      "wins": 22,
+      "losses": 4,
+      "draws": 1,
+      "ko": 10
+    }
+  },
+  "bernard-paul": {
+    "name": "Bernard Paul",
+    "record": {
+      "wins": 21,
+      "losses": 10,
+      "draws": 4
+    },
+    "stance": "Orthodoxe",
+    "nickname": "Punching Postman"
+  },
+  "bernard-taylor": {
+    "name": "Bernard Taylor",
+    "record": {
+      "wins": 45,
+      "losses": 4,
+      "draws": 2,
+      "ko": 22
+    },
+    "heightCm": 168,
+    "reachCm": 175,
+    "stance": "Orthodoxe",
+    "nickname": "The B.T. Express"
+  },
+  "bernardo-mercado": {
+    "name": "Bernardo Mercado",
+    "record": {
+      "wins": 33,
+      "losses": 5,
+      "draws": 0,
+      "ko": 28
+    },
+    "heightCm": 193,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "bernardo-pinango": {
+    "name": "Bernardo Piñango",
+    "record": {
+      "wins": 23,
+      "losses": 5,
+      "draws": 3,
+      "ko": 15
+    },
+    "heightCm": 169
+  },
+  "bert-batawang": {
+    "name": "Bert Batawang",
+    "record": {
+      "wins": 46,
+      "losses": 16,
+      "draws": 3,
+      "ko": 38
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids mi-mouches",
+    "nickname": "The Ninja"
+  },
+  "bert-cooper": {
+    "name": "Bert Cooper",
+    "record": {
+      "wins": 38,
+      "losses": 25,
+      "draws": 0,
+      "ko": 31
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Smokin"
+  },
+  "bert-kirby": {
+    "name": "Bert Kirby",
+    "record": {
+      "wins": 122,
+      "losses": 62,
+      "draws": 17,
+      "ko": 40
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mouches"
+  },
+  "bert-schenk": {
+    "name": "Bert Schenk",
+    "record": {
+      "wins": 36,
+      "losses": 2,
+      "draws": 0,
+      "ko": 23
+    },
+    "heightCm": 176
+  },
+  "bert-schneider": {
+    "name": "Bert Schneider",
+    "record": {
+      "wins": 19,
+      "losses": 23,
+      "draws": 6,
+      "ko": 6
+    },
+    "weightClass": "Poids welters"
+  },
+  "besar-nimani": {
+    "name": "Besar Nimani",
+    "record": {
+      "wins": 26,
+      "losses": 1,
+      "draws": 0,
+      "ko": 22
+    },
+    "heightCm": 181,
+    "reachCm": 185,
+    "weightClass": "Poids super-welters"
+  },
+  "bethuel-ushona": {
+    "name": "Bethuel Ushona",
+    "record": {
+      "wins": 36,
+      "losses": 10,
+      "draws": 1,
+      "ko": 9
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters",
+    "nickname": "Unstoppable"
+  },
+  "betiana-vinas": {
+    "name": "Betiana Viñas",
+    "record": {
+      "wins": 12,
+      "losses": 7,
+      "draws": 3,
+      "ko": 2
+    },
+    "heightCm": 166,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids plumes",
+    "nickname": "La Terrible (\"The Terrible\")"
+  },
+  "betulio-gonzalez": {
+    "name": "Betulio González",
+    "record": {
+      "wins": 76,
+      "losses": 12,
+      "draws": 4,
+      "ko": 52
+    },
+    "heightCm": 159,
+    "reachCm": 168
+  },
+  "biko-botowamungu": {
+    "name": "Biko Botowamungu",
+    "record": {
+      "wins": 10,
+      "losses": 16,
+      "draws": 1,
+      "ko": 10
+    },
+    "weightClass": "Poids lourds"
+  },
+  "bilal-fawaz": {
+    "name": "Bilal Fawaz",
+    "record": {
+      "wins": 12,
+      "losses": 1,
+      "draws": 1,
+      "ko": 4
+    },
+    "heightCm": 180,
+    "weightClass": "Poids super-welters",
+    "nickname": "Machine"
+  },
+  "bill-beynon": {
+    "name": "Bill Beynon",
+    "record": {
+      "wins": 70,
+      "losses": 30,
+      "draws": 91,
+      "ko": 26
+    },
+    "weightClass": "Poids coqs"
+  },
+  "bill-brennan": {
+    "name": "Bill Brennan",
+    "record": {
+      "wins": 77,
+      "losses": 18,
+      "draws": 8,
+      "ko": 49
+    },
+    "weightClass": "Poids lourds",
+    "nickname": "K.O. Bill Brennan Battling Bill the Bartender"
+  },
+  "bill-farnan": {
+    "name": "Bill Farnan",
+    "record": {
+      "wins": 8,
+      "losses": 3,
+      "draws": 3,
+      "ko": 8
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The Foundry Worker"
+  },
+  "bill-ladbury": {
+    "name": "Bill Ladbury",
+    "record": {
+      "wins": 31,
+      "losses": 17,
+      "draws": 5,
+      "ko": 13
+    },
+    "weightClass": "Poids coqs"
+  },
+  "bill-lang": {
+    "name": "Bill Lang",
+    "record": {
+      "wins": 27,
+      "losses": 15,
+      "draws": 1,
+      "ko": 21
+    },
+    "heightCm": 185,
+    "reachCm": 185,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "bill-richmond": {
+    "name": "Bill Richmond",
+    "record": {
+      "wins": 17,
+      "losses": 2,
+      "draws": 0
+    },
+    "heightCm": 175,
+    "weightClass": "Poids welters",
+    "nickname": "The Black Terror"
+  },
+  "bill-sharkey": {
+    "name": "Bill Sharkey",
+    "record": {
+      "wins": 22,
+      "losses": 7,
+      "draws": 1,
+      "ko": 16
+    },
+    "heightCm": 180,
+    "reachCm": 183
+  },
+  "bill-tate": {
+    "name": "Bill Tate",
+    "record": {
+      "wins": 27,
+      "losses": 19,
+      "draws": 2,
+      "ko": 22
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Big Bill"
+  },
+  "billal-bennama": {
+    "name": "Billal Bennama",
+    "record": {
+      "wins": 24,
+      "losses": 0,
+      "draws": 2,
+      "ko": 24
+    },
+    "nickname": "Destroyers"
+  },
+  "billel-dib": {
+    "name": "Billel Dib",
+    "record": {
+      "wins": 26,
+      "losses": 4,
+      "draws": 0,
+      "ko": 13
+    },
+    "heightCm": 175,
+    "reachCm": 175,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-plumes",
+    "nickname": "Babyface"
+  },
+  "billy-spider-kelly": {
+    "name": "Billy \"Spider\" Kelly",
+    "record": {
+      "wins": 56,
+      "losses": 24,
+      "draws": 4,
+      "ko": 15
+    },
+    "weightClass": "Poids plumes",
+    "nickname": "Spider"
+  },
+  "billy-backus": {
+    "name": "Billy Backus",
+    "record": {
+      "wins": 49,
+      "losses": 21,
+      "draws": 5,
+      "ko": 23
+    },
+    "heightCm": 175,
+    "weightClass": "Poids welters"
+  },
+  "billy-baker": {
+    "name": "Billy Baker",
+    "record": {
+      "wins": 11,
+      "losses": 17,
+      "draws": 1,
+      "ko": 10
+    },
+    "weightClass": "Poids coqs"
+  },
+  "billy-collins": {
+    "name": "Billy Collins",
+    "record": {
+      "wins": 14,
+      "losses": 0,
+      "draws": 0,
+      "ko": 11
+    },
+    "weightClass": "Poids welters"
+  },
+  "billy-conn": {
+    "name": "Billy Conn",
+    "record": {
+      "wins": 64,
+      "losses": 12,
+      "draws": 1,
+      "ko": 15
+    },
+    "heightCm": 187,
+    "nickname": "Pittsburgh Kid"
+  },
+  "billy-costello": {
+    "name": "Billy Costello",
+    "record": {
+      "wins": 40,
+      "losses": 2,
+      "draws": 0,
+      "ko": 23
+    },
+    "heightCm": 174
+  },
+  "billy-dib": {
+    "name": "Billy Dib",
+    "record": {
+      "wins": 43,
+      "losses": 5,
+      "draws": 0,
+      "ko": 24
+    },
+    "heightCm": 171,
+    "reachCm": 179,
+    "nickname": "The Kid"
+  },
+  "billy-famous": {
+    "name": "Billy Famous",
+    "record": {
+      "wins": 24,
+      "losses": 6,
+      "draws": 1
+    }
+  },
+  "billy-fox": {
+    "name": "Billy Fox",
+    "record": {
+      "wins": 49,
+      "losses": 9,
+      "draws": 1,
+      "ko": 48
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids mi-lourds"
+  },
+  "billy-graham": {
+    "name": "Billy Graham",
+    "record": {
+      "wins": 102,
+      "losses": 15,
+      "draws": 9,
+      "ko": 27
+    },
+    "heightCm": 170,
+    "weightClass": "Poids welters"
+  },
+  "billy-hardy": {
+    "name": "Billy Hardy",
+    "record": {
+      "wins": 37,
+      "losses": 9,
+      "draws": 2,
+      "ko": 17
+    }
+  },
+  "billy-jackson": {
+    "name": "Billy Jackson",
+    "record": {
+      "wins": 7,
+      "losses": 1,
+      "draws": 0,
+      "ko": 0
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-welters",
+    "nickname": "The Kid"
+  },
+  "billy-joe-saunders": {
+    "name": "Billy Joe Saunders",
+    "record": {
+      "wins": 30,
+      "losses": 1,
+      "draws": 0,
+      "ko": 14
+    },
+    "heightCm": 180,
+    "nickname": "{{lang|en|Superb}}"
+  },
+  "billy-lyell": {
+    "name": "Billy Lyell",
+    "record": {
+      "wins": 25,
+      "losses": 11,
+      "draws": 0,
+      "ko": 5
+    },
+    "heightCm": 180,
+    "reachCm": 183,
+    "stance": "Orthodoxe",
+    "nickname": "Pride of Ohio"
+  },
+  "billy-mcallister": {
+    "name": "Billy McAllister",
+    "record": {
+      "wins": 86,
+      "losses": 38,
+      "draws": 11
+    },
+    "stance": "Orthodoxe",
+    "nickname": "Young"
+  },
+  "billy-mccarthy": {
+    "name": "Billy McCarthy",
+    "record": {
+      "wins": 23,
+      "losses": 19,
+      "draws": 15,
+      "ko": 16
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids moyens",
+    "nickname": "Bluey"
+  },
+  "billy-miske": {
+    "name": "Billy Miske",
+    "record": {
+      "wins": 72,
+      "losses": 15,
+      "draws": 16,
+      "ko": 34
+    },
+    "heightCm": 184,
+    "nickname": "The St. Paul Thunderbolt"
+  },
+  "billy-moeller": {
+    "name": "Billy Moeller",
+    "record": {
+      "wins": 35,
+      "losses": 12,
+      "draws": 5
+    }
+  },
+  "billy-papke": {
+    "name": "Billy Papke",
+    "record": {
+      "wins": 40,
+      "losses": 15,
+      "draws": 7,
+      "ko": 31
+    },
+    "heightCm": 175,
+    "weightClass": "Poids moyens",
+    "nickname": "The Illinois Thunderbolt"
+  },
+  "billy-petrole": {
+    "name": "Billy Petrole",
+    "record": {
+      "wins": 120,
+      "losses": 25,
+      "draws": 14,
+      "ko": 64
+    },
+    "heightCm": 170,
+    "weightClass": "Poids légers",
+    "nickname": "The Fargo Express"
+  },
+  "billy-schwer": {
+    "name": "Billy Schwer",
+    "record": {
+      "wins": 39,
+      "losses": 6,
+      "draws": 0,
+      "ko": 30
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-légers"
+  },
+  "billy-soose": {
+    "name": "Billy Soose",
+    "record": {
+      "wins": 34,
+      "losses": 6,
+      "draws": 1,
+      "ko": 14
+    },
+    "heightCm": 184,
+    "weightClass": "Poids moyens"
+  },
+  "billy-thompson": {
+    "name": "Billy Thompson",
+    "record": {
+      "wins": 46,
+      "losses": 13,
+      "draws": 4,
+      "ko": 21
+    },
+    "weightClass": "Poids légers",
+    "nickname": "The Pocket Adonis"
+  },
+  "billy-waith": {
+    "name": "Billy Waith",
+    "record": {
+      "wins": 47,
+      "losses": 42,
+      "draws": 5,
+      "ko": 12
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids welters",
+    "nickname": "Boy"
+  },
+  "billy-walker": {
+    "name": "Billy Walker",
+    "record": {
+      "wins": 21,
+      "losses": 8,
+      "draws": 2,
+      "ko": 16
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "billy-wright": {
+    "name": "Billy Wright",
+    "record": {
+      "wins": 52,
+      "losses": 4,
+      "draws": 0,
+      "ko": 43
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "Bronco"
+  },
+  "blair-cobbs": {
+    "name": "Blair Cobbs",
+    "record": {
+      "wins": 18,
+      "losses": 1,
+      "draws": 1,
+      "ko": 11
+    },
+    "heightCm": 182,
+    "stance": "Southpaw",
+    "weightClass": "Poids welters",
+    "nickname": "The Flair"
+  },
+  "blair-richardson": {
+    "name": "Blair Richardson",
+    "record": {
+      "wins": 45,
+      "losses": 5,
+      "draws": 2
+    },
+    "stance": "Orthodoxe"
+  },
+  "blake-caparello": {
+    "name": "Blake Caparello",
+    "record": {
+      "wins": 30,
+      "losses": 4,
+      "draws": 1,
+      "ko": 13
+    },
+    "stance": "Southpaw",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "IL CAPO"
+  },
+  "bo-hogberg": {
+    "name": "Bo Högberg",
+    "record": {
+      "wins": 36,
+      "losses": 6,
+      "draws": 1
+    },
+    "heightCm": 180,
+    "weightClass": "Poids super-welters",
+    "nickname": "Bosse"
+  },
+  "bob-ajisafe": {
+    "name": "Bob Ajisafe",
+    "record": {
+      "wins": 19,
+      "losses": 4,
+      "draws": 0,
+      "ko": 9
+    },
+    "heightCm": 188,
+    "stance": "Southpaw",
+    "weightClass": "Poids mi-lourds",
+    "nickname": "Lionheart"
+  },
+  "bob-armstrong": {
+    "name": "Bob Armstrong",
+    "record": {
+      "wins": 18,
+      "losses": 11,
+      "draws": 7,
+      "ko": 15
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The King of the Battle Royal"
+  },
+  "bob-baker": {
+    "name": "Bob Baker",
+    "record": {
+      "wins": 51,
+      "losses": 16,
+      "draws": 1,
+      "ko": 20
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The Grinder"
+  },
+  "bob-cleroux": {
+    "name": "Bob Cleroux",
+    "record": {
+      "wins": 47,
+      "losses": 6,
+      "draws": 1,
+      "ko": 37
+    },
+    "heightCm": 185,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds"
+  },
+  "bob-dunlop": {
+    "name": "Bob Dunlop",
+    "record": {
+      "wins": 39,
+      "losses": 6,
+      "draws": 0,
+      "ko": 21
+    },
+    "stance": "Orthodoxe"
+  },
+  "bob-fitzsimmons": {
+    "name": "Bob Fitzsimmons",
+    "record": {
+      "wins": 50,
+      "losses": 8,
+      "draws": 5,
+      "ko": 44
+    },
+    "heightCm": 182,
+    "nickname": "Bob"
+  },
+  "bob-foster": {
+    "name": "Bob Foster",
+    "record": {
+      "wins": 56,
+      "losses": 8,
+      "draws": 1,
+      "ko": 46
+    },
+    "heightCm": 191,
+    "nickname": "The Deputy Sheriff"
+  },
+  "bob-godwin": {
+    "name": "Bob Godwin",
+    "record": {
+      "wins": 88,
+      "losses": 24,
+      "draws": 12,
+      "ko": 27
+    },
+    "heightCm": 182
+  },
+  "bob-goslin": {
+    "name": "Bob Goslin",
+    "record": {
+      "wins": 1,
+      "losses": 2,
+      "draws": 0,
+      "ko": 0
+    },
+    "stance": "Orthodoxe",
+    "weightClass": "Poids super-coqs"
+  },
+  "bob-hope": {
+    "name": "Bob Hope",
+    "record": {
+      "wins": 5,
+      "losses": 1,
+      "draws": 0
+    },
+    "heightCm": 178,
+    "reachCm": 183
+  },
+  "bob-marriott": {
+    "name": "Bob Marriott",
+    "record": {
+      "wins": 6,
+      "losses": 2,
+      "draws": 0
+    },
+    "weightClass": "Poids légers"
+  },
+  "bob-mirovic": {
+    "name": "Bob Mirovic",
+    "record": {
+      "wins": 31,
+      "losses": 23,
+      "draws": 1,
+      "ko": 21
+    },
+    "heightCm": 196,
+    "reachCm": 203,
+    "stance": "Orthodoxe",
+    "weightClass": "Poids lourds",
+    "nickname": "The Big Bear"
+  }
+}

@@ -89,11 +89,13 @@ les NaN. Impact faible mais propre.
 mais **pas sur Vercel/serverless** : chaque instance lambda a sa propre
 mémoire et son propre filesystem éphémère → compteurs de quota par instance
 (consommation réelle sous-estimée, dépassement possible), cache perdu à
-chaque cold start (appels API dupliqués, latence). **Fix :** soit (a)
-déployer sur une VM/container (Node long-running : tout marche tel quel),
-soit (b) basculer le cache + quota vers un store partagé (Upstash Redis,
-KV de Vercel, ou Postgres) avec une interface `Cache`/`Quota` abstraite
-(facile : déjà isolés dans 2 modules).
+chaque cold start (appels API dupliqués, latence). ⚠️ Depuis l'étape 3.1b,
+`ShardsFightsProvider` lit aussi `public/data/` par `fs` — **la cible
+VM/container (a) devient la recommandation** : tout marche tel quel.
+**Fix (b) sinon :** basculer cache + quota vers un store partagé (Upstash
+Redis, KV de Vercel, ou Postgres) avec une interface `Cache`/`Quota`
+abstraite (facile : déjà isolés dans 2 modules), et copier `public/data/`
+vers un store/objet accessible en runtime.
 
 ### P1 — Écriture synchrone du quota à chaque requête
 `writeFileSync` à chaque `consume()` → contention sous charge même en Node.
@@ -209,6 +211,11 @@ quand elle a des combats**. Logique à rendre paramétrable dès maintenant
   prioritaires — validé en live.
 - Quota + circuit breaker + cache TTL.
 - Schémas API documentés et validés (voir CONTEXT.md §4.3).
+- **Résultats OFFICIELS des 7 organisations** (IBF/WBA/WBC/WBO/CSAC/NSAC/FFBoxe)
+  via `boxingdatasource-pipeline` → `public/data/fights/*.json` (1853 combats),
+  lus en statique par `ShardsFightsProvider` (priorité 3, zéro réseau,
+  dédup inter-sources par id SHA-256) — le mock ne sert plus que les
+  combats à venir et l'enrichissement des stars (TASKS 2.6).
 
 ### ⚠️ Limites à assumer (produit)
 - Big Balls : `record` null → les boxeurs non-mock affichent 0-0-0 (honnête
@@ -261,7 +268,7 @@ quand elle a des combats**. Logique à rendre paramétrable dès maintenant
 
 ### P2 — ensuite
 10. Pagination du répertoire (offset/limit API + « Charger plus », `?page=`) — ✅ **FAIT** (virtualisation 12 000+ : plus tard).
-11. Historique complet des combats (TASKS 2.2), records réels (TASKS 2.3) — ⏳ dépend des sources (Big Balls publiera `record`/`bouts`).
+11. Historique complet des combats (TASKS 2.2), records réels (TASKS 2.3) — ⏳ dépend des sources (Big Balls publiera `record`/`bouts`). ➡️ **Résultats officiels récents déjà en ligne** (TASKS 2.6, shards du pipeline, 1853 combats) ; il manque l'historique par boxeur sur la page profil.
 12. Comparateur tale-of-the-tape (TASKS 1.1), dashboard quotas (TASKS 1.2) — ✅ **FAITS**.
 13. Recherche floue + autocomplete (TASKS 1.3) — ✅ **FAITE** (Levenshtein, client + API).
 14. Mise en avant des gros combats (TASKS 1.4) — ✅ **FAITE** (`fightImportance`).
