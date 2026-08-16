@@ -4,6 +4,7 @@ import { BigBallsProvider } from "./providers/bigballs";
 import { TheSportsDbProvider } from "./providers/thesportsdb";
 import { OddsApiProvider } from "./providers/oddsapi";
 import { WikipediaProvider } from "./providers/wikipedia";
+import { ShardsFightsProvider } from "./providers/shardsfights";
 import { ProviderRouter } from "./providers/router";
 import type { FighterFilters } from "./types";
 import { applyFilters, dedupeFighters } from "./utils";
@@ -14,7 +15,8 @@ import { applyFilters, dedupeFighters } from "./utils";
  * Ordre de priorité par besoin :
  * - profils boxeurs : Big Balls → TheSportsDB → Wikipedia (records réels
  *   des stars) → mock
- * - combats récents : mock (TheSportsDB quand l'API l'offre)
+ * - combats récents : **shards officiels du pipeline** (lecture statique
+ *   `public/data/fights/`) → TheSportsDB → mock
  * - combats à venir + cotes : The Odds API → mock
  *
  * Les providers sans clé API sont ignorés automatiquement (isActive()).
@@ -24,6 +26,7 @@ const router = new ProviderRouter([
   new TheSportsDbProvider(),
   new WikipediaProvider(),
   new OddsApiProvider(),
+  new ShardsFightsProvider(),
   new MockProvider(),
 ]);
 

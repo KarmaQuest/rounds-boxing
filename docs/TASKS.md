@@ -79,6 +79,13 @@
 - **Fichiers** : `app/sitemap.ts` (127 URLs), `app/robots.ts`, `app/opengraph-image.tsx` + `app/boxeurs/[slug]/opengraph-image.tsx` (Anton via `public/fonts/`), `components/json-ld.tsx`, `lib/site.ts` (`NEXT_PUBLIC_SITE_URL`), canonical + noindex des URL filtrées (`/boxeurs?q=…` → `noindex, follow`).
 - **Acceptation** : ✅ chaque profil a une carte OG (avatar + palmarès, 1200×630) ; JSON-LD `Person` (boxeur), `SportsEvent` (combats), `WebSite` (accueil).
 
+### 2.6 Résultats officiels des organisations (shards du pipeline) — ✅ FAIT
+- **Objectif** : remplacer le mock pour les résultats récents — les vrais combats (vainqueur, méthode, rounds, catégorie, titre) publiés par IBF, WBA, WBC, WBO, CSAC, NSAC et FFBoxe.
+- **Fichiers** : `boxingdatasource-pipeline` écrit `public/data/fights/{org}.json` (étape 3.1, 1853 combats) ; côté front `lib/data/providers/shardsfights.ts` (provider `shards`, priorité 3) + branchement dans `lib/data/index.ts`.
+- **Mapping** : `fighter_a/b` → `fighters[2]`, `winner`/`method`/`rounds` → `outcome`, `weight_class` FR/EN → `WeightClass` canonique (ordres des patterns : « light heavy » avant « heavy »…), ceintures → `title`, dédup inter-sources par id SHA-256, `source` = slug d'organisation.
+- **Acceptation** : ✅ `getCombatsRecents` sert les shards (test d'intégration : source `shards`, combats `finished`, 2 fighters) ; mapping testé sur les vrais shards (10 tests) ; 127 tests Vitest ; tsc 0 erreur.
+- ⚠️ **Déploiement** : lecture par `fs` → VM/container Node long-running ; sur Vercel/serverless il faudra copier `public/data/` ou passer par un store (voir AUDIT §2).
+
 ### 2.5 Améliorations UX/animations
 - **Objectif** : transitions de page (View Transitions ou AnimatePresence autour de `main`), marquee des grands noms, micro-animations KO, dark/light toggle, respect `prefers-reduced-motion` partout.
 - **Fichiers** : `app/layout.tsx`, `components/`, `app/globals.css`.

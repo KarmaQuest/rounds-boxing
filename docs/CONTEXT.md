@@ -111,12 +111,16 @@ boxing-app/
 │           ├── wikipedia-parse.ts  # parser d'infobox fr/en (record, taille, allonge, garde…)
 │           ├── wikipedia-types.ts  # type WikipediaRecord
 │           ├── wikipedia-records.json # SNAPSHOT des 24 stars (régénéré par scripts/refresh-wikipedia.ts)
+│           └── shardsfights.ts # Résultats OFFICIELS du pipeline (lecture statique public/data/, priorité 3)
 ├── .env.local                # ⚠️ clés API (gitignoré) — NE JAMAIS COMMITER
 ├── .env.example              # modèle des variables
 ├── .data/quota.json          # compteurs de quota (gitignoré, créé au runtime)
 ├── vitest.config.ts          # Vitest (alias server-only → test/stubs/)
 ├── test/stubs/server-only.ts # stub du package server-only pour les tests
-└── public/fonts/Anton-Regular.ttf # police des OG images (self-hosted)
+├── public/fonts/Anton-Regular.ttf # police des OG images (self-hosted)
+└── public/data/            # ⚠️ dossier GÉNÉRÉ par boxingdatasource-pipeline (gitignoré) :
+                            #    fights/{org}.json (résultats officiels IBF/WBA/WBC/WBO/CSAC/NSAC/FFBoxe)
+                            #    + organizations-index.json — régénérer au déploiement (étape 3.1)
 
 Tests : `lib/data/utils.test.ts`, `lib/data/quota.test.ts`, `lib/data/providers/router.test.ts`, `lib/data/index.test.ts` (intégration), `lib/news/parse.test.ts` (8)
 Composant : `components/json-ld.tsx` (injection JSON-LD)
@@ -131,7 +135,7 @@ Composant : `components/json-ld.tsx` (injection JSON-LD)
 | Profils boxeurs | **Big Balls Sports Data** | TheSportsDB → mock | 1 000 req/j (2 000 avec GitHub) |
 | **Palmarès réels (V-D-N-KO, taille, garde)** | **Wikipedia** (infobox, snapshot committé) | mock | illimité (zéro réseau en runtime) |
 | Combats à venir + cotes | **The Odds API** | mock | 500 crédits/mois (~16 req/j) |
-| Résultats récents | mock (TheSportsDB quand il le fournira) | — | — |
+| **Résultats récents (officiels)** | **shards du pipeline** (public/data/, 1853 combats IBF/WBA/WBC/WBO/CSAC/FFBoxe) | mock | illimité (lecture locale, zéro réseau) |
 | Enrichissement (ceintures, bios, rang) | **mock** (jeu de données) | — | — |
 
 ### 4.2 Comment fonctionne le `ProviderRouter`
@@ -217,6 +221,7 @@ interface Fight {
 - **Répertoire filtrable** : recherche (insensible aux accents), chips catégories, pays, sliders « victoires min » / « % KO min », tri — **tout est instantané côté client** (la liste est chargée 1× via React Query) et **synchronisé dans l'URL** (`?q=&cat=&pays=&v=&ko=&tri=`) → partageable
 - **Profil boxeur** : hero (avatar, surnom, rang p4p, ceintures), palmarès (V-D-N, % KO, total combats), barre animée, fiche technique (taille, allonge, garde, âge, début pro, nationalité), bio, ses combats à venir/récents, **lien BoxRec** quand l'ID existe
 - **Combats** : onglets animés « À venir (avec cotes) » / « Résultats récents », section « Les affiches du moment » (gros combats en tête, `fightImportance`)
+- **Résultats officiels (shards du pipeline)** : `ShardsFightsProvider` (priorité 3, avant le mock) lit `public/data/fights/{org}.json` (générés par `boxingdatasource-pipeline`, 1853 combats : IBF 1422, FFBoxe 271, CSAC 133, WBA 20, WBC 6, WBO 1) et les mappe vers `Fight` (fighter_a/b → fighters[], winner/method/rounds → outcome, catégorie FR/EN → WeightClass canonique, ceintures → title). Dédup inter-sources par id SHA-256, zéro requête réseau ; combats à venir = mock/odds (le pipeline ne publie pas de programmation)
 - **Animations** : loader d'intro « ROUND 1 » (🥊, 1× par session via sessionStorage, **sauté si `prefers-reduced-motion`**), révélation au scroll (`Reveal`), compteurs (`Counter`), hover néon, `AnimatePresence` + `layout` sur les grilles, skeletons shimmer, 404 stylisé
 - **Comparateur tale of the tape** (`/comparateur?boxeurA=&boxeurB=`) : 2 sélecteurs, stats gagnantes en or, partage par URL
 - **Recherche floue** : `levenshtein`/`fuzzyMatch`/`fuzzySuggest` — « uzyk » et « canlo » trouvent Usyk / Canelo (client ET API) + autocomplete 5 suggestions
@@ -236,7 +241,7 @@ interface Fight {
 - **ErrorBoundaries** : `error.tsx` global + par boxeur (bouton retry)
 - **Multi-sources** : fusion + enrichissement (voir §4), section explicative sur l'accueil
 - **Palmarès réels (Wikipedia)** : provider `wikipedia` (priorité 2) — infobox fr/en parsées (record V-D-N-KO, taille, allonge, garde, catégorie, surnom), **snapshot committé** des 24 stars (zéro réseau en runtime), régénérable via `npx tsx scripts/refresh-wikipedia.ts`. Attribution CC BY-SA au footer. Usyk 25-0-0, Crawford 42-0-0, Canelo 63-3-2… (voir `docs/DATA-SOURCES.md`)
-- **Tests (Vitest)** : `npm test` → **111 tests** (routeur : fusion, quota, circuit, cache ; `applyFilters` ; persistance disque du quota ; parser news RSS/Atom/YT ; parser infobox Wikipedia)
+- **Tests (Vitest)** : `npm test` → **127 tests** (routeur : fusion, quota, circuit, cache ; `applyFilters` ; persistance disque du quota ; parser news RSS/Atom/YT ; parser infobox Wikipedia ; provider shards + mapping catégories + intégration routeur)
 - **SEO** : sitemap.xml (127 URLs), robots.txt, canonical partout, **noindex des URL filtrées** `/boxeurs?…`, OG images (générique + par boxeur, police Anton self-hosted), JSON-LD (Person / SportsEvent / WebSite)
 
 ## 8. État de vérification (15/08/2026)
@@ -245,7 +250,7 @@ interface Fight {
 | --- | --- |
 | `npm run build` (TypeScript inclus) | ✅ |
 | `npm run lint` (ESLint) | ✅ 0 problème |
-| `npm test` (Vitest) | ✅ 111 tests |
+| `npm test` (Vitest) | ✅ 127 tests |
 | Pages : `/`, `/boxeurs`, `/combats`, `/boxeurs/[slug]`, `/comparateur`, `/debug` | ✅ 200 |
 | Pagination API (`limit=24&offset=0/24/48`) | ✅ 24/page cohérentes |
 | Recherche floue API (`q=uzyk`, `q=canlo`) | ✅ Usyk / Canelo trouvés |
@@ -261,6 +266,7 @@ interface Fight {
 | `/api/boxeurs` | ✅ source `bigballs + wikipedia + mock` (Usyk 25-0-0 réel) |
 | `/api/boxeurs?q=canelo` | ✅ source `bigballs + thesportsdb + mock` |
 | `/api/combats?scope=upcoming` | ✅ source `oddsapi + mock`, cotes réelles |
+| `/api/combats?scope=recent` | ✅ source `shards + mock` — 1853 résultats officiels du pipeline servis |
 | Rendu navigateur (Chrome headless) | ✅ hydratation OK, compteurs/chips/cartes présents |
 
 ## 9. Lancement & configuration
