@@ -32,17 +32,38 @@ function asStr(value: unknown): string {
   return "";
 }
 
-/** Retire le HTML (balises + entités communes) d'un résumé. */
-export function stripHtml(html: string): string {
-  return html
-    .replace(/<[^>]+>/g, " ")
+/**
+ * Décode les entités HTML : références numériques (&#8216;, &#x2018;) et
+ * entités nommées courantes. Les flux WordPress encodent les guillemets
+ * typographiques en entités numériques (&amp;#8220;… dans le XML, qui
+ * devient &#8220; après décodage XML) — sans cette étape, les titres
+ * afficheraient « &#8216; » en toutes lettres.
+ *
+ * &amp; est traité en dernier : un `&amp;#8216;` du flux devient `&#8216;`
+ * puis `‘`, alors qu'un `&amp;` destiné à rester « & » n'est pas re-échappé.
+ */
+export function decodeEntities(text: string): string {
+  const fromCodePoint = (s: string, base: number, raw: string): string => {
+    const cp = Number.parseInt(s, base);
+    if (Number.isNaN(cp) || cp < 0 || cp > 0x10ffff) return raw;
+    return String.fromCodePoint(cp);
+  };
+
+  return text
+    .replace(/&#x([0-9a-f]+);/gi, (raw, hex: string) => fromCodePoint(hex, 16, raw))
+    .replace(/&#(\d+);/g, (raw, dec: string) => fromCodePoint(dec, 10, raw))
+    .replace(/&hellip;/g, "…")
     .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
-    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&apos;/g, "'")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
-    .replace(/&hellip;/g, "…")
+    .replace(/&amp;/g, "&");
+}
+
+/** Retire le HTML (balises + entités) d'un résumé. */
+export function stripHtml(html: string): string {
+  return decodeEntities(html.replace(/<[^>]+>/g, " "))
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -77,7 +98,7 @@ function parseRssItems(xml: string, source: ArticleSource): NewsItem[] {
 
   return items
     .map((item): NewsItem | null => {
-      const title = asStr(item.title).trim();
+      const title = decodeEntities(asStr(item.title).trim());
       const url = asStr(item.link).trim();
       const publishedAt = normalizeDate(item.pubDate ?? item["dc:date"]);
       if (!title || !url) return null;
@@ -125,7 +146,7 @@ function parseAtomItems(xml: string, source: ArticleSource): NewsItem[] {
 
   return entries
     .map((entry): NewsItem | null => {
-      const title = asStr(entry.title).trim();
+      const title = decodeEntities(asStr(entry.title).trim());
       const link = asStr((entry.link as Xml | undefined)?.["@_href"]).trim();
       const publishedAt = normalizeDate(entry.published ?? entry.updated);
       if (!title || !link) return null;
@@ -167,7 +188,7 @@ function parseYtItems(xml: string, source: VideoSource): NewsItem[] {
   return entries
     .map((entry): NewsItem | null => {
       const videoId = asStr(entry["yt:videoId"]).trim();
-      const title = asStr(entry.title).trim();
+      const title = decodeEntities(asStr(entry.title).trim());
       const publishedAt = normalizeDate(entry.published);
       if (!videoId || !title) return null;
 

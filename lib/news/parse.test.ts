@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseArticleFeed, parseVideoFeed, stripHtml } from "./parse";
+import { decodeEntities, parseArticleFeed, parseVideoFeed, stripHtml } from "./parse";
 import type { ArticleSource, VideoSource } from "./sources";
 
 const RSS_SOURCE: ArticleSource = {
@@ -53,6 +53,21 @@ const ATOM_XML = `<?xml version="1.0"?>
     <published>2026-08-12T10:00:00Z</published>
   </entry>
 </feed>`;
+
+// Titre/description avec entités numériques (flux WordPress : les
+// guillemets typographiques sont encodés en &amp;#8216; etc. dans le XML)
+const ENTITIES_XML = `<?xml version="1.0"?>
+<rss version="2.0">
+  <channel>
+    <title>WBN</title>
+    <item>
+      <title>Canelo : &amp;#8220;je suis le meilleur&amp;#8221; dit-il</title>
+      <link>https://example.com/canelo-quote</link>
+      <pubDate>Wed, 13 Aug 2026 20:30:00 GMT</pubDate>
+      <description>&lt;p&gt;Il vise &amp;#8216;le sommet&amp;#8217; &amp;amp; le titre WBC.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>`;
 
 const YT_XML = `<?xml version="1.0"?>
 <feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/">
@@ -133,6 +148,20 @@ describe("parseVideoFeed — YouTube videos.xml", () => {
   });
 });
 
+describe("parseArticleFeed — entités HTML", () => {
+  it("décode les entités numériques des titres et descriptions", () => {
+    const items = parseArticleFeed(ENTITIES_XML, RSS_SOURCE);
+    expect(items).toHaveLength(1);
+
+    const [item] = items;
+    expect(item.title).toBe("Canelo : \u201cje suis le meilleur\u201d dit-il");
+    expect(item.title).not.toContain("&#");
+    expect(item.title).not.toContain("&amp;");
+    expect(item.description).toBe("Il vise \u2018le sommet\u2019 & le titre WBC.");
+    expect(item.description).not.toContain("&#");
+  });
+});
+
 describe("parseArticleFeed — XML invalide", () => {
   it("retourne [] sans lever", () => {
     expect(parseArticleFeed("<rss><channel>", RSS_SOURCE)).toEqual([]);
@@ -145,5 +174,25 @@ describe("stripHtml", () => {
   it("retire balises et entités", () => {
     expect(stripHtml("<p>Bonjour &amp; bienvenue</p>")).toBe("Bonjour & bienvenue");
     expect(stripHtml("a &lt; b &gt; c &#39;d&#39; &quot;e&quot;")).toBe("a < b > c 'd' \"e\"");
+  });
+
+  it("décode les guillemets typographiques (&#8216; etc.)", () => {
+    expect(stripHtml("&#8220;je suis le meilleur&#8221;")).toBe("\u201cje suis le meilleur\u201d");
+    expect(stripHtml("&#x2018;ok&#x2019;")).toBe("\u2018ok\u2019");
+    expect(stripHtml("R&amp;D &amp; plus")).toBe("R&D & plus");
+    // double encodage : &amp;amp; représente littéralement « &amp; »
+    expect(stripHtml("&amp;amp;")).toBe("&amp;");
+  });
+});
+
+describe("decodeEntities", () => {
+  it("décode numérique décimal, hex et nommé", () => {
+    expect(decodeEntities("&#8216;a&#8217; &amp; &#x201C;b&#x201D;")).toBe("\u2018a\u2019 & \u201Cb\u201D");
+    expect(decodeEntities("rien à décoder")).toBe("rien à décoder");
+  });
+
+  it("laisse les références invalides intactes", () => {
+    expect(decodeEntities("&#99999999999;")).toBe("&#99999999999;");
+    expect(decodeEntities("&#;")).toBe("&#;");
   });
 });

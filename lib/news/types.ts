@@ -12,6 +12,12 @@ export interface NewsItem {
   publishedAt: string;
   /** Miniature (vidéos YT uniquement). */
   thumbnail?: string;
+  /**
+   * Repli si la miniature directe casse dans le navigateur (403/hotlink) :
+   * URL de la route /api/news/thumb qui résout og:image puis génère par IA.
+   * Articles uniquement.
+   */
+  thumbFallback?: string;
   description?: string;
 }
 

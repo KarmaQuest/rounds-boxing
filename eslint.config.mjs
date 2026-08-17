@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // État runtime local (quota.json, rounds.db, scripts de scratch) —
+    // gitignoré, pas du code à linter.
+    ".data/**",
   ]),
 ]);
 

@@ -2,6 +2,7 @@ import "server-only";
 import { cache } from "@/lib/data/cache";
 import { ARTICLE_SOURCES, VIDEO_CHANNELS } from "./sources";
 import { parseArticleFeed, parseVideoFeed } from "./parse";
+import { thumbUrl } from "./thumbnail";
 import type { NewsFilter, NewsItem } from "./types";
 
 /**
@@ -68,6 +69,23 @@ export async function fetchNews(type: NewsFilter, limit: number): Promise<NewsIt
     .flat()
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
     .slice(0, safeLimit);
+
+  // Articles sans image fournie par le flux → miniature résolue à la
+  // demande (og:image de la page, puis génération IA si besoin). Les
+  // vidéos gardent leur vignette YouTube (déjà résolue par le parser).
+  //
+  // Articles AVEC image de flux directe : on garde l'URL d'origine, mais
+  // on prépare un repli (thumbFallback) vers la route de résolution —
+  // certaines images de flux sont bloquées côté navigateur (403/hotlink,
+  // ex. World Boxing News) et la route enchaîne og:image → IA.
+  for (const item of items) {
+    if (item.type !== "article") continue;
+    if (!item.thumbnail) {
+      item.thumbnail = thumbUrl(item);
+    } else if (!item.thumbnail.startsWith("/api/")) {
+      item.thumbFallback = thumbUrl(item);
+    }
+  }
 
   // le cache ne stocke jamais un agrégat vide (sinon les pannes réseau
   // « cacheraient » une page sans actualités pendant 15 min)

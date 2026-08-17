@@ -64,6 +64,21 @@ function SourceGradient({ source }: { source: string }) {
 
 /** Carte article : miniature + texte + source. */
 function ArticleCard({ item }: { item: NewsItem }) {
+  // Cascade de repli si l'image ne charge pas (403/hotlink, pas d'og:image,
+  // quota IA épuisé) : image de flux → thumbFallback (route : og:image puis
+  // génération IA) → dégradé néon. La carte ne casse jamais.
+  const [src, setSrc] = useState(item.thumbnail);
+  const [broken, setBroken] = useState(false);
+  const showThumb = Boolean(src) && !broken;
+
+  const handleImgError = () => {
+    if (item.thumbFallback && src !== item.thumbFallback) {
+      setSrc(item.thumbFallback);
+    } else {
+      setBroken(true);
+    }
+  };
+
   return (
     <a
       href={item.url}
@@ -72,12 +87,13 @@ function ArticleCard({ item }: { item: NewsItem }) {
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line/60 bg-panel transition-all duration-300 hover:-translate-y-1 hover:border-neon/40 hover:shadow-neon-sm"
     >
       <div className="relative aspect-video overflow-hidden bg-ink">
-        {item.thumbnail ? (
+        {showThumb ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
-            src={item.thumbnail}
+            src={src}
             alt=""
             loading="lazy"
+            onError={handleImgError}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
