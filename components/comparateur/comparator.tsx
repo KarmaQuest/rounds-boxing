@@ -14,10 +14,33 @@ interface ApiResponse {
   fighters: Fighter[];
 }
 
-async function fetchFighters(): Promise<ApiResponse> {
-  const res = await fetch("/api/boxeurs?limit=500");
-  if (!res.ok) throw new Error("Échec du chargement");
-  return res.json();
+interface ApiFighter {
+  fighter: Fighter;
+}
+
+/**
+ * Charge le répertoire (top 500) + résout les boxeurs demandés par URL
+ * même s'ils sont hors du pool (ex. boxeurs des calendriers officiels).
+ */
+async function fetchFighters(slugA: string, slugB: string): Promise<ApiResponse> {
+  const [poolRes, ...dedicated] = await Promise.all([
+    fetch("/api/boxeurs?limit=500"),
+    ...[slugA, slugB].filter(Boolean).map(async (slug) => {
+      const res = await fetch(`/api/boxeurs/${encodeURIComponent(slug)}`);
+      if (!res.ok) return null;
+      const json = (await res.json()) as ApiFighter;
+      return json.fighter ?? null;
+    }),
+  ]);
+  if (!poolRes.ok) throw new Error("Échec du chargement");
+  const pool = (await poolRes.json()) as ApiResponse;
+
+  // fusion : les fiches dédiées complètent le pool (dédup par slug)
+  const bySlug = new Map(pool.fighters.map((f) => [f.slug, f]));
+  for (const fighter of dedicated) {
+    if (fighter) bySlug.set(fighter.slug, fighter);
+  }
+  return { fighters: [...bySlug.values()] };
 }
 
 /** Colonne gagnante d'un comparatif numérique. */
@@ -172,8 +195,8 @@ export function Comparateur() {
   const slugB = sp.get("boxeurB") ?? "";
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["boxeurs"],
-    queryFn: fetchFighters,
+    queryKey: ["boxeurs", slugA, slugB],
+    queryFn: () => fetchFighters(slugA, slugB),
     staleTime: 1000 * 60 * 10,
   });
 

@@ -14,7 +14,7 @@
 | --- | --- |
 | Records (V-D-N-KO) réels | Mock uniquement (approximatif, daté) |
 | Historique des combats par boxeur | Mock (6 combats) — TASKS 2.2/2.3 en attente |
-| Combats à venir + cotes | ✅ The Odds API (réel, depuis le 15/08) |
+| Combats à venir + cotes | ✅ The Odds API (réel) → programmation officielle vérifiée (shards IBF/WBC, zéro mock) |
 | Profils / bio | ✅ Big Balls (1000 req/j gratuit) + mock |
 | Fiche technique (taille, allonge, garde) | Mock (approximatif) |
 
@@ -76,7 +76,7 @@ Intégration légère (SPARQL ponctuel + cache) si on veut enrichir les fiches.
 
 | Source | Rôle | Statut |
 | --- | --- | --- |
-| The Odds API | Combats à venir + cotes | ✅ 500 crédits/mois, cache 10 min |
+| The Odds API | Cotes des combats à venir | ✅ 500 crédits/mois, cache 10 min (repli : programmation shards IBF/WBC vérifiée par IA) |
 | Big Balls | Profils boxeurs | ✅ 1000 req/j gratuit ; `record` promis « bientôt » (les suivre) |
 | TheSportsDB | Recherche par nom | ✅ Gratuit, couverture boxe inégale |
 

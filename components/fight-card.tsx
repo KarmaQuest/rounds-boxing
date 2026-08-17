@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { CalendarDays, MapPin } from "lucide-react";
 import type { Fight } from "@/lib/data/types";
 import { formatDate, formatOdds } from "@/lib/utils";
+import { slugify } from "@/lib/data/utils";
 import { cn } from "@/lib/utils";
 
 function FighterSide({
@@ -80,11 +82,13 @@ interface FightCardProps {
   index?: number;
 }
 
-/** Carte combat : deux boxeurs face à face, cotes ou résultat. */
+/** Carte combat : deux boxeurs face à face, cotes ou résultat.
+ *  Cliquable → comparateur des deux boxeurs (tale of the tape). */
 export function FightCard({ fight, index = 0 }: FightCardProps) {
   const [a, b] = fight.fighters;
   const upcoming = fight.status === "upcoming";
   const winnerIdx = fight.outcome?.winnerIndex;
+  const compareHref = `/comparateur?boxeurA=${slugify(a.name)}&boxeurB=${slugify(b.name)}`;
 
   return (
     <motion.div
@@ -94,7 +98,10 @@ export function FightCard({ fight, index = 0 }: FightCardProps) {
       transition={{ duration: 0.4, delay: Math.min(index * 0.06, 0.4) }}
       layout
     >
-      <div className="group relative overflow-hidden rounded-2xl border border-line/60 bg-panel p-6 transition-all duration-300 panel-glow hover:-translate-y-1 hover:border-gold/50 hover:shadow-gold">
+      <Link
+        href={compareHref}
+        className="group relative block overflow-hidden rounded-2xl border border-line/60 bg-panel p-6 transition-all duration-300 panel-glow hover:-translate-y-1 hover:border-gold/50 hover:shadow-gold"
+      >
         {/* bandeau "VS" */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.04]">
           <span className="font-display text-[10rem] uppercase text-snow">VS</span>
@@ -148,7 +155,7 @@ export function FightCard({ fight, index = 0 }: FightCardProps) {
           {fight.weightClass && <span>{fight.weightClass}</span>}
           <OrgBadge source={fight.source} />
         </div>
-      </div>
+      </Link>
     </motion.div>
   );
 }

@@ -54,7 +54,7 @@ boxing-app/
 │   │   ├── page.tsx          # répertoire (header + Directory dans <Suspense>)
 │   │   └── [slug]/page.tsx   # profil boxeur (SSR, SEO, JSON-LD Person, lien BoxRec)
 │   │   └── [slug]/opengraph-image.tsx # carte OG par boxeur (avatar + palmarès)
-│   ├── combats/page.tsx      # combats : onglets À venir / Résultats (+ JSON-LD SportsEvent)
+│   ├── combats/page.tsx      # combats : onglets À venir / Résultats, filtres par org + recherche (+ JSON-LD SportsEvent)
 │   ├── comparateur/page.tsx  # tale of the tape (TASKS 1.1)
 │   ├── connexion/page.tsx    # connexion (compte JWT)
 │   ├── inscription/page.tsx  # inscription
@@ -85,7 +85,7 @@ boxing-app/
 │   ├── fighter-card.tsx / fight-card.tsx
 │   ├── directory/            # filters.tsx (barre + autocomplete flou) + directory.tsx (pagination « Charger plus »)
 │   ├── home/hero.tsx         # hero animé
-│   ├── combats/tabs.tsx      # + section « Les affiches du moment »
+│   ├── combats/tabs.tsx      # onglets + filtres org/recherche, cartes → comparateur
 │   ├── comparateur/comparator.tsx # tale of the tape (2 sélecteurs + tableau)
 │   ├── json-ld.tsx           # injection JSON-LD
 │   └── sw-register.tsx       # enregistre le service worker (prod uniquement)
@@ -134,7 +134,8 @@ Composant : `components/json-ld.tsx` (injection JSON-LD)
 | --- | --- | --- | --- |
 | Profils boxeurs | **Big Balls Sports Data** | TheSportsDB → mock | 1 000 req/j (2 000 avec GitHub) |
 | **Palmarès réels (V-D-N-KO, taille, garde)** | **Wikipedia** (infobox, snapshot committé) | mock | illimité (zéro réseau en runtime) |
-| Combats à venir + cotes | **The Odds API** | mock | 500 crédits/mois (~16 req/j) |
+| Combats à venir + cotes | **The Odds API** → programmation officielle vérifiée (shards IBF/WBC) | 500 crédits/mois (~16 req/j) |
+| Combats à venir (sans cotes) | **programmation shards** `fights-upcoming/` (IBF/WBC, vérifiée IA) | — | illimité (lecture locale) |
 | **Résultats récents (officiels)** | **shards du pipeline** (public/data/, 1853 combats IBF/WBA/WBC/WBO/CSAC/FFBoxe) | mock | illimité (lecture locale, zéro réseau) |
 | Enrichissement (ceintures, bios, rang) | **mock** (jeu de données) | — | — |
 
@@ -221,7 +222,8 @@ interface Fight {
 - **Répertoire filtrable** : recherche (insensible aux accents), chips catégories, pays, sliders « victoires min » / « % KO min », tri — **tout est instantané côté client** (la liste est chargée 1× via React Query) et **synchronisé dans l'URL** (`?q=&cat=&pays=&v=&ko=&tri=`) → partageable
 - **Profil boxeur** : hero (avatar, surnom, rang p4p, ceintures), palmarès (V-D-N, % KO, total combats), barre animée, fiche technique (taille, allonge, garde, âge, début pro, nationalité), bio, ses combats à venir/récents, **lien BoxRec** quand l'ID existe
 - **Combats** : onglets animés « À venir (avec cotes) » / « Résultats récents », section « Les affiches du moment » (gros combats en tête, `fightImportance`)
-- **Résultats officiels (shards du pipeline)** : `ShardsFightsProvider` (priorité 3, avant le mock) lit `public/data/fights/{org}.json` (générés par `boxingdatasource-pipeline`, 1853 combats : IBF 1422, FFBoxe 271, CSAC 133, WBA 20, WBC 6, WBO 1) et les mappe vers `Fight` (fighter_a/b → fighters[], winner/method/rounds → outcome, catégorie FR/EN → WeightClass canonique, ceintures → title). Dédup inter-sources par id SHA-256, zéro requête réseau ; combats à venir = mock/odds (le pipeline ne publie pas de programmation)
+- **Résultats officiels (shards du pipeline)** : `ShardsFightsProvider` (priorité 3, avant le mock) lit `public/data/fights/{org}.json` (générés par `boxingdatasource-pipeline` : IBF 1422, FFBoxe 1794, CSAC 133, WBA 20, WBC 346, WBO 1) et les mappe vers `Fight` (fighter_a/b → fighters[], winner/method/rounds → outcome, catégorie FR/EN → WeightClass canonique, ceintures → title). Dédup inter-sources par id SHA-256, zéro requête réseau.
+- **Programmation officielle (combats à venir)** : `ShardsFightsProvider.getUpcomingFights` lit `public/data/fights-upcoming/{org}.json` (calendriers IBF/WBC, 20 combats confirmés par le module llm/verify) — le mock ne sert plus la capacité « odds », zéro combat inventé.
 - **Animations** : loader d'intro « ROUND 1 » (🥊, 1× par session via sessionStorage, **sauté si `prefers-reduced-motion`**), révélation au scroll (`Reveal`), compteurs (`Counter`), hover néon, `AnimatePresence` + `layout` sur les grilles, skeletons shimmer, 404 stylisé
 - **Comparateur tale of the tape** (`/comparateur?boxeurA=&boxeurB=`) : 2 sélecteurs, stats gagnantes en or, partage par URL
 - **Recherche floue** : `levenshtein`/`fuzzyMatch`/`fuzzySuggest` — « uzyk » et « canlo » trouvent Usyk / Canelo (client ET API) + autocomplete 5 suggestions
