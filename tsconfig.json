@@ -30,5 +30,7 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  // scripts/ = outils dev exécutés via tsx (imports .ts requis) —
+  // hors du typecheck applicatif (le snapshot committé suffit en runtime)
+  "exclude": ["node_modules", "scripts"]
 }

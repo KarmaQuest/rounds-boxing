@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { onPageReady } from "@/lib/page-events";
 
 const WORD = "ROUNDS".split("");
 const BANDS = 16;
@@ -13,19 +14,33 @@ const BANDS = 16;
  * la page.
  *
  * Rendu côté serveur (`visible = true` initial) : le rideau est dans le
- * HTML dès le premier paint, on ne voit JAMAIS le site avant lui, et le
- * site n'apparaît qu'une fois le rideau parti. Il se joue à chaque
- * chargement de page (pas de cookie/sessionStorage : l'utilisateur veut
- * le voir à chaque visite pendant la phase de test). Les navigations
- * internes (SPA) ne rechargent pas le layout → pas de rejeu. Sauté en
- * prefers-reduced-motion.
+ * HTML dès le premier paint — le site ne s'affiche qu'une fois le rideau
+ * parti. Sauté en prefers-reduced-motion.
+ *
+ * NE SE JOUE QUE sur les vrais chargements de page (F5, nouvel onglet) :
+ * la révélation est déclenchée par l'événement `rounds:page-ready` émis par
+ * `PageReadySignal` au moment de window.load (tout est chargé), avec un
+ * temps minimal d'affichage du logo et un filet de sécurité. Les
+ * navigations internes (SPA) n'ont PAS de rideau : elles utilisent le fade
+ * de `PageTransition`.
  */
 export function AppLoader() {
   const [visible, setVisible] = useState(true);
   const [opening, setOpening] = useState(true);
+  const lifted = useRef(false);
+
+  /** Lève le rideau (une seule fois) puis le démonte. */
+  const lift = useCallback(() => {
+    if (lifted.current) return;
+    lifted.current = true;
+    setOpening(false);
+    // laisse les bandes se lever avant de démonter le rideau
+    setTimeout(() => setVisible(false), 800);
+  }, []);
 
   useEffect(() => {
     const timers: Array<ReturnType<typeof setTimeout>> = [];
+    let unsubscribe: (() => void) | undefined;
     // setState dans des callbacks (règle react-hooks/set-state-in-effect)
     timers.push(
       setTimeout(() => {
@@ -33,12 +48,21 @@ export function AppLoader() {
           setVisible(false);
           return;
         }
-        timers.push(setTimeout(() => setOpening(false), 1400));
-        timers.push(setTimeout(() => setVisible(false), 2400));
+        // temps minimal d'affichage du logo avant la révélation
+        const minDisplayAt = Date.now() + 1500;
+        unsubscribe = onPageReady(() => {
+          const wait = Math.max(0, minDisplayAt - Date.now());
+          timers.push(setTimeout(lift, wait));
+        });
+        // filet de sécurité : on ne bloque jamais le site plus de 6 s
+        timers.push(setTimeout(lift, 6000));
       }, 0)
     );
-    return () => timers.forEach((t) => clearTimeout(t));
-  }, []);
+    return () => {
+      unsubscribe?.();
+      timers.forEach((t) => clearTimeout(t));
+    };
+  }, [lift]);
 
   return (
     <AnimatePresence>

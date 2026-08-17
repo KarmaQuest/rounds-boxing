@@ -68,15 +68,23 @@
 - **Fichiers** : `lib/data/types.ts` (nouveau type `FightHistory`), `lib/data/providers/*`, page `[slug]`.
 - **Acceptation** : un boxeur du mock affiche ≥ 10 combats avec méthode/round/date.
 
-### 2.3 Records réels quand Big Balls les publiera — ⏳ dépend de Big Balls (recordPriority déjà en place)
-- **Objectif** : brancher `GET /v1/athletes/:id/record?sport=boxing` (annoncé « coming soon ») et cesser de dépendre du mock pour les palmarès.
-- **Fichiers** : `bigballs.ts` (nouvelle méthode `getRecord`), fusion dans `router.ts`.
-- **Acceptation** : le palmarès affiché vient de la source réelle quand dispo, le mock reste le fallback.
+### 2.3 Records réels — ✅ FAIT via Wikipedia (le mock n'est plus la source des palmarès)
+- **Objectif** : cesser de dépendre du mock pour les palmarès des boxeurs connus.
+- **Fichiers** : `lib/data/providers/wikipedia.ts` (provider `wikipedia`, priorité 2) + `wikipedia-parse.ts` (parser d'infobox fr/en) + `wikipedia-records.json` (snapshot committé des 24 stars) + `scripts/refresh-wikipedia.ts` (régénère le snapshot) ; fusion dans `router.ts` (palmarès réel + données physiques réelles priment, le mock ne comble que les trous) ; attribution CC BY-SA dans le footer.
+- **Acceptation** : ✅ Usyk **25-0-0** (KO 16, Southpaw, 191/198 cm) au lieu de 23-0-0 mock ; Crawford **42-0-0**, Inoue **33-0-0**, Canelo **63-3-2**… vérifiés via `/api/boxeurs`. Zéro requête réseau en runtime (snapshot).
+- **Rafraîchissement** : `npx tsx scripts/refresh-wikipedia.ts` (~1 min) puis commit du JSON. Si Big Balls publie un jour `record` : ajouter `getRecord` dans `bigballs.ts`, le routeur priorisera déjà la source réelle (`recordPriority`).
 
 ### 2.4 SEO & partage — ✅ FAIT (sauf carte OG par combat, à la demande)
 - **Objectif** : sitemap.xml, opengraph-image (cartes de partage par boxeur), JSON-LD (Person/SportsEvent).
 - **Fichiers** : `app/sitemap.ts` (127 URLs), `app/robots.ts`, `app/opengraph-image.tsx` + `app/boxeurs/[slug]/opengraph-image.tsx` (Anton via `public/fonts/`), `components/json-ld.tsx`, `lib/site.ts` (`NEXT_PUBLIC_SITE_URL`), canonical + noindex des URL filtrées (`/boxeurs?q=…` → `noindex, follow`).
 - **Acceptation** : ✅ chaque profil a une carte OG (avatar + palmarès, 1200×630) ; JSON-LD `Person` (boxeur), `SportsEvent` (combats), `WebSite` (accueil).
+
+### 2.6 Résultats officiels des organisations (shards du pipeline) — ✅ FAIT
+- **Objectif** : remplacer le mock pour les résultats récents — les vrais combats (vainqueur, méthode, rounds, catégorie, titre) publiés par IBF, WBA, WBC, WBO, CSAC, NSAC et FFBoxe.
+- **Fichiers** : `boxingdatasource-pipeline` écrit `public/data/fights/{org}.json` (étape 3.1, 1853 combats) ; côté front `lib/data/providers/shardsfights.ts` (provider `shards`, priorité 3) + branchement dans `lib/data/index.ts`.
+- **Mapping** : `fighter_a/b` → `fighters[2]`, `winner`/`method`/`rounds` → `outcome`, `weight_class` FR/EN → `WeightClass` canonique (ordres des patterns : « light heavy » avant « heavy »…), ceintures → `title`, dédup inter-sources par id SHA-256, `source` = slug d'organisation.
+- **Acceptation** : ✅ `getCombatsRecents` sert les shards (test d'intégration : source `shards`, combats `finished`, 2 fighters) ; mapping testé sur les vrais shards (10 tests) ; 127 tests Vitest ; tsc 0 erreur.
+- ⚠️ **Déploiement** : lecture par `fs` → VM/container Node long-running ; sur Vercel/serverless il faudra copier `public/data/` ou passer par un store (voir AUDIT §2).
 
 ### 2.5 Améliorations UX/animations
 - **Objectif** : transitions de page (View Transitions ou AnimatePresence autour de `main`), marquee des grands noms, micro-animations KO, dark/light toggle, respect `prefers-reduced-motion` partout.
@@ -96,6 +104,43 @@
 - **3.7** Déploiement : Vercel (env vars à configurer), domaine, analytics (Plausible/Vercel Analytics).
 - **3.8** Espace admin (non essentiel en solo) : gérer les données éditoriales du mock sans toucher au code.
 - **3.9** Backend persistant — ✅ **FAIT (base)** : SQLite (`better-sqlite3`, `.data/rounds.db`) pour comptes/favoris ; le cache API reste en mémoire/Redis. Sync périodique des APIs si le volume monte.
+
+---
+
+## Journal de conception (interviews) — 15/08/2026
+
+Chaque évolution de conception est cadrée par un entretien avec
+l'utilisateur, puis documentée ici (décisions → implémentation).
+
+### Loader & chargement de page (session 15/08/2026)
+
+**Problème** : « je vois la page avant le loader à chaque nouveau
+chargement » — révélation du site mal synchronisée avec le chargement.
+
+**Interview** (3 questions, réponses utilisateur) :
+
+| Question | Réponse choisie |
+| --- | --- |
+| Quand révéler le site ? | **À `window.load`** (tout est chargé : HTML, styles, polices, images non-lazy) — pas à une durée fixe |
+| Que faire sur navigation interne (clic lien) ? | **Distinguer** : rideau uniquement sur les vrais chargements (F5 / nouvel onglet) ; sur les clics internes, **fade smooth du contenu** (transition de page) |
+| Styles critiques inline pour l'anti-flash ? | **Simple, sans inline** — on garde le CSS normal (flash résiduel possible en dev, absent en prod où Next inline le CSS critique) |
+
+**Décisions d'architecture retenues** :
+- **Bus d'événements JS propre** (`lib/page-events.ts`) :
+  - `PageReadySignal` (layout, client) émet **`rounds:page-ready`** au
+    `window.load` + un paint (`requestAnimationFrame`).
+  - `AppLoader` écoute l'événement → lève le rideau (temps minimal
+    d'affichage du logo : 1,5 s) — **filet de sécurité 6 s** si l'événement
+    ne part jamais (jamais de site bloqué).
+  - Émission sans écouteur = no-op ; désabonnement propre (cleanup).
+- **Rideau** : rendu SSR (`visible = true` initial) → couvre le site dès le
+  premier paint ; site révélé uniquement au `window.load` + min 1,5 s.
+- **Navigation SPA** : plus de rejeu du rideau — `PageTransition` (fade
+  keyé par pathname) gère le changement de page.
+- `prefers-reduced-motion` : rideau retiré immédiatement (aucune animation).
+
+**Vérifié en navigateur (headless)** : rideau présent 500 ms → 2 s,
+révélé ~3,5 s ; clic interne sans rideau avec fade ; retour accueil OK.
 
 ---
 

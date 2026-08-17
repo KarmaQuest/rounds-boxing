@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2, SearchX } from "lucide-react";
 import type { Fighter } from "@/lib/data/types";
-import { applyFilters } from "@/lib/data/utils";
+import { applyFilters, fuzzyScore } from "@/lib/data/utils";
 import { FighterCard } from "@/components/fighter-card";
 import { FighterGridSkeleton } from "@/components/skeleton";
 import {
@@ -29,6 +29,17 @@ const PAGE_SIZE = 24;
 async function fetchFightersPage(offset: number): Promise<ApiResponse> {
   const res = await fetch(`/api/boxeurs?limit=${PAGE_SIZE}&offset=${offset}`);
   if (!res.ok) throw new Error("Échec du chargement");
+  return res.json();
+}
+
+/**
+ * Recherche serveur (q → API) : couvre TOUS les boxeurs de l'annuaire
+ * (merged.json), pas seulement la liste déjà chargée côté client. Sans ça,
+ * un boxeur hors pool n'apparaissait qu'après « Charger plus ».
+ */
+async function fetchSearch(q: string): Promise<ApiResponse> {
+  const res = await fetch(`/api/boxeurs?q=${encodeURIComponent(q)}&limit=500`);
+  if (!res.ok) throw new Error("Échec de la recherche");
   return res.json();
 }
 
@@ -102,18 +113,47 @@ export function Directory() {
     });
   };
 
-  const filtered = useMemo(
-    () =>
-      applyFilters(fighters, {
-        q: filters.q || undefined,
+  // Recherche : dès qu'on tape, la requête part à l'API (recherche sur tout
+  // l'annuaire — bigballs + wikipedia + merged.json), sans attendre que le
+  // boxeur soit dans la liste déjà chargée.
+  const query = filters.q.trim();
+  const { data: searchData, isFetching: isSearching } = useQuery({
+    queryKey: ["boxeurs-search", query],
+    queryFn: () => fetchSearch(query),
+    enabled: query.length > 0,
+    staleTime: 1000 * 60,
+    placeholderData: (prev) => prev, // garde les résultats précédents pendant qu'on tape
+  });
+
+  const filtered = useMemo(() => {
+    // recherche : résultats API ; sinon liste paginée déjà chargée
+    const base = query ? searchData?.fighters ?? [] : fighters;
+    if (!query) {
+      return applyFilters(base, {
         weightClass: filters.weightClass || undefined,
         country: filters.country || undefined,
         minWins: filters.minWins || undefined,
         minKoPct: filters.minKoPct || undefined,
         sort: filters.sort,
-      }),
-    [fighters, filters]
-  );
+      });
+    }
+    // mode recherche : les autres filtres s'appliquent, puis tri par
+    // pertinence (le meilleur match en tête — ex. « Bakary Samake » en 1er)
+    const list = applyFilters(base, {
+      q: query,
+      weightClass: filters.weightClass || undefined,
+      country: filters.country || undefined,
+      minWins: filters.minWins || undefined,
+      minKoPct: filters.minKoPct || undefined,
+      sort: "name",
+    });
+    list.sort(
+      (a, b) =>
+        fuzzyScore(query, a.name) - fuzzyScore(query, b.name) ||
+        a.name.localeCompare(b.name)
+    );
+    return list;
+  }, [fighters, searchData, filters, query]);
 
   const updateFilters = (patch: Partial<FilterState>) => {
     setFilters((prev) => ({ ...prev, ...patch }));
@@ -144,14 +184,21 @@ export function Directory() {
             </>
           )}
         </p>
-        {data?.pages[0]?.source && (
+        {(query ? searchData?.source : data?.pages[0]?.source) && (
           <p className="hidden sm:block">
-            Source : <span className="text-mist">{data.pages[0].source}</span>
+            Source :{" "}
+            <span className="text-mist">
+              {query ? searchData!.source : data!.pages[0]!.source}
+            </span>
           </p>
         )}
       </div>
 
       {isLoading && <FighterGridSkeleton count={8} />}
+
+      {isSearching && query.length > 0 && !searchData && (
+        <FighterGridSkeleton count={8} />
+      )}
 
       {isError && !isLoading && (
         <div className="rounded-2xl border border-loss/40 bg-loss/10 p-10 text-center text-mist">
@@ -193,8 +240,9 @@ export function Directory() {
         </motion.div>
       )}
 
-      {/* Charger plus (TASKS 2.1) */}
-      {!isLoading && !isError && hasNextPage && filtered.length > 0 && (
+      {/* Charger plus (TASKS 2.1) — masqué en recherche : la recherche
+          serveur renvoie déjà tous les matchs d'un coup */}
+      {!query && !isLoading && !isError && hasNextPage && filtered.length > 0 && (
         <div className="flex justify-center pt-2">
           <button
             onClick={loadMore}

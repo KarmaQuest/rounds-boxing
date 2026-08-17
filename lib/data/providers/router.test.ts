@@ -141,6 +141,69 @@ describe("listFighters — fusion multi-source", () => {
     expect(source).toBe("bigballs + mock");
   });
 
+  it("les données physiques d'une source réelle priment ; le mock ne les écrase pas (ni par undefined)", async () => {
+    const real = mkFighter({
+      name: "Oleksandr Usyk",
+      heightCm: 191,
+      reachCm: 198,
+      stance: "Southpaw",
+      nickname: "The Cat",
+      record: { wins: 25, losses: 0, draws: 0, ko: 16 },
+    });
+    const mock = mkFighter({
+      name: "Oleksandr Usyk",
+      heightCm: 190, // valeur différente → ne doit pas écraser 191
+      stance: "Orthodoxe", // ne doit pas écraser Southpaw
+      reachCm: undefined, // champ absent → ne doit pas écraser par undefined
+      record: { wins: 25, losses: 0, draws: 0, ko: 16 },
+    });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "bigballs", priority: 1, listFighters: async () => [real] }),
+      mkProvider({ name: "mock", priority: 99, listFighters: async () => [mock] }),
+    ]);
+
+    const { fighters } = await router.listFighters();
+    expect(fighters[0]!.heightCm).toBe(191); // la source réelle prime
+    expect(fighters[0]!.stance).toBe("Southpaw");
+    expect(fighters[0]!.reachCm).toBe(198); // pas écrasé par undefined
+    expect(fighters[0]!.nickname).toBe("The Cat");
+  });
+
+  it("une fiche minimale (Wikipedia) ne doit pas écraser les champs de la source réelle (Big Balls)", async () => {
+    const bigballs = mkFighter({
+      name: "Bakary Samaké",
+      country: "France",
+      heightCm: 180,
+      bio: "Champion de France super-welters.",
+      record: { wins: 0, losses: 0, draws: 0, ko: 0 },
+    });
+    // fiche Wikipedia minimale : record réel, mais pas de bio/pays/taille
+    const wikipedia = mkFighter({
+      name: "Bakary Samaké",
+      country: "",
+      flag: "",
+      heightCm: 0,
+      reachCm: 0,
+      bio: undefined,
+      record: { wins: 19, losses: 1, draws: 0, ko: 11 },
+      source: "wikipedia",
+    });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "bigballs", priority: 1, listFighters: async () => [bigballs] }),
+      mkProvider({ name: "wikipedia", priority: 2, listFighters: async () => [wikipedia] }),
+    ]);
+
+    const { fighters } = await router.listFighters();
+    const f = fighters[0]!;
+    expect(f.record).toEqual({ wins: 19, losses: 1, draws: 0, ko: 11 }); // record réel Wikipedia
+    expect(f.country).toBe("France"); // champ Big Balls préservé
+    expect(f.heightCm).toBe(180); // pas écrasé par 0
+    expect(f.bio).toBe("Champion de France super-welters.");
+    expect(f.source).toBe("wikipedia"); // le label suit le palmarès retenu
+  });
+
   it("le palmarès d'une source réelle prime dès qu'il contient des combats (recordPriority)", async () => {
     const real = mkFighter({
       name: "Oleksandr Usyk",

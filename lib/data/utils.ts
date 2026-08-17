@@ -90,12 +90,60 @@ function flagEmoji(iso: string): string {
   return String.fromCodePoint(0x1f1e6 + cp.charCodeAt(0) - 65, 0x1f1e6 + cp.charCodeAt(1) - 65);
 }
 
+/** Drapeau par fragment de nom de pays (Big Balls : « Kingdom of the
+ *  Netherlands », « United States of America »…). */
+const FLAG_FRAGMENTS: Array<[RegExp, string]> = [
+  [/pays-bas|pays bas|netherlands/i, "NL"],
+  [/danemark|denmark/i, "DK"],
+  [/norv[èe]ge|norway/i, "NO"],
+  [/su[èe]de|sweden/i, "SE"],
+  [/finlande|finland/i, "FI"],
+  [/belgique|belgium/i, "BE"],
+  [/irlande|ireland/i, "IE"],
+  [/royaume-uni|united kingdom|great britain|england|scotland|wales/i, "GB"],
+  [/[ée]tats-unis|united states|usa|u\.?s\.?a/i, "US"],
+  [/f[ée]d[ée]ration de russie|russian federation|russia|russie/i, "RU"],
+  [/france|fran[çc]aise/i, "FR"],
+  [/germany|deutschland/i, "DE"],
+  [/ukraine|ukrain/i, "UA"],
+  [/mexico|m[ée]xique/i, "MX"],
+  [/japan/i, "JP"],
+  [/poland/i, "PL"],
+  [/china/i, "CN"],
+  [/canada/i, "CA"],
+  [/australia/i, "AU"],
+  [/brazil|br[ée]sil/i, "BR"],
+  [/argentina|argentine/i, "AR"],
+  [/spain|espagne|spanish/i, "ES"],
+  [/italy|italie/i, "IT"],
+  [/turkey|turquie/i, "TR"],
+  [/saudi arabia|arabie saoudite/i, "SA"],
+  [/egypt|[ée]gypte/i, "EG"],
+  [/ghana/i, "GH"],
+  [/nigeria/i, "NG"],
+  [/senegal/i, "SN"],
+  [/cuba/i, "CU"],
+  [/cameroun|cameroon/i, "CM"],
+  [/puerto rico|porto rico/i, "PR"],
+  [/dominican|dominicain/i, "DO"],
+  [/uzbekistan/i, "UZ"],
+  [/kazakhstan/i, "KZ"],
+  [/thailand|tha[ïi]lande/i, "TH"],
+  [/india/i, "IN"],
+  [/south africa|afrique du sud/i, "ZA"],
+  [/switzerland|suisse/i, "CH"],
+];
+
 export function flagForCountry(country?: string): string {
   if (!country) return "🌍";
   const key = Object.keys(FLAGS).find(
     (k) => k.toLowerCase() === country.toLowerCase()
   );
-  return key ? flagEmoji(FLAGS[key]!) : "🌍";
+  if (key) return flagEmoji(FLAGS[key]!);
+  for (const [re, iso] of FLAG_FRAGMENTS) {
+    if (re.test(country)) return flagEmoji(iso);
+  }
+  return "🌍";
 }
 
 

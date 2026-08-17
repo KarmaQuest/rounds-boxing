@@ -3,6 +3,10 @@ import { MockProvider } from "./providers/mock";
 import { BigBallsProvider } from "./providers/bigballs";
 import { TheSportsDbProvider } from "./providers/thesportsdb";
 import { OddsApiProvider } from "./providers/oddsapi";
+import { WikipediaProvider } from "./providers/wikipedia";
+import { ShardsFightsProvider } from "./providers/shardsfights";
+import { CareersProvider } from "./providers/careers";
+import { MergedBoxersProvider } from "./providers/mergedboxers";
 import { ProviderRouter } from "./providers/router";
 import type { FighterFilters } from "./types";
 import { applyFilters, dedupeFighters } from "./utils";
@@ -11,8 +15,10 @@ import { applyFilters, dedupeFighters } from "./utils";
  * Couche de données unique pour toute l'app.
  *
  * Ordre de priorité par besoin :
- * - profils boxeurs : Big Balls → TheSportsDB → mock
- * - combats récents : mock (TheSportsDB quand l'API l'offre)
+ * - profils boxeurs : Big Balls → TheSportsDB → Wikipedia (records réels
+ *   des stars) → mock
+ * - combats récents : **shards officiels du pipeline** (lecture statique
+ *   `public/data/fights/`) → TheSportsDB → mock
  * - combats à venir + cotes : The Odds API → mock
  *
  * Les providers sans clé API sont ignorés automatiquement (isActive()).
@@ -20,15 +26,24 @@ import { applyFilters, dedupeFighters } from "./utils";
 const router = new ProviderRouter([
   new BigBallsProvider(),
   new TheSportsDbProvider(),
+  new WikipediaProvider(),
   new OddsApiProvider(),
+  new ShardsFightsProvider(),
   new MockProvider(),
+  // Annuaire complet (merged.json, 22k boxeurs) — dernier recours : trouve
+  // les boxeurs absents des APIs live (ex. Bakary Samake) sans jamais
+  // écraser un record complet (mock/Wikipedia) ni le pool classé.
+  new MergedBoxersProvider(),
 ]);
 
 export async function searchBoxeurs(filters: FighterFilters) {
   // On charge TOUJOURS le maximum disponible (liste source mise en cache
   // TTL 1 h) : la pagination et le tri se font APRÈS, sur un jeu stable —
   // sinon chaque page re-trierait un fenêtrage différent (incohérent).
-  const FETCH_LIMIT = 500;
+  // Pool visible : 1500 boxeurs (Big Balls paginé + snapshot Wikipedia +
+  // mock). Assez large pour inclure les boxeurs connus hors top 100
+  // alphabétique (ex. Bakary Samaké), et la liste est mise en cache 1 h.
+  const FETCH_LIMIT = 1500;
 
   if (!filters.q) {
     const { fighters, source } = await router.listFighters(FETCH_LIMIT);
@@ -62,6 +77,14 @@ export async function getCombatsAvenir(limit = 20) {
 
 export async function getCombatsRecents(limit = 20) {
   return router.recentFights(limit);
+}
+
+/** Tous les combats d'un boxeur (carrière complète, brique 3 du plan
+ *  d'archive) — lecture statique de boxers/careers.json généré par
+ *  `python main.py careers` (pipeline). */
+export async function getCarriere(slug: string) {
+  const fights = await new CareersProvider().getCareer(slug);
+  return { fights, source: fights.length > 0 ? "archive pipeline" : "aucune" };
 }
 
 /** Providers actifs + quota (pour une page /api/health ou debug). */

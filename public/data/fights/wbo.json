@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ca5b9d856797646a061fdfa58de56aea9fefa6076c36295cd1a72976fa462e8b",
+    "date": "2026-03-01",
+    "location": "Glendale, Arizona",
+    "weight_class": "Junior Lightweight",
+    "fighter_a": "Emanuel Navarrete",
+    "fighter_b": "Eduardo Nuñez",
+    "winner": "Emanuel Navarrete",
+    "method": "TKO",
+    "rounds": 11,
+    "is_title_fight": true
+  }
+]

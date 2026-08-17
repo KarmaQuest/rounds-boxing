@@ -129,7 +129,17 @@ export class BigBallsProvider implements DataProvider {
   }
 
   async listFighters(limit = 200): Promise<Fighter[]> {
-    const athletes = await this.getAthletes(`&limit=${Math.min(limit, LIST_LIMIT)}`);
+    // L'API plafonne à 100 par requête : on pagine pour couvrir le pool
+    // demandé (le routeur demande 1500). Résultat mis en cache 1 h par le
+    // routeur → quelques requêtes/heure, très loin du quota quotidien.
+    const athletes: BbsAthlete[] = [];
+    for (let offset = 0; athletes.length < limit && offset < 12_000; offset += LIST_LIMIT) {
+      const page = await this.getAthletes(
+        `&limit=${LIST_LIMIT}&offset=${offset}`
+      );
+      if (page.length === 0) break;
+      athletes.push(...page);
+    }
     return athletes.slice(0, limit).map(toFighter);
   }
 

@@ -22,7 +22,9 @@ function f(
   };
 }
 
-const FIGHTERS: Fighter[] = [
+/** Liste des boxeurs de démo — exportée pour que le provider Wikipedia
+ *  puisse s'en servir de base (records réels par-dessus la fiche complète). */
+export const FIGHTERS: Fighter[] = [
   // ── Poids lourds ──────────────────────────────────────────────
   f({
     name: "Oleksandr Usyk",

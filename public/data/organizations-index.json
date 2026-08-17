@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-08-17T12:14:29Z",
+  "organizations": {
+    "csac": {
+      "name": "California State Athletic Commission",
+      "abbr": "CSAC",
+      "date_last_sync": "2026-08-17T12:14:29Z",
+      "total_fights": 133
+    },
+    "ffboxe": {
+      "name": "Fédération Française de Boxe",
+      "abbr": "FFBoxe",
+      "date_last_sync": "2026-08-17T12:14:29Z",
+      "total_fights": 1794
+    },
+    "ibf": {
+      "name": "International Boxing Federation",
+      "abbr": "IBF",
+      "date_last_sync": "2026-08-17T12:14:29Z",
+      "total_fights": 1422
+    },
+    "nsac": {
+      "name": "Nevada State Athletic Commission",
+      "abbr": "NSAC",
+      "date_last_sync": "2026-08-17T12:14:29Z",
+      "total_fights": 0
+    },
+    "wba": {
+      "name": "World Boxing Association",
+      "abbr": "WBA",
+      "date_last_sync": "2026-08-17T12:14:29Z",
+      "total_fights": 20
+    },
+    "wbc": {
+      "name": "World Boxing Council",
+      "abbr": "WBC",
+      "date_last_sync": "2026-08-17T12:14:29Z",
+      "total_fights": 346
+    },
+    "wbo": {
+      "name": "World Boxing Organization",
+      "abbr": "WBO",
+      "date_last_sync": "2026-08-17T12:14:29Z",
+      "total_fights": 1
+    }
+  },
+  "total_fights": 3716,
+  "total_unique": 3716
+}

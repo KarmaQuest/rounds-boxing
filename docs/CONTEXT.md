@@ -9,9 +9,10 @@
 animations (Framer Motion), loader d'intro, skeletons, et un **système de
 filtres ultra-rapide** (instantané côté client, synchronisé dans l'URL).
 
-BoxRec n'ayant pas d'API officielle, le site agrège **3 APIs de boxe** avec
-une couche de routage intelligente : fusion multi-source, bascule automatique
-en cas de limite atteinte, quota quotidien et cache TTL.
+BoxRec n'ayant pas d'API officielle, le site agrège **plusieurs sources de
+boxe** (Big Balls, TheSportsDB, The Odds API, **Wikipedia** pour les
+palmarès) avec une couche de routage intelligente : fusion multi-source,
+bascule automatique en cas de limite atteinte, quota quotidien et cache TTL.
 
 Le projet vit dans **`boxing-app/`** (sous-dossier du workspace, car le nom
 du dossier racine « Freebuff » contient des majuscules, interdites par npm).
@@ -105,13 +106,21 @@ boxing-app/
 │           ├── mock.ts       # 24 boxeurs de démo + combats (filet de sécurité + enrichissement)
 │           ├── bigballs.ts   # Big Balls Sports Data (validé live)
 │           ├── thesportsdb.ts# TheSportsDB (validé live)
-│           └── oddsapi.ts    # The Odds API (validé live)
+│           ├── oddsapi.ts    # The Odds API (validé live)
+│           ├── wikipedia.ts  # Palmarès réels des stars (snapshot committé, zéro réseau)
+│           ├── wikipedia-parse.ts  # parser d'infobox fr/en (record, taille, allonge, garde…)
+│           ├── wikipedia-types.ts  # type WikipediaRecord
+│           ├── wikipedia-records.json # SNAPSHOT des 24 stars (régénéré par scripts/refresh-wikipedia.ts)
+│           └── shardsfights.ts # Résultats OFFICIELS du pipeline (lecture statique public/data/, priorité 3)
 ├── .env.local                # ⚠️ clés API (gitignoré) — NE JAMAIS COMMITER
 ├── .env.example              # modèle des variables
 ├── .data/quota.json          # compteurs de quota (gitignoré, créé au runtime)
 ├── vitest.config.ts          # Vitest (alias server-only → test/stubs/)
 ├── test/stubs/server-only.ts # stub du package server-only pour les tests
-└── public/fonts/Anton-Regular.ttf # police des OG images (self-hosted)
+├── public/fonts/Anton-Regular.ttf # police des OG images (self-hosted)
+└── public/data/            # ⚠️ dossier GÉNÉRÉ par boxingdatasource-pipeline (gitignoré) :
+                            #    fights/{org}.json (résultats officiels IBF/WBA/WBC/WBO/CSAC/NSAC/FFBoxe)
+                            #    + organizations-index.json — régénérer au déploiement (étape 3.1)
 
 Tests : `lib/data/utils.test.ts`, `lib/data/quota.test.ts`, `lib/data/providers/router.test.ts`, `lib/data/index.test.ts` (intégration), `lib/news/parse.test.ts` (8)
 Composant : `components/json-ld.tsx` (injection JSON-LD)
@@ -124,9 +133,10 @@ Composant : `components/json-ld.tsx` (injection JSON-LD)
 | Besoin | Source primaire | Secours | Limite gratuite |
 | --- | --- | --- | --- |
 | Profils boxeurs | **Big Balls Sports Data** | TheSportsDB → mock | 1 000 req/j (2 000 avec GitHub) |
+| **Palmarès réels (V-D-N-KO, taille, garde)** | **Wikipedia** (infobox, snapshot committé) | mock | illimité (zéro réseau en runtime) |
 | Combats à venir + cotes | **The Odds API** | mock | 500 crédits/mois (~16 req/j) |
-| Résultats récents | mock (TheSportsDB quand il le fournira) | — | — |
-| Enrichissement (palmarès, ceintures, bios) | **mock** (jeu de données) | — | — |
+| **Résultats récents (officiels)** | **shards du pipeline** (public/data/, 1853 combats IBF/WBA/WBC/WBO/CSAC/FFBoxe) | mock | illimité (lecture locale, zéro réseau) |
+| Enrichissement (ceintures, bios, rang) | **mock** (jeu de données) | — | — |
 
 ### 4.2 Comment fonctionne le `ProviderRouter`
 
@@ -137,10 +147,13 @@ de **toutes** les sources capables puis les **fusionne** (`lib/data/providers/ro
    arrive en dernier et **enrichit** les stars : un Usyk venu de Big Balls
    garde sa taille/dob réels mais reçoit son palmarès 23-0, ses ceintures et
    sa bio depuis le mock. `mergeFighter(existing, incoming, "first")` : le
-   palmarès réel prime dès qu'il contient des combats (Big Balls renvoie
-   `record: null` tant que les résultats ne sont pas publiés → le mock
-   enrichit ; `recordPriority` est paramétrable et testé). L'ID **BoxRec**
-   (`external_ids.boxrec`) est préservé.
+   palmarès réel prime dès qu'il contient des combats (Wikipedia fournit les
+   vrais records ; Big Balls renvoie `record: null` → le mock enrichit ;
+   `recordPriority` est paramétrable et testé). **Les données physiques
+   d'une source réelle priment aussi** (taille, allonge, garde, surnom : le
+   mock ne comble que les trous et ne peut pas écraser par `undefined`).
+   L'ID **BoxRec** (`external_ids.boxrec`) est préservé, et le **label
+   `source` suit le palmarès retenu** (pas le dernier provider).
 2. **Fusion combats** : dédup par paire de noms (`fightKey`), on garde la
    fiche la plus riche (venue, titre, catégorie du mock) mais **les cotes
    réelles priment** (Odds API).
@@ -208,6 +221,7 @@ interface Fight {
 - **Répertoire filtrable** : recherche (insensible aux accents), chips catégories, pays, sliders « victoires min » / « % KO min », tri — **tout est instantané côté client** (la liste est chargée 1× via React Query) et **synchronisé dans l'URL** (`?q=&cat=&pays=&v=&ko=&tri=`) → partageable
 - **Profil boxeur** : hero (avatar, surnom, rang p4p, ceintures), palmarès (V-D-N, % KO, total combats), barre animée, fiche technique (taille, allonge, garde, âge, début pro, nationalité), bio, ses combats à venir/récents, **lien BoxRec** quand l'ID existe
 - **Combats** : onglets animés « À venir (avec cotes) » / « Résultats récents », section « Les affiches du moment » (gros combats en tête, `fightImportance`)
+- **Résultats officiels (shards du pipeline)** : `ShardsFightsProvider` (priorité 3, avant le mock) lit `public/data/fights/{org}.json` (générés par `boxingdatasource-pipeline`, 1853 combats : IBF 1422, FFBoxe 271, CSAC 133, WBA 20, WBC 6, WBO 1) et les mappe vers `Fight` (fighter_a/b → fighters[], winner/method/rounds → outcome, catégorie FR/EN → WeightClass canonique, ceintures → title). Dédup inter-sources par id SHA-256, zéro requête réseau ; combats à venir = mock/odds (le pipeline ne publie pas de programmation)
 - **Animations** : loader d'intro « ROUND 1 » (🥊, 1× par session via sessionStorage, **sauté si `prefers-reduced-motion`**), révélation au scroll (`Reveal`), compteurs (`Counter`), hover néon, `AnimatePresence` + `layout` sur les grilles, skeletons shimmer, 404 stylisé
 - **Comparateur tale of the tape** (`/comparateur?boxeurA=&boxeurB=`) : 2 sélecteurs, stats gagnantes en or, partage par URL
 - **Recherche floue** : `levenshtein`/`fuzzyMatch`/`fuzzySuggest` — « uzyk » et « canlo » trouvent Usyk / Canelo (client ET API) + autocomplete 5 suggestions
@@ -217,14 +231,17 @@ interface Fight {
 - **Dashboard + favoris** : profil (email, date), étoile sur les cartes du répertoire, liste sur le dashboard (table `favorites` SQLite)
 - **Actualités boxe** : section « L’actu boxe » sur l’accueil — 5 flux RSS/Atom (Bad Left Hook, WBN, Boxing News Online, Boxing Social, Boxing Insider) + 5 chaînes YouTube via `videos.xml` public (DAZN, Top Rank, Matchroom, Sky, iFL TV), triées par date, miniatures, cache 15 min, source en panne = skip sans casser la page
 - **Design (session 15/08/2026)** : menu plein écran style rive.app (burger → croix, liens en cascade, scroll lock, Échap), loader style eszterbial.com (rideau de 16 bandes verticales paires ↑ / impaires ↓, coutures `border-white/10`), utilitaires `.sheen` / `.hover-lift` / `.press` / `.link-underline` appliqués aux boutons/liens
-- **Transitions de page** : `components/page-transition.tsx` (AnimatePresence keyed par pathname, `mode="wait"`, fondu + léger décalage)
+- **Transitions de page** : `components/page-transition.tsx` (motion.div keyé par pathname, entrée seule — fondu + léger décalage ; sans AnimatePresence, qui laissait la page à `opacity:0`)
+- **Bus d'événements de page** : `lib/page-events.ts` — `PageReadySignal` (layout) émet `rounds:page-ready` au `window.load` ; `AppLoader` écoute et lève le rideau (min. d'affichage 1,5 s, filet de sécurité 6 s)
 - **Badges « Top x »** : sur toutes les cartes boxeur avec un `rank` (or + couronne pour ≤ 5, neutre au-delà)
 - **Loader rendu côté serveur** : rideau dans le HTML SSR (le site n'est jamais visible avant le loader) ; le layout ne le rend que si le cookie `rounds_loader_seen` est absent (posé par le client après la 1re lecture → plus de flash aux retours)
 - **Fix menu invisible** : le `backdrop-filter` du header créait un containing block qui effondrait le `fixed` de l'overlay (hauteur 0) → l'overlay est désormais un FRÈRE du header
+- **Loader (décision utilisateur, voir TASKS.md « Journal de conception »)** : rideau uniquement sur les vrais chargements (F5/onglet), révélé à `window.load` via l'événement `rounds:page-ready` ; navigations internes = fade de `PageTransition` (pas de rideau)
 - **Dashboard quotas** : `/debug` + `/api/health` + alerte console à 80 %
 - **ErrorBoundaries** : `error.tsx` global + par boxeur (bouton retry)
 - **Multi-sources** : fusion + enrichissement (voir §4), section explicative sur l'accueil
-- **Tests (Vitest)** : `npm test` → 80 tests (routeur : fusion, quota, circuit, cache ; `applyFilters` ; persistance disque du quota ; parser news RSS/Atom/YT)
+- **Palmarès réels (Wikipedia)** : provider `wikipedia` (priorité 2) — infobox fr/en parsées (record V-D-N-KO, taille, allonge, garde, catégorie, surnom), **snapshot committé** des 24 stars (zéro réseau en runtime), régénérable via `npx tsx scripts/refresh-wikipedia.ts`. Attribution CC BY-SA au footer. Usyk 25-0-0, Crawford 42-0-0, Canelo 63-3-2… (voir `docs/DATA-SOURCES.md`)
+- **Tests (Vitest)** : `npm test` → **127 tests** (routeur : fusion, quota, circuit, cache ; `applyFilters` ; persistance disque du quota ; parser news RSS/Atom/YT ; parser infobox Wikipedia ; provider shards + mapping catégories + intégration routeur)
 - **SEO** : sitemap.xml (127 URLs), robots.txt, canonical partout, **noindex des URL filtrées** `/boxeurs?…`, OG images (générique + par boxeur, police Anton self-hosted), JSON-LD (Person / SportsEvent / WebSite)
 
 ## 8. État de vérification (15/08/2026)
@@ -233,7 +250,7 @@ interface Fight {
 | --- | --- |
 | `npm run build` (TypeScript inclus) | ✅ |
 | `npm run lint` (ESLint) | ✅ 0 problème |
-| `npm test` (Vitest) | ✅ 80 tests |
+| `npm test` (Vitest) | ✅ 127 tests |
 | Pages : `/`, `/boxeurs`, `/combats`, `/boxeurs/[slug]`, `/comparateur`, `/debug` | ✅ 200 |
 | Pagination API (`limit=24&offset=0/24/48`) | ✅ 24/page cohérentes |
 | Recherche floue API (`q=uzyk`, `q=canlo`) | ✅ Usyk / Canelo trouvés |
@@ -246,9 +263,10 @@ interface Fight {
 | `/dashboard` sans session | ✅ 307 → `/connexion?next=/dashboard` (proxy) |
 | `/connexion` `/inscription` `/comparateur` `/debug` | ✅ 200 |
 | 404 profil inconnu (prod) | ✅ 404 (⚠️ avec `loading.tsx` le streaming renvoyait 200 → supprimé volontairement) |
-| `/api/boxeurs` | ✅ source `bigballs + mock`, 124 boxeurs |
+| `/api/boxeurs` | ✅ source `bigballs + wikipedia + mock` (Usyk 25-0-0 réel) |
 | `/api/boxeurs?q=canelo` | ✅ source `bigballs + thesportsdb + mock` |
 | `/api/combats?scope=upcoming` | ✅ source `oddsapi + mock`, cotes réelles |
+| `/api/combats?scope=recent` | ✅ source `shards + mock` — 1853 résultats officiels du pipeline servis |
 | Rendu navigateur (Chrome headless) | ✅ hydratation OK, compteurs/chips/cartes présents |
 
 ## 9. Lancement & configuration
@@ -294,11 +312,13 @@ npm run dev        # http://localhost:3000 (Turbopack)
 
 ## 12. Workflow git (agence) — depuis le 15/08/2026
 
-Dépôt : **`github.com/KarmaQuest/rounds-boxing`** (privé). Branche par
-défaut : `main`.
+Dépôt : **`github.com/KarmaQuest/rounds-boxing`** (**public**). Branche par
+défaut : `main`, **protégée** (PR requise pour merger, force-push et
+suppressions bloqués). CI GitHub Actions (lint + tests + build) sur
+chaque PR vers `develop`/`main` et sur les pushs `develop`.
 
-- **`main`** : stable, version déployable. On n'y pousse que des fusions
-  validées (release), jamais de travail en cours.
+- **`main`** : stable, version déployable, **protégée** (PR requise). On n'y
+  fusionne que des releases validées, jamais de travail en cours.
 - **`develop`** : intégration. Toute feature y fusionne une fois terminée.
   C'est LA branche de travail courante.
 - **`feature/*`** : une branche par tâche (ex. `feature/comparateur`),

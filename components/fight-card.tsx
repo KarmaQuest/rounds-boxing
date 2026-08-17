@@ -50,6 +50,31 @@ function FighterSide({
   );
 }
 
+/** Slug d'organisation (source des shards du pipeline) → libellé affiché. */
+const ORG_LABELS: Record<string, string> = {
+  ibf: "IBF",
+  wba: "WBA",
+  wbc: "WBC",
+  wbo: "WBO",
+  csac: "CSAC",
+  nsac: "NSAC",
+  ffboxe: "FFBoxe",
+};
+
+/** Badge discret indiquant l'organisation officielle qui a publié le résultat. */
+function OrgBadge({ source }: { source?: string }) {
+  const label = source ? ORG_LABELS[source] : undefined;
+  if (!label) return null;
+  return (
+    <span
+      title="Résultat publié par l'organisation"
+      className="rounded-full border border-line/60 bg-panel-2 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-mist"
+    >
+      {label}
+    </span>
+  );
+}
+
 interface FightCardProps {
   fight: Fight;
   index?: number;
@@ -121,6 +146,7 @@ export function FightCard({ fight, index = 0 }: FightCardProps) {
             </span>
           )}
           {fight.weightClass && <span>{fight.weightClass}</span>}
+          <OrgBadge source={fight.source} />
         </div>
       </div>
     </motion.div>
