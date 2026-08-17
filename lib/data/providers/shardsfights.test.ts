@@ -182,8 +182,9 @@ describe("ShardsFightsProvider", () => {
     expect(await new ShardsFightsProvider().getRecentFights()).toEqual([]);
   });
 
-  it("les autres capacités restent vides (programmation = mock/odds)", async () => {
+  it("les autres capacités restent vides, sauf la programmation (shards fights-upcoming)", async () => {
     const p = new ShardsFightsProvider();
+    // pas de shards programmation dans ce cwd factice → [] propre
     expect(await p.getUpcomingFights()).toEqual([]);
     expect(await p.listFighters()).toEqual([]);
     expect(await p.searchFighters("usyk")).toEqual([]);
@@ -240,11 +241,13 @@ describe("ShardsFightsProvider", () => {
 
     it("pas de shards programmation → [] propre", async () => {
       expect(await new ShardsFightsProvider().getUpcomingProgrammation()).toEqual([]);
+      expect(await new ShardsFightsProvider().getUpcomingFights()).toEqual([]);
     });
 
     it("combats incomplets sautés", async () => {
       writeScheduleShard(dir, "wbc", [scheduledFight({ fighter_a: "" })]);
       expect(await new ShardsFightsProvider().getUpcomingProgrammation()).toEqual([]);
+      expect(await new ShardsFightsProvider().getUpcomingFights()).toEqual([]);
     });
   });
 

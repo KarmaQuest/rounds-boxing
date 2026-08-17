@@ -507,74 +507,14 @@ const RECENT_FIGHTS: Fight[] = [
   },
 ];
 
-/** Combats à venir (avec cotes). */
-const UPCOMING_FIGHTS: Fight[] = [
-  {
-    id: "f-2026-10-10-usyk-bakole",
-    date: "2026-10-10",
-    status: "upcoming",
-    weightClass: "Poids lourds",
-    title: "Championnat WBC, WBA & WBO des lourds",
-    venue: "Kingdom Arena",
-    location: "Riyad, Arabie saoudite",
-    fighters: [ref("Oleksandr Usyk", byName("Oleksandr Usyk")), ref("Martin Bakole")],
-    odds: [1.18, 5.4],
-    source: "mock",
-  },
-  {
-    id: "f-2026-11-14-bivol-benavidez",
-    date: "2026-11-14",
-    status: "upcoming",
-    weightClass: "Poids mi-lourds",
-    title: "Championnat incontesté des mi-lourds",
-    venue: "Kingdom Arena",
-    location: "Riyad, Arabie saoudite",
-    fighters: [ref("Dmitry Bivol", byName("Dmitry Bivol")), ref("David Benavidez", byName("David Benavidez"))],
-    odds: [2.1, 1.72],
-    source: "mock",
-  },
-  {
-    id: "f-2026-12-13-inoue-nakatani",
-    date: "2026-12-13",
-    status: "upcoming",
-    weightClass: "Poids super-coqs",
-    title: "Championnat incontesté des super-coqs",
-    venue: "Tokyo Dome",
-    location: "Tokyo, Japon",
-    fighters: [ref("Naoya Inoue", byName("Naoya Inoue")), ref("Junto Nakatani")],
-    odds: [1.45, 2.7],
-    source: "mock",
-  },
-  {
-    id: "f-2026-09-26-dubois-anderson",
-    date: "2026-09-26",
-    status: "upcoming",
-    weightClass: "Poids lourds",
-    title: "Championnat WBC des lourds",
-    venue: "O2 Arena",
-    location: "Londres, Royaume-Uni",
-    fighters: [ref("Daniel Dubois", byName("Daniel Dubois")), ref("Jared Anderson")],
-    odds: [1.25, 4.1],
-    source: "mock",
-  },
-  {
-    id: "f-2026-10-24-mbilli-berlanga",
-    date: "2026-10-24",
-    status: "upcoming",
-    weightClass: "Poids super-moyens",
-    title: "Éliminatoire WBC super-moyens",
-    venue: "Accor Arena",
-    location: "Paris, France",
-    fighters: [ref("Christian Mbilli", byName("Christian Mbilli")), ref("Edgar Berlanga")],
-    odds: [1.6, 2.35],
-    source: "mock",
-  },
-];
-
 export class MockProvider implements DataProvider {
   readonly name = "mock";
   readonly priority = 99; // toujours en dernier recours
-  readonly capabilities = ["fighters", "fights", "odds"] as const;
+  // « odds » retiré : plus AUCUN combat à venir inventé — la programmation
+  // réelle (shards vérifiés par IA) a pris le relais (voir getUpcomingFights
+  // du ShardsFightsProvider). Le mock reste l'annuaire de démo des boxeurs
+  // et les résultats récents en dernier recours.
+  readonly capabilities = ["fighters", "fights"] as const;
   readonly dailyLimit = 0; // illimité
 
   isActive(): boolean {
@@ -597,8 +537,11 @@ export class MockProvider implements DataProvider {
     return FIGHTERS.find((x) => x.slug === slug) ?? null;
   }
 
-  async getUpcomingFights(limit = 20): Promise<Fight[]> {
-    return UPCOMING_FIGHTS.slice(0, limit);
+  async getUpcomingFights(): Promise<never[]> {
+    // Capacité « odds » retirée → jamais appelé par le routeur pour les
+    // combats à venir. Les affiches viennent des calendriers officiels
+    // vérifiés (fights-upcoming/), jamais de données inventées.
+    return [];
   }
 
   async getRecentFights(limit = 20): Promise<Fight[]> {

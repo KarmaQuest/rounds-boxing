@@ -12,10 +12,11 @@ import type { DataProvider } from "./provider";
  * (zéro requête runtime vers les organisations) et les mappe vers le type
  * `Fight` du front (fighters[2], outcome, weightClass, source).
  *
- * - Seuls les combats TERMINÉS sont servis (`getRecentFights`) ; les combats
- *   à venir restent au mock/odds (le pipeline ne publie pas de programmation).
+ * - Les combats TERMINÉS sont servis par `getRecentFights` et les combats
+ *   PROGRAMMÉS (à venir, vérifiés par IA) par `getUpcomingFights` — le
+ *   pipeline publie les deux (`fights/` et `fights-upcoming/`).
  * - Dédup inter-sources par id SHA-256 (le même combat vu par NSAC et WBC
- *   a le même id) — réalisée dans `getRecentFights`.
+ *   a le même id) — réalisée dans `getRecentFights`/`getUpcomingProgrammation`.
  * - Absence de shards (pipeline pas encore runné) → [] propre, le routeur
  *   bascule sur les autres sources.
  *
@@ -176,7 +177,7 @@ export function toFrontFight(p: PipelineFight, source: string): Fight {
 export class ShardsFightsProvider implements DataProvider {
   readonly name = "shards";
   readonly priority = 3; // après BigBalls/Odds (1) et TheSportsDB/Wikipedia (2), avant le mock (99)
-  readonly capabilities = ["fights"] as const;
+  readonly capabilities = ["fights", "odds"] as const;
   readonly dailyLimit = 0; // lecture locale, aucun quota
 
   isActive(): boolean {
@@ -204,8 +205,9 @@ export class ShardsFightsProvider implements DataProvider {
     return null;
   }
 
-  async getUpcomingFights(): Promise<never[]> {
-    return []; // programmation = shards fights-upcoming/, pas ici
+  async getUpcomingFights(limit = 20): Promise<Fight[]> {
+    // Programmation officielle vérifiée par IA (shards fights-upcoming/).
+    return (await this.getUpcomingProgrammation()).slice(0, limit);
   }
 
   /**

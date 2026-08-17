@@ -237,7 +237,7 @@ class ProviderRouter {
           merged.set(key, fight);
         } else if (existing.odds) {
           // les cotes réelles (oddsapi, première source) priment ; la fiche
-          // enrichie (venue, titre, catégorie) vient du mock
+          // enrichie (venue, titre, catégorie) vient des shards programmation
           merged.set(key, { ...fight, odds: existing.odds, source: fight.source });
         } else {
           merged.set(key, { ...fight, odds: fight.odds ?? existing.odds });

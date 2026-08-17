@@ -28,8 +28,10 @@ export const metadata: Metadata = {
 };
 
 async function Fights() {
+  // Limite haute (50) : les filtres client (organisation, recherche) doivent
+  // porter sur TOUS les combats à venir, pas sur un échantillon de 12.
   const [{ fights: upcoming }, { fights: recent }] = await Promise.all([
-    getCombatsAvenir(12),
+    getCombatsAvenir(50),
     getCombatsRecents(12),
   ]);
 

@@ -19,7 +19,9 @@ import { applyFilters, dedupeFighters } from "./utils";
  *   des stars) → mock
  * - combats récents : **shards officiels du pipeline** (lecture statique
  *   `public/data/fights/`) → TheSportsDB → mock
- * - combats à venir + cotes : The Odds API → mock
+ * - combats à venir + cotes : The Odds API → **programmation officielle
+ *   vérifiée par IA** (shards `fights-upcoming/`) — zéro combat inventé,
+ *   le mock ne sert plus la capacité odds
  *
  * Les providers sans clé API sont ignorés automatiquement (isActive()).
  */
