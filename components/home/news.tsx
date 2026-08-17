@@ -2,8 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { ExternalLink, Newspaper, PlayCircle, Radio } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink, Newspaper, PlayCircle, Radio } from "lucide-react";
 import type { NewsFilter, NewsItem } from "@/lib/news/types";
+
+/** L'API renvoie au plus 50 items par type — on récupère tout et on pagine
+ *  côté client (changement de page instantané, un seul fetch). */
+const NEWS_FETCH_LIMIT = 50;
 
 const TABS: Array<{ key: NewsFilter; label: string }> = [
   { key: "all", label: "Toutes" },
@@ -161,18 +165,66 @@ function SkeletonCard() {
   );
 }
 
+/** Contrôles Précédent / Suivant + « Page X / Y ». Masqué si une seule page. */
+function NewsPagination({
+  page,
+  totalPages,
+  onPage,
+}: {
+  page: number;
+  totalPages: number;
+  onPage: (page: number) => void;
+}) {
+  if (totalPages <= 1) return null;
+
+  const btn =
+    "flex items-center gap-1 rounded-full border border-line bg-ink/60 px-5 py-2 text-sm font-medium text-mist transition-all duration-300 hover:border-neon/40 hover:text-snow disabled:pointer-events-none disabled:opacity-40";
+
+  return (
+    <nav aria-label="Pagination des actualités" className="mt-10 flex items-center justify-center gap-4">
+      <button className={btn} onClick={() => onPage(page - 1)} disabled={page <= 1}>
+        <ChevronLeft size={16} aria-hidden />
+        Précédent
+      </button>
+      <span className="text-sm text-fog">
+        Page <span className="font-semibold text-snow">{page}</span> / {totalPages}
+      </span>
+      <button className={btn} onClick={() => onPage(page + 1)} disabled={page >= totalPages}>
+        Suivant
+        <ChevronRight size={16} aria-hidden />
+      </button>
+    </nav>
+  );
+}
+
 /**
  * Section « Actualités » : onglets + grille, chargée côté client via /api/news.
  *
  * `header` (défaut true) : sur l'accueil, la section affiche son propre titre ;
  * sur la page /actualite le titre est fourni par la page (évite le doublon).
  */
-export function NewsSection({ header = true }: { header?: boolean }) {
+export function NewsSection({
+  header = true,
+  pageSize = 9,
+  pagination = false,
+}: {
+  header?: boolean;
+  /** Nombre de cartes par page (accueil : 9, page actualités : 12). */
+  pageSize?: number;
+  /** Affiche les contrôles Précédent / Suivant (page actualités). */
+  pagination?: boolean;
+}) {
   const [tab, setTab] = useState<NewsFilter>("all");
+  const [page, setPage] = useState(1);
+
+  const handleTabChange = (t: NewsFilter) => {
+    setTab(t);
+    setPage(1); // nouvel onglet → on repart à la première page
+  };
   const { data, isLoading, isError } = useQuery({
     queryKey: ["news", tab],
     queryFn: async () => {
-      const res = await fetch(`/api/news?type=${tab}&limit=9`);
+      const res = await fetch(`/api/news?type=${tab}&limit=${NEWS_FETCH_LIMIT}`);
       if (!res.ok) throw new Error("news");
       const json = (await res.json()) as { items: NewsItem[] };
       return json.items;
@@ -181,12 +233,27 @@ export function NewsSection({ header = true }: { header?: boolean }) {
   });
 
   const items = useMemo(() => data ?? [], [data]);
+  const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
+  const safePage = Math.min(page, totalPages);
+  const pageItems = useMemo(
+    () => items.slice((safePage - 1) * pageSize, safePage * pageSize),
+    [items, safePage, pageSize]
+  );
+
+  const goToPage = (next: number) => {
+    setPage(next);
+    // on remonte en haut de la section pour voir la nouvelle page
+    document.getElementById("actualites")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   // pas d'actualités (pannes réseau amont) → on ne casse pas la page
   if (isError || (!isLoading && items.length === 0)) return null;
 
   return (
-    <section id="actualites" className="relative border-y border-line/60 bg-panel/40">
+    <section
+      id="actualites"
+      className="relative scroll-mt-24 border-y border-line/60 bg-panel/40"
+    >
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
         {header && (
           <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
@@ -204,7 +271,7 @@ export function NewsSection({ header = true }: { header?: boolean }) {
             </div>
 
             {/* Onglets */}
-            <NewsTabs tab={tab} onChange={setTab} />
+            <NewsTabs tab={tab} onChange={handleTabChange} />
           </div>
         )}
 
@@ -212,14 +279,14 @@ export function NewsSection({ header = true }: { header?: boolean }) {
             seulement les onglets. */}
         {!header && (
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-            <NewsTabs tab={tab} onChange={setTab} />
+            <NewsTabs tab={tab} onChange={handleTabChange} />
           </div>
         )}
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {isLoading
-            ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
-            : items.map((item) =>
+            ? Array.from({ length: pageSize }).map((_, i) => <SkeletonCard key={i} />)
+            : pageItems.map((item) =>
                 item.type === "video" ? (
                   <VideoCard key={item.id} item={item} />
                 ) : (
@@ -227,6 +294,10 @@ export function NewsSection({ header = true }: { header?: boolean }) {
                 )
               )}
         </div>
+
+        {pagination && (
+          <NewsPagination page={safePage} totalPages={totalPages} onPage={goToPage} />
+        )}
       </div>
     </section>
   );

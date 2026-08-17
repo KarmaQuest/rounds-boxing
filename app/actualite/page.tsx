@@ -35,7 +35,7 @@ export default function ActualitePage() {
         </p>
       </div>
 
-      <NewsSection header={false} />
+      <NewsSection header={false} pageSize={12} pagination />
     </div>
   );
 }
