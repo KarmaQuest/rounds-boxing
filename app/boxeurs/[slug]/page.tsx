@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Crown, Ruler, Scale, Calendar, Flag, Swords } from "lucide-react";
-import { getBoxeur, getCombatsAvenir, getCombatsRecents } from "@/lib/data";
+import { getBoxeur, getCarriere, getCombatsAvenir } from "@/lib/data";
 import type { Fight } from "@/lib/data/types";
 import { koPct } from "@/lib/data/utils";
 import { Avatar } from "@/components/avatar";
@@ -52,17 +52,21 @@ export default async function FighterPage({ params }: PageProps) {
   const { fighter, source } = await getBoxeur(slug);
   if (!fighter) notFound();
 
-  const [recent, upcoming] = await Promise.all([
-    getCombatsRecents(30),
+  // Carrière complète (archive pipeline : toutes sources, toutes années).
+  // Lecture statique de public/data/boxers/careers.json — si absente, on
+  // retombe sur les combats récents des shards filtrés par nom.
+  const [career, upcoming] = await Promise.all([
+    getCarriere(fighter.slug),
     getCombatsAvenir(10),
   ]);
+  const careerFights = career.fights;
 
   const fightsWith = (fights: Fight[], name: string) =>
     fights.filter((f) =>
       f.fighters.some((ref) => ref.name.toLowerCase() === name.toLowerCase())
     );
 
-  const recentFights = fightsWith(recent.fights, fighter.name);
+  const recentFights = fightsWith(careerFights, fighter.name);
   const upcomingFights = fightsWith(upcoming.fights, fighter.name);
   const ko = koPct(fighter.record);
 
@@ -248,7 +252,9 @@ export default async function FighterPage({ params }: PageProps) {
           {recentFights.length > 0 && (
             <div>
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-fog">
-                Derniers résultats
+                {career.fights.length > 0
+                  ? `Carrière (${recentFights.length} combats archivés)`
+                  : "Derniers résultats"}
               </p>
               <div className="grid gap-4 sm:grid-cols-2">
                 {recentFights.map((fight, i) => (

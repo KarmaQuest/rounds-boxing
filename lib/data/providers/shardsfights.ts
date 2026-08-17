@@ -24,7 +24,7 @@ import type { DataProvider } from "./provider";
  * `fs` (voir AUDIT §2). Le cache TTL du routeur limite la lecture à 1×/24 h.
  */
 
-interface PipelineFight {
+export interface PipelineFight {
   id: string;
   date: string;
   location: string;
@@ -52,7 +52,7 @@ const WEIGHT_MAP: Array<[RegExp, WeightClass]> = [
   [/poids lourds|heavy/, "Poids lourds"],
   [/super-moyens|super middle/, "Poids super-moyens"],
   [/poids moyens|middle/, "Poids moyens"],
-  [/super-welters|super welter|light middle/, "Poids super-welters"],
+  [/super-welters|super welter|light middle|junior middle|jr\.? middle|mi-moyens/, "Poids super-welters"],
   [/welters|welter/, "Poids welters"],
   [/super-légers|super legers|super light|light welter|junior lightweight|junior welter/, "Poids super-légers"],
   [/poids légers|poids legers|^light|light$/, "Poids légers"],
@@ -65,7 +65,7 @@ const WEIGHT_MAP: Array<[RegExp, WeightClass]> = [
   [/mi-mouches|minimum|straw/, "Poids mi-mouches"],
 ];
 
-function mapWeightClass(raw: string): WeightClass | undefined {
+export function mapWeightClass(raw: string): WeightClass | undefined {
   const s = (raw ?? "").toLowerCase();
   if (!s) return undefined;
   // déjà une catégorie canonique FR ? (évite le double mapping)
@@ -90,7 +90,7 @@ function isBelt(raw: string): boolean {
   return /(^|\s)(wba|wbc|ibf|wbo|wba\s+international|continental|intercontinental|wbo\s+global|the\s+ring)\b/i.test(raw);
 }
 
-function toFrontFight(p: PipelineFight, source: string): Fight {
+export function toFrontFight(p: PipelineFight, source: string): Fight {
   const a = p.fighter_a.trim();
   const b = p.fighter_b.trim();
   const winner = p.winner?.trim();

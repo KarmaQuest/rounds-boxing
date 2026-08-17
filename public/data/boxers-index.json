@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-08-16T14:08:26Z",
+  "generated_at": "2026-08-17T12:33:44Z",
   "sources": {
     "bigballs": {
       "name": "bigballs",
-      "date_last_sync": "2026-08-16T14:08:26Z",
+      "date_last_sync": "2026-08-17T12:33:44Z",
       "total_boxers": 12163
     },
     "merged": {
       "name": "merged",
-      "date_last_sync": "2026-08-16T14:08:26Z",
-      "total_boxers": 20894
+      "date_last_sync": "2026-08-17T12:33:44Z",
+      "total_boxers": 22186
     },
     "wikidata": {
       "name": "wikidata",
-      "date_last_sync": "2026-08-16T14:08:26Z",
+      "date_last_sync": "2026-08-17T12:33:44Z",
       "total_boxers": 19586
     }
   },
-  "total_boxers": 52643,
-  "total_unique": 21312
+  "total_boxers": 53935,
+  "total_unique": 22604
 }

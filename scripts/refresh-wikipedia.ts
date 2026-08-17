@@ -11,7 +11,8 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { parseBoxerInfobox } from "../lib/data/providers/wikipedia-parse.ts";
+import { parseBoxerCareer, parseBoxerInfobox } from "../lib/data/providers/wikipedia-parse.ts";
+import type { WikipediaBout } from "../lib/data/providers/wikipedia-types.ts";
 import { FIGHTERS } from "../lib/data/providers/mock.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -22,6 +23,17 @@ const OUT = join(
   "data",
   "providers",
   "wikipedia-records.json"
+);
+// Carrières complètes (tableaux « Professional boxing record ») — dataset
+// séparé, lu par CareersProvider ; alimenté aussi par add-wikipedia-bouts.ts
+// (couverture étendue à tous les boxeurs avec ID Wikidata).
+const CAREERS_OUT = join(
+  __dirname,
+  "..",
+  "lib",
+  "data",
+  "providers",
+  "wikipedia-careers.json"
 );
 
 // charge .env.local (clé Big Balls) — tsx ne le fait pas automatiquement
@@ -158,8 +170,8 @@ async function resolveTitles(
   return titles;
 }
 
-/** Récupère le wikitext (section 0 = infobox) de titres par lots, sur la
- *  Wikipédia de la langue demandée. */
+/** Récupère le wikitext COMPLET de titres par lots (infobox + palmarès
+ *  « Professional boxing record »), sur la Wikipédia de la langue demandée. */
 async function fetchWikitexts(
   lang: "fr" | "en",
   titles: string[]
@@ -168,7 +180,7 @@ async function fetchWikitexts(
   for (let i = 0; i < titles.length; i += BATCH) {
     const chunk = titles.slice(i, i + BATCH);
     const j = await apiFetch(
-      `https://${lang}.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvslots=main&rvsection=0&redirects=1&format=json&formatversion=2&titles=${encodeURIComponent(
+      `https://${lang}.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvslots=main&redirects=1&format=json&formatversion=2&titles=${encodeURIComponent(
         chunk.join("|")
       )}`
     );
@@ -241,23 +253,29 @@ async function main() {
   for (const a of all) if (a.wikidata) byQid.set(a.wikidata, a);
   const titlesByQid = await resolveTitles(byQid);
 
-  // 3. wikitext fr (section 0) pour tous les titres fr connus
+  // 3. wikitext fr (complet) pour tous les titres fr connus
   const frTitles = [...titlesByQid.values()]
     .map((t) => t.fr)
     .filter((t): t is string => Boolean(t));
   const frWikitexts = await fetchWikitexts("fr", [...new Set(frTitles)]);
   console.log(`  fr : ${frWikitexts.size} wikitexts récupérés`);
 
-  // 4. parse fr → snapshot intermédiaire ; on note qui a besoin de l'en
+  // 4. parse fr (infobox + palmarès) → snapshot intermédiaire ; on note qui
+  //    a besoin de l'en
   const out: Record<string, unknown> = {};
+  const careersOut: Record<string, { name: string; bouts: WikipediaBout[] }> = {};
   const needEn: string[] = [];
   const frParsed = new Map<string, NonNullable<ReturnType<typeof parseBoxerInfobox>>>();
+  const frCareer = new Map<string, WikipediaBout[]>();
   for (const a of all) {
     const t = a.wikidata ? titlesByQid.get(a.wikidata) : undefined;
     if (t?.fr && frWikitexts.has(t.fr)) {
-      const p = parseBoxerInfobox(frWikitexts.get(t.fr)!);
+      const wt = frWikitexts.get(t.fr)!;
+      const p = parseBoxerInfobox(wt);
       if (p) {
         frParsed.set(a.slug, p);
+        const bouts = parseBoxerCareer(wt);
+        if (bouts.length) frCareer.set(a.slug, bouts);
         continue; // fiche fr valide → pas besoin de l'en
       }
     }
@@ -268,24 +286,44 @@ async function main() {
   const enWikitexts = await fetchWikitexts("en", [...new Set(needEn)]);
   console.log(`  en : ${enWikitexts.size} wikitexts de secours`);
 
-  // 6. merge fr + en (meilleure fiche) → snapshot final
+  // 6. merge fr + en (meilleure fiche) → snapshot final, avec le palmarès
+  //    complet (bouts) de la meilleure langue disponible
   let ok = 0;
   for (const a of all) {
     const t = a.wikidata ? titlesByQid.get(a.wikidata) : undefined;
     let best = frParsed.get(a.slug) ?? null;
+    let bouts: WikipediaBout[] = frCareer.get(a.slug) ?? [];
     if (t?.en && enWikitexts.has(t.en)) {
       const p = parseBoxerInfobox(enWikitexts.get(t.en)!);
       if (p) best = best ? bestOf(best, p) : p;
+      const enBouts = parseBoxerCareer(enWikitexts.get(t.en)!);
+      // la langue avec le palmarès le plus fourni prime (souvent l'en)
+      if (enBouts.length > bouts.length) bouts = enBouts;
     }
     if (best) {
       out[a.slug] = { name: a.name, ...best };
+      if (bouts.length) careersOut[a.slug] = { name: a.name, bouts };
       ok++;
     }
   }
 
+  // merge avec le dataset carrières existant (ne pas perdre la couverture
+  // étendue d'add-wikipedia-bouts.ts pour les boxeurs hors de ce pool)
+  let careersFile: Record<string, { name: string; bouts: unknown }> = {};
+  try {
+    careersFile = JSON.parse(readFileSync(CAREERS_OUT, "utf8"));
+  } catch {
+    /* premier run → dataset vide */
+  }
+  for (const [slug, entry] of Object.entries(careersOut)) {
+    if (entry.bouts.length) careersFile[slug] = entry;
+  }
+  writeFileSync(CAREERS_OUT, JSON.stringify(careersFile, null, 2) + "\n", "utf8");
+
   writeFileSync(OUT, JSON.stringify(out, null, 2) + "\n", "utf8");
   console.log(`\nÉcrit ${ok}/${all.length} fiches → ${OUT}`);
-  console.log("Commit le JSON : c'est un dataset, comme les autres sources.");
+  console.log(`Carrières : ${Object.keys(careersFile).length} boxeurs → ${CAREERS_OUT}`);
+  console.log("Commit les JSON : ce sont des datasets, comme les autres sources.");
 }
 
 main().catch((e) => {

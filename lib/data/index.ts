@@ -5,6 +5,8 @@ import { TheSportsDbProvider } from "./providers/thesportsdb";
 import { OddsApiProvider } from "./providers/oddsapi";
 import { WikipediaProvider } from "./providers/wikipedia";
 import { ShardsFightsProvider } from "./providers/shardsfights";
+import { CareersProvider } from "./providers/careers";
+import { MergedBoxersProvider } from "./providers/mergedboxers";
 import { ProviderRouter } from "./providers/router";
 import type { FighterFilters } from "./types";
 import { applyFilters, dedupeFighters } from "./utils";
@@ -28,6 +30,10 @@ const router = new ProviderRouter([
   new OddsApiProvider(),
   new ShardsFightsProvider(),
   new MockProvider(),
+  // Annuaire complet (merged.json, 22k boxeurs) — dernier recours : trouve
+  // les boxeurs absents des APIs live (ex. Bakary Samake) sans jamais
+  // écraser un record complet (mock/Wikipedia) ni le pool classé.
+  new MergedBoxersProvider(),
 ]);
 
 export async function searchBoxeurs(filters: FighterFilters) {
@@ -71,6 +77,14 @@ export async function getCombatsAvenir(limit = 20) {
 
 export async function getCombatsRecents(limit = 20) {
   return router.recentFights(limit);
+}
+
+/** Tous les combats d'un boxeur (carrière complète, brique 3 du plan
+ *  d'archive) — lecture statique de boxers/careers.json généré par
+ *  `python main.py careers` (pipeline). */
+export async function getCarriere(slug: string) {
+  const fights = await new CareersProvider().getCareer(slug);
+  return { fights, source: fights.length > 0 ? "archive pipeline" : "aucune" };
 }
 
 /** Providers actifs + quota (pour une page /api/health ou debug). */

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   heightToCm,
+  parseBoxerCareer,
   parseBoxerInfobox,
   reachToCm,
   stanceNormalize,
@@ -161,5 +162,164 @@ describe("parseBoxerInfobox", () => {
 
   it("catégorie EN avec tiret (Light-heavyweight) → traduite", () => {
     expect(weightClassNormalize("[[Light-heavyweight]]")).toBe("Poids mi-lourds");
+  });
+});
+
+/** Extrait réaliste du tableau « Professional boxing record » d'Usyk (en). */
+const CAREER_USYK = `==Professional boxing record==
+<!--DO NOT ADD UPCOMING FIGHTS-->
+{{BoxingRecordSummary
+|draws=
+|nc=
+|ko-wins=16
+|ko-losses=
+|dec-wins=9
+|dec-losses=
+}}
+{|class="wikitable" style="text-align:center"
+|-
+|-<!--comment-->
+!{{abbr|No.|Number}}
+!Result
+!Record
+!Opponent
+!Type
+!Round, time
+!Date
+!Location
+!Notes
+|-
+|25
+|{{yes2}}Win
+|25\u20130
+|style="text-align:left;"|[[Rico Verhoeven]]
+|TKO
+|11 (12), {{small|2:59}}
+|23 May 2026
+|style="text-align:left;"|{{small|[[Pyramids of Giza]], [[Giza]], Egypt}}
+|style="text-align:left;"|{{small|Retained WBA (Super), WBC, and ''The Ring'' heavyweight titles}}
+|-
+|24
+|{{yes2}}Win
+|24\u20130
+|style="text-align:left;"|[[Daniel Dubois]]
+|KO
+|5 (12), {{small|1:52}}
+|[[Oleksandr Usyk vs. Daniel Dubois II|19 Jul 2025]]
+|style="text-align:left;"|{{small|[[Wembley Stadium]], London, England}}
+|style="text-align:left;"|{{small|Retained WBA (Super), WBC, WBO, IBO, and ''The Ring'' heavyweight titles; Won IBF heavyweight title}}
+|-
+|23
+|{{yes2}}Win
+|23\u20130
+|style="text-align:left;"|[[Tyson Fury]]
+|UD
+|12
+|18 May 2024
+|style="text-align:left;"|{{small|Kingdom Arena, Riyadh, Saudi Arabia}}
+|style="text-align:left;"|{{small|Retained WBA (Super), IBF, WBO, IBO, and ''The Ring'' heavyweight titles; Won [[List of WBC world champions#Heavyweight|WBC heavyweight title]]}}
+|-
+|22
+|{{no2}}Loss
+|21\u20131
+|style="text-align:left;"|[[Tyson Fury]]
+|SD
+|12
+|21 Dec 2024
+|style="text-align:left;"|{{small|Kingdom Arena, Riyadh, Saudi Arabia}}
+|style="text-align:left;"|{{small|Lost WBA (Super), WBC, WBO, IBF heavyweight titles}}
+|-
+|21
+|{{draw}}Draw
+|21\u20130\u20131
+|style="text-align:left;"|[[Tyson Fury]]
+|MD
+|12
+|16 Aug 2025
+|style="text-align:left;"|{{small|Kingdom Arena, Riyadh, Saudi Arabia}}
+|style="text-align:left;"|{{small|Retained WBA (Super), WBC, WBO, IBF heavyweight titles}}
+|}
+
+==Early life==
+Some text.
+`;
+
+describe("parseBoxerCareer", () => {
+  it("parse le palmarès complet (en), du plus récent au plus ancien", () => {
+    const bouts = parseBoxerCareer(CAREER_USYK);
+    expect(bouts).toHaveLength(5);
+    // premier combat = le plus récent (Rico Verhoeven)
+    expect(bouts[0]).toMatchObject({
+      result: "Win",
+      opponent: "Rico Verhoeven",
+      type: "TKO",
+      round: 11,
+      date: "2026-05-23",
+      location: "Pyramids of Giza, Giza, Egypt",
+      title: "Titre WBA, WBC, The Ring",
+    });
+    // date en lien wiki → libellé extrait
+    expect(bouts[1]).toMatchObject({ opponent: "Daniel Dubois", date: "2025-07-19" });
+    // défaite → result Loss, vainqueur = adversaire
+    expect(bouts[3]).toMatchObject({ result: "Loss", opponent: "Tyson Fury", type: "SD", round: 12, date: "2024-12-21" });
+    // nul → result Draw
+    expect(bouts[4]).toMatchObject({ result: "Draw", type: "MD", date: "2025-08-16", round: 12 });
+  });
+
+  it("pas de section palmarès → []", () => {
+    expect(parseBoxerCareer("{{Infobox boxer\n| name = X\n}}")).toEqual([]);
+    expect(parseBoxerCareer("")).toEqual([]);
+  });
+
+  it("format de date mois-jour-année (« Sep 13, 2025 ») → ISO", () => {
+    const wt = `==Professional boxing record==
+{|class="wikitable"
+|-
+!No.!!Result!!Record!!Opponent!!Type!!Round!!Date!!Location
+|-
+|42
+|{{yes2}}Win
+|42\u20130
+|style="text-align:left;"|[[Canelo Álvarez]]
+|UD
+|12
+|[[Canelo Álvarez vs. Terence Crawford|Sep 13, 2025]]
+|style="text-align:left;"|{{small|Allegiant Stadium, Paradise, Nevada, U.S.}}
+|}
+`;
+    const bouts = parseBoxerCareer(wt);
+    expect(bouts).toHaveLength(1);
+    expect(bouts[0]!.date).toBe("2025-09-13");
+    expect(bouts[0]!.opponent).toBe("Canelo Álvarez");
+  });
+
+  it("lignes TBD/TBA ou dates illisibles → ignorées", () => {
+    const wt = `==Professional boxing record==
+{|class="wikitable"
+|-
+!No.!!Result!!Record!!Opponent!!Type!!Round!!Date!!Location
+|-
+|1
+|{{yes2}}Win
+|1\u20130
+|style="text-align:left;"|[[John Doe]]
+|KO
+|2 (4)
+|15 Feb 2026
+|Las Vegas, Nevada
+|-
+|2
+|{{N/A}}
+|1\u20130
+|style="text-align:left;"|TBD
+|\u2013
+|\u2013
+|TBA
+|\u2013
+|}
+`;
+    const bouts = parseBoxerCareer(wt);
+    expect(bouts).toHaveLength(1);
+    expect(bouts[0]).toMatchObject({ opponent: "John Doe", date: "2026-02-15" });
   });
 });

@@ -1,4 +1,5 @@
 import type { BoxerRecord, Stance, WeightClass } from "../types";
+import type { WikipediaBout } from "./wikipedia-types";
 
 /**
  * Parser d'infobox Wikipedia (wikitext) — format français « Infobox Boxeur »
@@ -318,4 +319,165 @@ export function parseBoxerInfobox(wikitext: string): {
     ...(weightClass ? { weightClass } : {}),
     ...(nickname ? { nickname } : {}),
   };
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ *  Palmarès professionnel complet — tableau « Professional boxing record »
+ *  (en) / « Palmarès professionnel » (fr) des articles de boxeurs.
+ *  Colonnes : No. | Result | Record | Opponent | Type | Round, time |
+ *  Date | Location | Notes — du combat le plus récent au plus ancien.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/** Retire balises, refs, templates, liens wiki et commentaires d'une cellule. */
+function cleanCell(raw: string): string {
+  return raw
+    .replace(/<!--[\s\S]*?-->/g, " ")
+    // attributs de cellule (style/align/class…) : `style="…"|` et `align=left|`
+    .replace(/\b(?:style|align|valign|class|rowspan|colspan|bgcolor)\s*=\s*"[^"]*"\s*\|/gi, " ")
+    .replace(/\b(?:align|valign)\s*=\s*\w+\s*\|/gi, " ")
+    .replace(/<ref[^>]*>[\s\S]*?<\/ref>/gi, " ")
+    .replace(/<ref[^>]*\/>/gi, " ")
+    .replace(/<br\s*\/?>/gi, " · ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\{\{\s*small\s*\|([\s\S]*?)\}\}/gi, "$1") // {{small|…}} → contenu
+    .replace(/\{\{\s*abbr\s*\|([^|]*)\|([^}]*)\}\}/gi, "$2") // {{abbr|UD|Unanimous}} → label
+    .replace(/\{\{\s*(yes2|no2|draw|n\/a|maybe|dunno|sd)\s*\}\}/gi, "") // fond de cellule
+    .replace(/\{\{[^}]*\}\}/g, " ")
+    .replace(/\[\[[^|\]]*\|([^\]]*)\]\]/g, "$1") // lien wiki → libellé
+    .replace(/\[\[([^\]]*)\]\]/g, "$1")
+    .replace(/'{2,}/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/** Décode le résultat (en/fr) → valeur canonique, null si illisible. */
+export function normalizeBoutResult(raw: string): WikipediaBout["result"] | null {
+  const s = (raw ?? "").toLowerCase();
+  if (/no contest|sans d[cé]cision/.test(s)) return "NC";
+  if (/^nc$|^n\.c\.?$/.test(s.trim())) return "NC";
+  if (/win|victoire|vaincu|gagn/.test(s)) return "Win";
+  if (/loss|d[cé]faite|perdu/.test(s)) return "Loss";
+  if (/draw|nul|égalit|egalit/.test(s)) return "Draw";
+  return null;
+}
+
+const MONTHS: Record<string, number> = {
+  jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12,
+  january: 1, february: 2, march: 3, april: 4, june: 6, july: 7, august: 8, september: 9, october: 10, november: 11, december: 12,
+  janvier: 1, février: 1, fevrier: 1, mars: 3, avril: 4, mai: 5, juin: 6, juillet: 7,
+  août: 8, aout: 8, septembre: 9, octobre: 10, novembre: 11, décembre: 12, decembre: 12,
+};
+
+/** « 23 May 2026 », « 19 Jul 2025 », « Sep 13, 2025 », « 23 mai 2026 »
+ *  → ISO yyyy-mm-dd. Supporte jour-mois-année (en/fr) et mois-jour-année
+ *  (variante en « Sep 13, 2025 »). */
+export function parseBoutDate(raw: string): string | null {
+  const toIso = (day: number, month: number, year: number): string | null => {
+    if (day < 1 || day > 31 || year < 1950 || year > 2100) return null;
+    return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  };
+  const s = raw ?? "";
+  // jour mois année : « 23 May 2026 », « 23 mai 2026 »
+  let m = s.match(/(\d{1,2})\s+([A-Za-zÀ-ÿ]{3,})\s+(\d{4})/);
+  if (m) {
+    const month = MONTHS[m[2]!.toLowerCase()];
+    if (month) return toIso(Number(m[1]), month, Number(m[3]));
+  }
+  // mois jour, année : « Sep 13, 2025 »
+  m = s.match(/([A-Za-zÀ-ÿ]{3,})\s+(\d{1,2}),?\s+(\d{4})/);
+  if (m) {
+    const month = MONTHS[m[1]!.toLowerCase()];
+    if (month) return toIso(Number(m[2]), month, Number(m[3]));
+  }
+  return null;
+}
+
+/** « 11 (12), 2:59 », « 12 » → round d'arrêt (ou undefined aux points). */
+export function parseBoutRound(raw: string): number | undefined {
+  const m = (raw ?? "").match(/\b(\d{1,2})\b/);
+  if (!m) return undefined;
+  const n = Number(m[1]);
+  return n >= 1 && n <= 30 ? n : undefined;
+}
+
+/** Ceintures citées dans les notes → titre du combat (« Titre WBA, WBC… »). */
+export function beltsFromNotes(notes?: string): string | undefined {
+  if (!notes) return undefined;
+  const hits = notes.match(/\b(WBA|WBC|IBF|WBO|IBO|The Ring)\b/gi);
+  if (!hits) return undefined;
+  const uniq = [...new Set(hits.map((h) => (h.toLowerCase() === "the ring" ? "The Ring" : h.toUpperCase())))];
+  return `Titre ${uniq.join(", ")}`;
+}
+
+/** Découpe le wikitable d'une section en lignes de cellules nettoyées. */
+export function parseCareerTable(section: string): string[][] {
+  const rows: string[][] = [];
+  const start = section.indexOf("{|");
+  if (start === -1) return rows;
+  const end = section.indexOf("|}", start);
+  const body = end === -1 ? section.slice(start) : section.slice(start, end);
+  for (const block of body.split(/^\|-/m).slice(1)) {
+    const cells: string[] = [];
+    for (const rawLine of block.split("\n")) {
+      const line = rawLine.trimEnd();
+      if (!line.trim()) continue;
+      const m = line.match(/^\|\|?(.*)$/);
+      if (m) {
+        for (const part of m[1]!.split("||")) {
+          const clean = cleanCell(part);
+          cells.push(clean);
+        }
+      } else if (cells.length > 0) {
+        // ligne de continuation (cellule multi-lignes) → on l'ajoute à la dernière
+        const clean = cleanCell(line);
+        if (clean) {
+          cells[cells.length - 1] += cells[cells.length - 1] ? " " + clean : clean;
+        }
+      }
+    }
+    if (cells.length >= 7) rows.push(cells);
+  }
+  return rows;
+}
+
+/**
+ * Extrait le palmarès professionnel complet d'un article de boxeur
+ * (tableau « Professional boxing record » / « Palmarès professionnel »),
+ * du combat le plus récent au plus ancien. Retourne [] si l'article n'a
+ * pas de tableau exploitable.
+ */
+export function parseBoxerCareer(wikitext: string): WikipediaBout[] {
+  if (!wikitext) return [];
+  const header = wikitext.match(
+    /==\s*(?:Professional boxing record|Palmar[èe]s professionnel(?: de boxe)?|Palmar[èe]s)\s*==/i
+  );
+  if (!header) return [];
+  const rest = wikitext.slice(header.index! + header[0].length);
+  const end = rest.search(/^==+\s*[^=]/m); // prochaine section
+  const section = end === -1 ? rest : rest.slice(0, end);
+
+  const bouts: WikipediaBout[] = [];
+  for (const cells of parseCareerTable(section)) {
+    const result = normalizeBoutResult(cells[1] ?? "");
+    const opponent = (cells[3] ?? "").trim();
+    const date = parseBoutDate(cells[6] ?? "");
+    if (!result || !opponent || !date) continue;
+
+    const type = (cells[4] ?? "").trim() || undefined;
+    const round = parseBoutRound(cells[5] ?? "");
+    const location = cells.length >= 8 ? (cells[7] ?? "").trim() || undefined : undefined;
+    const notes = cells.length >= 9 ? (cells[8] ?? "").trim() || undefined : undefined;
+
+    bouts.push({
+      result,
+      opponent,
+      ...(type ? { type } : {}),
+      ...(round !== undefined ? { round } : {}),
+      date,
+      ...(location ? { location } : {}),
+      ...(beltsFromNotes(notes) ? { title: beltsFromNotes(notes) } : {}),
+      ...(notes ? { notes } : {}),
+    });
+  }
+  return bouts;
 }
