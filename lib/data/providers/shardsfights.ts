@@ -37,6 +37,26 @@ export interface PipelineFight {
   is_title_fight: boolean;
 }
 
+/** Combat PROGRAMMÉ (schéma pipeline fights-upcoming/, cf. ScheduledFight). */
+export interface PipelineScheduledFight {
+  id: string;
+  date: string;
+  location: string;
+  weight_class: string;
+  fighter_a: string;
+  fighter_b: string;
+  is_title_fight: boolean;
+  amateur?: boolean;
+  bout_type?: string;
+  promoter?: string;
+  org?: string;
+}
+
+/** Rapport de vérification du module llm/verify (fights-upcoming-verification.json). */
+interface VerificationReport {
+  items?: Array<{ id: string; status: string }>;
+}
+
 interface OrgIndex {
   organizations: Record<string, { name?: string; abbr?: string; total_fights?: number }>;
 }
@@ -88,6 +108,30 @@ export function mapWeightClass(raw: string): WeightClass | undefined {
 /** Une catégorie qui EST une ceinture (WBA/WBC/IBF/WBO/…) → titre du combat. */
 function isBelt(raw: string): boolean {
   return /(^|\s)(wba|wbc|ibf|wbo|wba\s+international|continental|intercontinental|wbo\s+global|the\s+ring)\b/i.test(raw);
+}
+
+/** Mappe un combat programmé du pipeline vers le type Fight du front. */
+export function toScheduledFight(
+  p: PipelineScheduledFight,
+  source: string
+): Fight {
+  return {
+    id: p.id,
+    date: p.date,
+    status: "upcoming",
+    weightClass: mapWeightClass(p.weight_class),
+    title: p.is_title_fight
+      ? p.bout_type
+        ? `${p.bout_type} — ${p.weight_class.trim()}`
+        : p.weight_class.trim()
+      : undefined,
+    location: p.location || undefined,
+    fighters: [{ name: p.fighter_a.trim() }, { name: p.fighter_b.trim() }],
+    amateur: p.amateur ?? false,
+    boutType: p.bout_type || undefined,
+    promoter: p.promoter || undefined,
+    source,
+  };
 }
 
 export function toFrontFight(p: PipelineFight, source: string): Fight {
@@ -161,7 +205,65 @@ export class ShardsFightsProvider implements DataProvider {
   }
 
   async getUpcomingFights(): Promise<never[]> {
-    return []; // programmation = mock/odds, pas les shards de résultats
+    return []; // programmation = shards fights-upcoming/, pas ici
+  }
+
+  /**
+   * Combats PROGRAMMÉS (à venir) par organisation — shards
+   * `fights-upcoming/{org}.json` générés par `python main.py programmation`
+   * (pipeline) puis vérifiés par le module llm/verify.
+   *
+   * - Tri par date CROISSANTE (le plus proche d'abord) ;
+   * - zéro mock : uniquement les calendriers officiels ;
+   * - si le rapport de vérification existe, seuls les combats `confirmed`
+   *   sont servis (les `flagged` sont « refusés à la publication »).
+   */
+  async getUpcomingProgrammation(): Promise<Fight[]> {
+    const dir = this.dataDir();
+    const schedDir = path.join(dir, "fights-upcoming");
+    let files: string[] = [];
+    try {
+      files = await fs.readdir(schedDir);
+    } catch {
+      return []; // pipeline programmation pas encore runné
+    }
+
+    // combats refusés par la vérification (si rapport présent)
+    const flagged = new Set<string>();
+    try {
+      const report = JSON.parse(
+        await fs.readFile(path.join(dir, "fights-upcoming-verification.json"), "utf-8")
+      ) as VerificationReport;
+      for (const item of report.items ?? []) {
+        if (item.status === "flagged") flagged.add(item.id);
+      }
+    } catch {
+      // pas de rapport → tout est servi tel quel
+    }
+
+    const fights: Fight[] = [];
+    const seen = new Set<string>(); // dédup inter-sources par id
+    for (const file of files.sort()) {
+      if (!file.endsWith(".json") || file === "fights-upcoming-index.json") continue;
+      let raw: PipelineScheduledFight[];
+      try {
+        raw = JSON.parse(
+          await fs.readFile(path.join(schedDir, file), "utf-8")
+        ) as PipelineScheduledFight[];
+      } catch {
+        continue;
+      }
+      const orgSlug = file.replace(/\.json$/, "");
+      for (const p of raw) {
+        if (!p?.id || !p.fighter_a || !p.fighter_b) continue;
+        if (flagged.has(p.id)) continue; // refusé par la vérification IA
+        if (seen.has(p.id)) continue;
+        seen.add(p.id);
+        fights.push(toScheduledFight(p, orgSlug));
+      }
+    }
+
+    return fights.sort((x, y) => x.date.localeCompare(y.date));
   }
 
   async getRecentFights(limit = 20): Promise<Fight[]> {

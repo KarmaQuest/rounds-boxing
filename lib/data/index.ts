@@ -75,6 +75,21 @@ export async function getCombatsAvenir(limit = 20) {
   return router.upcomingFights(limit);
 }
 
+/**
+ * Combats à venir PAR ORGANISATION (programmation officielle) : lecture
+ * statique des shards `fights-upcoming/` (pipeline) — zéro mock, zéro
+ * odds. Filtrés par le rapport de vérification IA (llm/verify) : seuls
+ * les combats `confirmed` sont servis.
+ */
+export async function getProgrammation() {
+  const fights = await new ShardsFightsProvider().getUpcomingProgrammation();
+  return {
+    fights,
+    count: fights.length,
+    source: fights.length > 0 ? "calendriers officiels vérifiés" : "aucune",
+  };
+}
+
 export async function getCombatsRecents(limit = 20) {
   return router.recentFights(limit);
 }

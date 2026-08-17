@@ -2,7 +2,7 @@ import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { ShardsFightsProvider } from "./shardsfights";
+import { ShardsFightsProvider, toScheduledFight } from "./shardsfights";
 
 function pipelineFight(over: Record<string, unknown> = {}) {
   return {
@@ -37,6 +37,37 @@ function writeIndex(dir: string, orgs: Record<string, unknown>) {
   writeFileSync(
     join(dataDirOf(dir), "organizations-index.json"),
     JSON.stringify({ organizations: orgs }),
+    "utf-8"
+  );
+}
+
+function scheduledFight(over: Record<string, unknown> = {}) {
+  return {
+    id: "sched-1",
+    date: "2026-10-10",
+    location: "Bohol, Philippines",
+    weight_class: "Jr. Flyweight (108 LBS)",
+    fighter_a: "Regie Suganob",
+    fighter_b: "Sivenathi Nontshinga",
+    is_title_fight: true,
+    amateur: false,
+    bout_type: "Eliminator for #1",
+    promoter: "PMI Bohol",
+    org: "IBF",
+    ...over,
+  };
+}
+
+function writeScheduleShard(dir: string, slug: string, fights: unknown[]) {
+  const dirPath = join(dataDirOf(dir), "fights-upcoming");
+  mkdirSync(dirPath, { recursive: true });
+  writeFileSync(join(dirPath, `${slug}.json`), JSON.stringify(fights), "utf-8");
+}
+
+function writeVerification(dir: string, items: Array<{ id: string; status: string }>) {
+  writeFileSync(
+    join(dataDirOf(dir), "fights-upcoming-verification.json"),
+    JSON.stringify({ items }),
     "utf-8"
   );
 }
@@ -158,6 +189,63 @@ describe("ShardsFightsProvider", () => {
     expect(await p.searchFighters("usyk")).toEqual([]);
     expect(await p.getFighter("usyk")).toBeNull();
     expect(p.isActive()).toBe(true);
+  });
+
+  describe("programmation (fights-upcoming)", () => {
+    it("mappe un combat programmé vers Fight (status upcoming)", () => {
+      const f = toScheduledFight(scheduledFight(), "ibf");
+      expect(f.id).toBe("sched-1");
+      expect(f.status).toBe("upcoming");
+      expect(f.date).toBe("2026-10-10");
+      expect(f.fighters.map((x) => x.name)).toEqual(["Regie Suganob", "Sivenathi Nontshinga"]);
+      expect(f.weightClass).toBe("Poids mouches"); // Jr. Flyweight
+      expect(f.title).toBe("Eliminator for #1 — Jr. Flyweight (108 LBS)");
+      expect(f.location).toBe("Bohol, Philippines");
+      expect(f.amateur).toBe(false);
+      expect(f.boutType).toBe("Eliminator for #1");
+      expect(f.source).toBe("ibf");
+      expect(f.outcome).toBeUndefined();
+    });
+
+    it("lit les shards, trie par date croissante (le plus proche d'abord)", async () => {
+      writeScheduleShard(dir, "wbc", [
+        scheduledFight({ id: "late", date: "2026-12-01" }),
+        scheduledFight({ id: "soon", date: "2026-09-01" }),
+      ]);
+      const fights = await new ShardsFightsProvider().getUpcomingProgrammation();
+      expect(fights.map((f) => f.date)).toEqual(["2026-09-01", "2026-12-01"]);
+      expect(fights[0]!.source).toBe("wbc");
+    });
+
+    it("exclut les combats refusés par la vérification IA (flagged)", async () => {
+      writeScheduleShard(dir, "ibf", [
+        scheduledFight({ id: "ok" }),
+        scheduledFight({ id: "douteux" }),
+      ]);
+      writeVerification(dir, [
+        { id: "ok", status: "confirmed" },
+        { id: "douteux", status: "flagged" },
+      ]);
+      const fights = await new ShardsFightsProvider().getUpcomingProgrammation();
+      expect(fights.map((f) => f.id)).toEqual(["ok"]);
+    });
+
+    it("dédup inter-sources par id", async () => {
+      const shared = scheduledFight({ id: "same" });
+      writeScheduleShard(dir, "wbc", [shared]);
+      writeScheduleShard(dir, "ibf", [shared, scheduledFight({ id: "other" })]);
+      const fights = await new ShardsFightsProvider().getUpcomingProgrammation();
+      expect(fights).toHaveLength(2);
+    });
+
+    it("pas de shards programmation → [] propre", async () => {
+      expect(await new ShardsFightsProvider().getUpcomingProgrammation()).toEqual([]);
+    });
+
+    it("combats incomplets sautés", async () => {
+      writeScheduleShard(dir, "wbc", [scheduledFight({ fighter_a: "" })]);
+      expect(await new ShardsFightsProvider().getUpcomingProgrammation()).toEqual([]);
+    });
   });
 
   it("intégration : lit les vrais shards du pipeline (si présents)", async () => {

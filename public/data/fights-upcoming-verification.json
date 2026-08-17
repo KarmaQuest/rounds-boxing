@@ -1,0 +1,395 @@
+{
+  "generated_at": "2026-08-18T00:33:38Z",
+  "annuaire_loaded": true,
+  "llm_available": true,
+  "llm_calls": 1,
+  "total": 21,
+  "confirmed": 20,
+  "flagged": 1,
+  "items": [
+    {
+      "id": "4d7045ac318720ce90851ee048406cab08f20e86ef85149fd9b79e4793a9bdbb",
+      "org": "ibf",
+      "date": "2026-09-12",
+      "weight_class": "Jr. Flyweight (108 LBS)",
+      "fighter_a": "Regie Suganob",
+      "fighter_b": "Sivenathi Nontshinga",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "3235251bb721efaaece444aa2c390c7b2328e89a796a7bcad6de5e2b7471f54c",
+      "org": "ibf",
+      "date": "2026-09-12",
+      "weight_class": "Jr. Featherweight (122 LBS)",
+      "fighter_a": "Datu Adam",
+      "fighter_b": "Oky Akbar",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "b5b2ef7988ba6e45741a65acc652251ec36152a268bbf5fee6dbd2c0ba501f3f",
+      "org": "ibf",
+      "date": "2026-09-12",
+      "weight_class": "Jr. Mini Flyweight (102 LBS)",
+      "fighter_a": "Sol Cudos",
+      "fighter_b": "Mercedes Rocio Reyna",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "6a7f7400182b01012acc05a6c1590ba8fd58cc165f40cfff3e4fb7d9a4766a32",
+      "org": "ibf",
+      "date": "2026-09-12",
+      "weight_class": "Flyweight (112 LBS)",
+      "fighter_a": "Leonard Pores III",
+      "fighter_b": "Andika D'Golden Boy",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "df897f9255e934c96a9be7528a9eb29106c0250036cd0e32d7ba0385e302edb2",
+      "org": "ibf",
+      "date": "2026-09-12",
+      "weight_class": "Jr. Bantamweight (115 LBS)",
+      "fighter_a": "Reymart Tagacanao",
+      "fighter_b": "Chunlin Kuang",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "Reymart Tagacanao et Chunlin Kuang sont de vrais boxeurs, mais aucun combat officiel entre eux n'est programmé ou annoncé par l'IBF Asia pour cette date lointaine en 2026."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "61fcd7a11278a2ec059ce7735ab5da9ed07cad57e42f0bfc2562789d27c124b6",
+      "org": "ibf",
+      "date": "2026-09-19",
+      "weight_class": "Featherweight (126 LBS)",
+      "fighter_a": "Shabaz Masoud",
+      "fighter_b": "Ckari Mansilla",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "767460647f2bf0463e20a35111c7ccfbd68fedaab5f940dbe15ad8324cbd654c",
+      "org": "ibf",
+      "date": "2026-10-03",
+      "weight_class": "Heavyweight (Over 200 LBS)",
+      "fighter_a": "Stan Surmacz",
+      "fighter_b": "Alexis Barriere",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "7d8e82df0975827ca9dd2048122ce9091d9214fc5f1ed661237da6133eb35849",
+      "org": "ibf",
+      "date": "2026-10-03",
+      "weight_class": "Featherweight (126 LBS)",
+      "fighter_a": "Mea Motu",
+      "fighter_b": "Mariah Turner",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "6ed7803e976a4bea156d6e17fa039a4d3da29e0ed191717975b540c8d41703c3",
+      "org": "wbc",
+      "date": "2026-08-29",
+      "weight_class": "FEATHERWEIGHT SILVER",
+      "fighter_a": "David Picasso",
+      "fighter_b": "Maicol Rincon",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "10bf66bbc90ff2a1a34bdd4135f81b02bf84c98449011cb3faedfad0e93f3fb2",
+      "org": "wbc",
+      "date": "2026-08-29",
+      "weight_class": "SUPERMIDDLEWEIGHT INTERIM VOLUNTARY",
+      "fighter_a": "Lester Martinez",
+      "fighter_b": "Luka Plantic",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "aed2936695b59cf48d4a16823c5811f59d7f133a8de2b3a105385f2f9bec451a",
+      "org": "wbc",
+      "date": "2026-08-29",
+      "weight_class": "SUPERWELTERWEIGHT",
+      "fighter_a": "Mikaela Mayer",
+      "fighter_b": "Chantelle Cameron",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "e74bb557adc74585319846c7bff551a0a09983924389ff90267b0ae5666eca34",
+      "org": "wbc",
+      "date": "2026-08-29",
+      "weight_class": "ATOMWEIGHT",
+      "fighter_a": "Canila Zamorano",
+      "fighter_b": "Perla Perez",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "4b4d09dc7235a15b226b194a2c32813c765f58c0448eec221960ba75700bf55b",
+      "org": "wbc",
+      "date": "2026-08-29",
+      "weight_class": "LIGHTWEIGHT",
+      "fighter_a": "Caroline Dubois",
+      "fighter_b": "Amelia Moore",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "52ea676e20343560ad94e7e1fd3cfa44949d51d76d4cb538cdf17b906ba11fe8",
+      "org": "wbc",
+      "date": "2026-08-29",
+      "weight_class": "SUPERFLYWEIGHT SILVER",
+      "fighter_a": "Jaqueline Calvo",
+      "fighter_b": "Maria Soledad Vargas",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "42b6dcca066c5851e0595345da2ac66a8fb4b821bb53bdccc8b08defc632f5d3",
+      "org": "wbc",
+      "date": "2026-08-30",
+      "weight_class": "MIDDLEWEIGHT SILVER",
+      "fighter_a": "Dylan Biggs",
+      "fighter_b": "Kenan Guzel",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "bb71456f5c7ddbdf25e7e4285f0f008b148d08982e85cec82a226e41e3f147c2",
+      "org": "wbc",
+      "date": "2026-09-05",
+      "weight_class": "SUPERLIGHTWEIGHT",
+      "fighter_a": "Katie Taylor",
+      "fighter_b": "Flora Pili",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "04018592cb4321f408cc0283e88956d102852d51dee598ad4463abf53ac2f01c",
+      "org": "wbc",
+      "date": "2026-09-12",
+      "weight_class": "WELTERWEIGHT VOLUNTARY",
+      "fighter_a": "Ryan Garcia",
+      "fighter_b": "Conor Benn",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "16c19c91dfc990f22db20b2522f04e566fcc65b220f878abb701f18b5de4b237",
+      "org": "wbc",
+      "date": "2026-09-19",
+      "weight_class": "STRAWWEIGHT SILVER VACANT",
+      "fighter_a": "Beaven Sibanda",
+      "fighter_b": "Joey Canoy",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "6763b951ee2499d06a368b8e13af3b88d60999c5b8e788d812dbd11cd1460995",
+      "org": "wbc",
+      "date": "2026-09-22",
+      "weight_class": "STRAWWEIGHT INTERNATIONAL VACANT",
+      "fighter_a": "Erika Bolivar",
+      "fighter_b": "Joanna Zuniga",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "61b6bb3392de7bd8f8aa71ff2b8764d776f5fbab551178440f7b1e9fa2c9ac1b",
+      "org": "wbc",
+      "date": "2026-09-27",
+      "weight_class": "BANTAMWEIGHT VOLUNTARY",
+      "fighter_a": "Takuma Inoue",
+      "fighter_b": "Tenshin Nasukawa",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "e689eb65cb6b2cd534bb5a8f37c272ffa8d9624b314064b3db3660853a14f341",
+      "org": "wbc",
+      "date": "2026-09-27",
+      "weight_class": "SUPERFLYWEIGHT ELIMINATOR",
+      "fighter_a": "Tamoya Tsuboi",
+      "fighter_b": "Ricardo Malajika",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    }
+  ]
+}

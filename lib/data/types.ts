@@ -87,6 +87,13 @@ export interface Fight {
   /** cotes décimales [boxeur A, boxeur B] */
   odds?: [number, number];
   source?: string;
+  /** combat amateur (FFBoxe amateur, CSAC…) — shards programmation */
+  amateur?: boolean;
+  /** type d'annonce (IBF : Defense / Eliminator / Vacant…) */
+  boutType?: string;
+  promoter?: string;
+  /** vrai si validé par le module de vérification (llm/verify) */
+  verified?: boolean;
 }
 
 /** Critères de filtrage partagés (API + UI). */

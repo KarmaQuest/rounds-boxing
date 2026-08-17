@@ -16,6 +16,7 @@ const PRIMARY_LINKS = [
   { href: "/", label: "Accueil" },
   { href: "/boxeurs", label: "Boxeurs" },
   { href: "/combats", label: "Combats" },
+  { href: "/combats-a-venir", label: "Combats à venir" },
   { href: "/comparateur", label: "Comparateur" },
   { href: "/actualite", label: "Actualités" },
 ];
