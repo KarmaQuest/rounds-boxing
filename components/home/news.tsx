@@ -165,15 +165,18 @@ function SkeletonCard() {
   );
 }
 
-/** Contrôles Précédent / Suivant + « Page X / Y ». Masqué si une seule page. */
+/** Contrôles Précédent / Suivant + « Page X / Y ». Masqué si une seule page.
+ *  `className` permet d'ajuster la marge externe (haut vs bas de section). */
 function NewsPagination({
   page,
   totalPages,
   onPage,
+  className = "mt-10",
 }: {
   page: number;
   totalPages: number;
   onPage: (page: number) => void;
+  className?: string;
 }) {
   if (totalPages <= 1) return null;
 
@@ -181,7 +184,10 @@ function NewsPagination({
     "flex items-center gap-1 rounded-full border border-line bg-ink/60 px-5 py-2 text-sm font-medium text-mist transition-all duration-300 hover:border-neon/40 hover:text-snow disabled:pointer-events-none disabled:opacity-40";
 
   return (
-    <nav aria-label="Pagination des actualités" className="mt-10 flex items-center justify-center gap-4">
+    <nav
+      aria-label="Pagination des actualités"
+      className={`${className} flex items-center justify-center gap-4`}
+    >
       <button className={btn} onClick={() => onPage(page - 1)} disabled={page <= 1}>
         <ChevronLeft size={16} aria-hidden />
         Précédent
@@ -276,10 +282,18 @@ export function NewsSection({
         )}
 
         {/* Page /actualite : le titre est déjà en haut de page, on garde
-            seulement les onglets. */}
+            les onglets + la pagination (haut de section). */}
         {!header && (
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
             <NewsTabs tab={tab} onChange={handleTabChange} />
+            {pagination && (
+              <NewsPagination
+                page={safePage}
+                totalPages={totalPages}
+                onPage={goToPage}
+                className="mt-0"
+              />
+            )}
           </div>
         )}
 
