@@ -266,12 +266,14 @@ class ProviderRouter {
     const sources: string[] = [];
 
     for (const provider of this.providers) {
+      // On augmente la limite pour récupérer plus de combats du mois courant
+      const fetchLimit = Math.max(limit, 100);
       const list = await this.fetchOne<Fight[]>(
         provider,
         "fights",
-        `recent:${limit}`,
+        `recent:${fetchLimit}`,
         TTL.recentFights,
-        (p) => p.getRecentFights(limit)
+        (p) => p.getRecentFights(fetchLimit)
       );
       if (!list || list.length === 0) continue;
       sources.push(provider.name);
@@ -280,8 +282,16 @@ class ProviderRouter {
       }
     }
 
+    // Filtre : combats du mois courant uniquement
+    const now = new Date();
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    const fights = [...merged.values()]
+      .filter((f) => f.date.startsWith(currentMonth))
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, limit);
+
     return {
-      fights: [...merged.values()].slice(0, limit),
+      fights,
       source: sources.join(" + ") || "aucune",
     };
   }

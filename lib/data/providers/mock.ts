@@ -510,18 +510,6 @@ const RECENT_FIGHTS: Fight[] = [
 /** Combats à venir (avec cotes). */
 const UPCOMING_FIGHTS: Fight[] = [
   {
-    id: "f-2026-09-13-canelo-crawford",
-    date: "2026-09-13",
-    status: "upcoming",
-    weightClass: "Poids super-moyens",
-    title: "Superfight incontesté : Canelo vs Crawford",
-    venue: "T-Mobile Arena",
-    location: "Las Vegas, États-Unis",
-    fighters: [ref("Canelo Álvarez", byName("Canelo Álvarez")), ref("Terence Crawford", byName("Terence Crawford"))],
-    odds: [1.9, 1.88],
-    source: "mock",
-  },
-  {
     id: "f-2026-10-10-usyk-bakole",
     date: "2026-10-10",
     status: "upcoming",

@@ -4,8 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
-const LINE_1 = "RECORDS &".split("");
-const LINE_2 = "LÉGENDES".split("");
+const LINE_1 = "ROUNDS".split("");
 
 /** Hero plein écran : anneaux néon animés + titre en cascade. */
 export function Hero() {
@@ -47,23 +46,10 @@ export function Hero() {
             {LINE_1.map((l, i) => (
               <motion.span
                 key={i}
-                className="inline-block"
+                className={`inline-block ${l === "S" ? "text-neon " : ""}`}
                 initial={{ y: "110%" }}
                 animate={{ y: 0 }}
                 transition={{ delay: 0.25 + i * 0.05, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {l}
-              </motion.span>
-            ))}
-          </span>
-          <span className="block overflow-hidden">
-            {LINE_2.map((l, i) => (
-              <motion.span
-                key={i}
-                className={`inline-block ${l === "É" || l === "S" ? "text-neon text-glow-red" : ""}`}
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ delay: 0.45 + i * 0.05, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
                 {l}
               </motion.span>

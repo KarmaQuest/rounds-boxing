@@ -60,7 +60,7 @@ function mkFighter(partial: Partial<Fighter> & { name: string }): Fighter {
 
 function mkFight(partial: Partial<Fight> & { id: string }): Fight {
   return {
-    date: "2026-09-13",
+    date: "2031-01-01", // date future par défaut → passe le filtre upcoming
     status: "upcoming",
     fighters: [{ name: "Canelo Álvarez" }, { name: "Terence Crawford" }],
     ...partial, // id (requis) et tout override arrivent ici
@@ -459,8 +459,10 @@ describe("upcomingFights", () => {
 
 describe("recentFights", () => {
   it("fusionne et déduplique les résultats", async () => {
-    const f = mkFight({ id: "r1", status: "finished", fighters: [{ name: "Usyk" }, { name: "Fury" }] });
-    const dup = mkFight({ id: "r2", status: "finished", fighters: [{ name: "Fury" }, { name: "Usyk" }] });
+    const now = new Date();
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
+    const f = mkFight({ id: "r1", status: "finished", date: currentMonth, fighters: [{ name: "Usyk" }, { name: "Fury" }] });
+    const dup = mkFight({ id: "r2", status: "finished", date: currentMonth, fighters: [{ name: "Fury" }, { name: "Usyk" }] });
 
     const router = new ProviderRouter([
       mkProvider({ name: "mock", capabilities: ["fights"], getRecentFights: async () => [f, dup] }),

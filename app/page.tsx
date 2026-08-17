@@ -81,7 +81,7 @@ export default async function Home() {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {top.map((fighter, i) => (
             <Reveal key={fighter.slug} delay={i * 0.07}>
               <FighterCard fighter={fighter} index={i} />

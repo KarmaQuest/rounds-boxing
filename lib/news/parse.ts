@@ -47,6 +47,16 @@ export function stripHtml(html: string): string {
     .trim();
 }
 
+/** Première image d'un contenu HTML (src du premier <img>), si présente. */
+export function firstImage(html: string): string | undefined {
+  const match = /<img[^>]+src=["']([^"']+)["']/i.exec(html);
+  if (!match) return undefined;
+  const src = match[1]!.trim();
+  if (!src) return undefined;
+  // on ne garde que http(s) — les data:/blob: casseraient la carte
+  return /^https?:\/\//i.test(src) ? src : undefined;
+}
+
 function truncate(text: string, max = 220): string {
   if (text.length <= max) return text;
   return `${text.slice(0, max).trimEnd()}…`;
@@ -71,6 +81,27 @@ function parseRssItems(xml: string, source: ArticleSource): NewsItem[] {
       const url = asStr(item.link).trim();
       const publishedAt = normalizeDate(item.pubDate ?? item["dc:date"]);
       if (!title || !url) return null;
+
+      const rawDescription = asStr(item.description);
+
+      // Extraction de l'image (media:content, media:thumbnail, enclosure,
+      // puis 1re image du contenu HTML — les flux WordPress mettent souvent
+      // la miniature dans le <description>)
+      let thumbnail: string | undefined;
+      const mediaContent = item["media:content"] as Xml | undefined;
+      const mediaThumbnail = item["media:thumbnail"] as Xml | undefined;
+      const enclosure = item.enclosure as Xml | undefined;
+      
+      if (mediaThumbnail) {
+        thumbnail = asStr(mediaThumbnail["@_url"]).trim();
+      } else if (mediaContent) {
+        thumbnail = asStr(mediaContent["@_url"]).trim();
+      } else if (enclosure && asStr(enclosure["@_type"]).startsWith("image/")) {
+        thumbnail = asStr(enclosure["@_url"]).trim();
+      } else {
+        thumbnail = firstImage(rawDescription);
+      }
+
       return {
         type: "article",
         id: url,
@@ -79,7 +110,8 @@ function parseRssItems(xml: string, source: ArticleSource): NewsItem[] {
         source: source.name,
         sourceId: source.id,
         publishedAt: publishedAt || new Date(0).toISOString(),
-        description: truncate(stripHtml(asStr(item.description))),
+        description: truncate(stripHtml(rawDescription)),
+        thumbnail: thumbnail || undefined,
       };
     })
     .filter((x): x is NewsItem => x !== null);
@@ -97,6 +129,20 @@ function parseAtomItems(xml: string, source: ArticleSource): NewsItem[] {
       const link = asStr((entry.link as Xml | undefined)?.["@_href"]).trim();
       const publishedAt = normalizeDate(entry.published ?? entry.updated);
       if (!title || !link) return null;
+
+      const rawSummary = asStr(entry.summary ?? entry.content);
+
+      // image : media:thumbnail/thumbnail Atom, sinon 1re image du résumé
+      let thumbnail = asStr(
+        (entry["media:thumbnail"] as Xml | undefined)?.["@_url"]
+      ).trim();
+      if (!thumbnail) {
+        thumbnail = asStr((entry.thumbnail as Xml | undefined)?.["@_url"]).trim();
+      }
+      if (!thumbnail) {
+        thumbnail = firstImage(rawSummary) ?? "";
+      }
+
       return {
         type: "article",
         id: link,
@@ -105,7 +151,8 @@ function parseAtomItems(xml: string, source: ArticleSource): NewsItem[] {
         source: source.name,
         sourceId: source.id,
         publishedAt: publishedAt || new Date(0).toISOString(),
-        description: truncate(stripHtml(asStr(entry.summary ?? entry.content))),
+        description: truncate(stripHtml(rawSummary)),
+        thumbnail: thumbnail || undefined,
       };
     })
     .filter((x): x is NewsItem => x !== null);
@@ -137,7 +184,9 @@ function parseYtItems(xml: string, source: VideoSource): NewsItem[] {
         source: source.name,
         sourceId: source.id,
         publishedAt: publishedAt || new Date(0).toISOString(),
-        thumbnail: thumbnailUrl || undefined,
+        // fallback i.ytimg.com : miniature officielle toujours dispo même
+        // si le flux ne fournit pas media:thumbnail
+        thumbnail: thumbnailUrl || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
         description: truncate(
           stripHtml(asStr(mediaGroup?.["media:description"])),
           160

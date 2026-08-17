@@ -122,9 +122,9 @@ describe("parseVideoFeed — YouTube videos.xml", () => {
     expect(first.source).toBe("DAZN Boxing");
   });
 
-  it("gère les entrées sans miniature", () => {
+  it("gère les entrées sans miniature (fallback i.ytimg.com)", () => {
     const items = parseVideoFeed(YT_XML, VIDEO_SOURCE);
-    expect(items[1]!.thumbnail).toBeUndefined();
+    expect(items[1]!.thumbnail).toBe("https://i.ytimg.com/vi/def456/hqdefault.jpg");
   });
 
   it("trie-t-il ? non — l'agrégateur trie, le parser préserve l'ordre", () => {
