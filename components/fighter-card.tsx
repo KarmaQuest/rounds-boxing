@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Crown, TrendingUp } from "lucide-react";
 import type { Fighter } from "@/lib/data/types";
 import { koPct } from "@/lib/data/utils";
+import { countryLabel, toLocale, weightClassLabel } from "@/lib/i18n/data";
 import { Avatar } from "./avatar";
 import { RecordBar } from "./record-bar";
 
@@ -13,8 +15,11 @@ interface FighterCardProps {
   index?: number;
 }
 
-/** Carte boxeur : avatar, nom, catégorie, palmarès + barre animée. */
+/** Carte boxeur : avatar, nom, categorie, palmares + barre animee. */
 export function FighterCard({ fighter, index = 0 }: FighterCardProps) {
+  const t = useTranslations("common");
+  const tBoxeurs = useTranslations("boxeurs");
+  const locale = toLocale(useLocale());
   const ko = koPct(fighter.record);
   const total = fighter.record.wins + fighter.record.losses + fighter.record.draws;
 
@@ -30,7 +35,7 @@ export function FighterCard({ fighter, index = 0 }: FighterCardProps) {
         href={`/boxeurs/${fighter.slug}`}
         className="group relative block overflow-hidden rounded-2xl border border-line/60 bg-panel p-5 transition-all duration-300 panel-glow hover:-translate-y-1 hover:border-neon/60 hover:shadow-neon"
       >
-        {/* halo néon au survol */}
+        {/* halo neon au survol */}
         <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-neon/0 blur-3xl transition-all duration-500 group-hover:bg-neon/20" />
 
         {fighter.rank ? (
@@ -42,7 +47,7 @@ export function FighterCard({ fighter, index = 0 }: FighterCardProps) {
             }`}
           >
             {fighter.rank <= 5 && <Crown size={11} aria-hidden />}
-            Top {fighter.rank}
+            {t("top", { rank: fighter.rank })}
           </div>
         ) : null}
 
@@ -53,13 +58,19 @@ export function FighterCard({ fighter, index = 0 }: FighterCardProps) {
               {fighter.name}
             </h3>
             {fighter.nickname && (
-              <p className="truncate text-xs italic text-mist">« {fighter.nickname} »</p>
+              <p className="truncate text-xs italic text-mist">&laquo; {fighter.nickname} &raquo;</p>
             )}
             <p className="mt-1 flex items-center gap-1.5 text-xs text-fog">
               <span>{fighter.flag}</span>
-              <span>{fighter.country}</span>
-              <span className="text-line">•</span>
-              <span>{fighter.weightClass}</span>
+              <span>{countryLabel(fighter.country, locale)}</span>
+              <span className="text-line">&bull;</span>
+              <span>{weightClassLabel(fighter.weightClass, locale)}</span>
+              {fighter.gender === "F" && (
+                <span className="text-pink-400">&female; Femme</span>
+              )}
+              {fighter.gender === "M" && (
+                <span className="text-blue-400">&male; Homme</span>
+              )}
             </p>
           </div>
         </div>
@@ -67,7 +78,7 @@ export function FighterCard({ fighter, index = 0 }: FighterCardProps) {
         {total === 0 ? (
           <div className="mt-5">
             <span className="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-gold">
-              Palmarès à venir
+              {tBoxeurs("recordUpcoming")}
             </span>
           </div>
         ) : (
@@ -79,7 +90,7 @@ export function FighterCard({ fighter, index = 0 }: FighterCardProps) {
                 <span className="text-draw">-{fighter.record.draws}</span>
               </p>
               <p className="flex items-center gap-1 text-xs text-gold">
-                <TrendingUp size={12} aria-hidden /> {ko}% KO
+                <TrendingUp size={12} aria-hidden /> {t("koPct", { pct: ko })}
               </p>
             </div>
             <RecordBar record={fighter.record} />
