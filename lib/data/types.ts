@@ -55,6 +55,8 @@ export interface Fighter {
   boxrecId?: string;
   /** source fournisseuse des données */
   source?: string;
+  /** sexe : 'M' homme, 'F' femme, '' inconnu */
+  gender?: string;
 }
 
 export type FightStatus = "upcoming" | "finished";

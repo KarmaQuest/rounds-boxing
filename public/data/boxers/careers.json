@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-17T12:33:45Z",
+  "generated_at": "2026-08-18T15:39:26Z",
   "boxers": {
     "a-dan-ochoa": {
       "id": "orgs-a-dan-ochoa",
@@ -20286,6 +20286,19 @@
       "id": "712e7b9ca63dbd9f251b5104341da080c446ca5de3d11376eaf4ad62065e2f54",
       "name": "Claressa Shields",
       "fights": [
+        {
+          "id": "ae63a5179a1e3c96fe9b4bec93e7a26c6d48b2063475326d40c042e2c31311e3",
+          "date": "2026-08-17",
+          "location": "Atlanta, Georgia",
+          "weight_class": "middleweight",
+          "fighter_a": "Claressa Shields",
+          "fighter_b": "Kaye Scott",
+          "winner": "Claressa Shields",
+          "method": "TKO",
+          "rounds": 6,
+          "is_title_fight": true,
+          "org": "wbc"
+        },
         {
           "id": "88cdbc7fa05fbbb591ad8be94a6d2c4f56fd3c8a79148a63b37b0ad38414a22f",
           "date": "2026-02-22",
@@ -61405,6 +61418,19 @@
       "name": "Kaye Scott",
       "fights": [
         {
+          "id": "ae63a5179a1e3c96fe9b4bec93e7a26c6d48b2063475326d40c042e2c31311e3",
+          "date": "2026-08-17",
+          "location": "Atlanta, Georgia",
+          "weight_class": "middleweight",
+          "fighter_a": "Claressa Shields",
+          "fighter_b": "Kaye Scott",
+          "winner": "Claressa Shields",
+          "method": "TKO",
+          "rounds": 6,
+          "is_title_fight": true,
+          "org": "wbc"
+        },
+        {
           "id": "0c4b128254b9bcf11e336108894d3619a1e2b68f892e698a86195db17a2cc97d",
           "date": "2024-12-13",
           "location": "Sydney, Australia",
@@ -98079,6 +98105,25 @@
         }
       ]
     },
+    "ryota-toyoshima": {
+      "id": "orgs-ryota-toyoshima",
+      "name": "Ryota Toyoshima",
+      "fights": [
+        {
+          "id": "48a14e07826a73c53c901949d89188edfe8639f04d754547e63e1179cdee59a0",
+          "date": "2026-08-17",
+          "location": "Tokyo, Japan",
+          "weight_class": "super welterweight",
+          "fighter_a": "Ryota Toyoshima",
+          "fighter_b": "Tsukuru Midorikawa",
+          "winner": "Ryota Toyoshima",
+          "method": "UD",
+          "rounds": 10,
+          "is_title_fight": true,
+          "org": "wbc"
+        }
+      ]
+    },
     "ryuga-hattori": {
       "id": "orgs-ryuga-hattori",
       "name": "Ryuga Hattori",
@@ -111531,6 +111576,25 @@
           "rounds": 1,
           "is_title_fight": false,
           "org": "csac"
+        }
+      ]
+    },
+    "tsukuru-midorikawa": {
+      "id": "orgs-tsukuru-midorikawa",
+      "name": "Tsukuru Midorikawa",
+      "fights": [
+        {
+          "id": "48a14e07826a73c53c901949d89188edfe8639f04d754547e63e1179cdee59a0",
+          "date": "2026-08-17",
+          "location": "Tokyo, Japan",
+          "weight_class": "super welterweight",
+          "fighter_a": "Ryota Toyoshima",
+          "fighter_b": "Tsukuru Midorikawa",
+          "winner": "Ryota Toyoshima",
+          "method": "UD",
+          "rounds": 10,
+          "is_title_fight": true,
+          "org": "wbc"
         }
       ]
     },
