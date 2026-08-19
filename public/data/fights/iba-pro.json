@@ -60,6 +60,54 @@
     "is_title_fight": true
   },
   {
+    "id": "f02b81460df70277276431f29310257deb7fe2885fe78f9ee58b26c14d218398",
+    "date": "2026-08-14",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "Khavasbek Asadullaev (Uzbekistan)",
+    "fighter_b": "Sergey Lubkovich (Russia)",
+    "winner": "Khavasbek Asadullaev (Uzbekistan)",
+    "method": "UD",
+    "rounds": 0,
+    "is_title_fight": false
+  },
+  {
+    "id": "fc2b683cb22ccb93baf2453a8f1b36e5cb434d102eeacfc787653477d4476150",
+    "date": "2026-08-14",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "Amin Abdullin (Russia)",
+    "fighter_b": "Adilet Kurmetov (Kazakhstan)",
+    "winner": "Amin Abdullin (Russia)",
+    "method": "UD",
+    "rounds": 0,
+    "is_title_fight": false
+  },
+  {
+    "id": "4fd7f1f4e8eb215c5584ca9eeddcf01f8b5eb54b6eb9891e84512a69d9f2714c",
+    "date": "2026-08-14",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "Khalimjon Mamasoliev (Uzbekistan)",
+    "fighter_b": "German Skobenko (Russia)",
+    "winner": "Khalimjon Mamasoliev (Uzbekistan)",
+    "method": "UD",
+    "rounds": 0,
+    "is_title_fight": false
+  },
+  {
+    "id": "6feeaefc0961f2b94ae759f1b01ce2ca4b9493345282b066df010a781b09608f",
+    "date": "2026-08-10",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "where he",
+    "fighter_b": "the experienced",
+    "winner": "where he",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": false
+  },
+  {
     "id": "39df8b0cbb5e288b8712a520ba5a93b5ceb1d03af0b00caa578fa6d054ef8c54",
     "date": "2026-07-11",
     "location": "",
@@ -67,6 +115,30 @@
     "fighter_a": "Suslenkov breaks down Joyce to claim biggest",
     "fighter_b": "of his career",
     "winner": "Suslenkov breaks down Joyce to claim biggest",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true
+  },
+  {
+    "id": "9957f4a35b480d92a7a3f0ce060d5d6fbdb3e8b58cd17bafa874d49b36f49d98",
+    "date": "2026-07-11",
+    "location": "",
+    "weight_class": "Heavyweight",
+    "fighter_a": "Gassiev",
+    "fighter_b": "Kadiru to make successful",
+    "winner": "Gassiev",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true
+  },
+  {
+    "id": "7824766ebf0f9614b2aef0121035f79021a4eb73e0792642dc7cac7541aa9bae",
+    "date": "2026-07-11",
+    "location": "",
+    "weight_class": "Heavyweight",
+    "fighter_a": "Suslenkov",
+    "fighter_b": "down Joyce to claim",
+    "winner": "Suslenkov",
     "method": "PTS",
     "rounds": 0,
     "is_title_fight": true
@@ -80,6 +152,54 @@
     "fighter_b": "Mama with body shot",
     "winner": "Ayala Lardizabal",
     "method": "TKO",
+    "rounds": 0,
+    "is_title_fight": false
+  },
+  {
+    "id": "532765bba64d3a969d670eedd62a47ff4d598f53f6c2aed084e6768a3fa306cf",
+    "date": "2026-05-22",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "Fierro",
+    "fighter_b": "Sanchez in co-main event",
+    "winner": "Fierro",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": false
+  },
+  {
+    "id": "732ebba8cbf8be168b107f0a67948de74231b3797f5dc7f4f84b5a8d245be92c",
+    "date": "2026-05-02",
+    "location": "",
+    "weight_class": "Heavyweight",
+    "fighter_a": "David Surov",
+    "fighter_b": "Kevin Martinez",
+    "winner": "David Surov",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": false
+  },
+  {
+    "id": "f8c503500551713a2118ea4be69a7778a64389d6f9812045c51c751dd68bd4c3",
+    "date": "2026-05-02",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "Russia ultimately",
+    "fighter_b": "the World",
+    "winner": "Russia ultimately",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": false
+  },
+  {
+    "id": "3580a6ecfa9ddceb6fc9b86fd7ce29b56bc5064d02cea98db4e7f0fd5b1991dc",
+    "date": "2026-04-24",
+    "location": "",
+    "weight_class": "Heavyweight",
+    "fighter_a": "Surov",
+    "fighter_b": "Israilov in the second",
+    "winner": "Surov",
+    "method": "PTS",
     "rounds": 0,
     "is_title_fight": false
   },
@@ -106,6 +226,30 @@
     "method": "PTS",
     "rounds": 0,
     "is_title_fight": false
+  },
+  {
+    "id": "97aa0c0c1541d86b0f50684f0d08cd2afae1bde2e3c380bc84a9588c3a73375e",
+    "date": "2026-04-17",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "Suslenkov",
+    "fighter_b": "Mann down and finishes",
+    "winner": "Suslenkov",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true
+  },
+  {
+    "id": "2ce51c69f22dfb23729a1e4cfedb677a037da1d9d93c63477a151cbe228b7af3",
+    "date": "2026-04-17",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "Grigoryan",
+    "fighter_b": "Santisima for IBF Asia",
+    "winner": "Grigoryan",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true
   },
   {
     "id": "ce95e9abe6d777c05ce155630d9698d782bdb763598baf364df5a193da3e9061",
@@ -154,5 +298,65 @@
     "method": "PTS",
     "rounds": 0,
     "is_title_fight": true
+  },
+  {
+    "id": "b176c3e071d5766b54c09afffe02c594b6e77e3a7fac8f9b0c66dcff3b890f11",
+    "date": "2026-03-12",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "Sergey Koldenkov",
+    "fighter_b": "Abel Lima in round",
+    "winner": "Sergey Koldenkov",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": false
+  },
+  {
+    "id": "55f9119793fc4a91cce8e8c0efe82fe1282619f0d2d9da9cdb258af32d1b19b1",
+    "date": "2026-03-12",
+    "location": "",
+    "weight_class": "Cruiserweight",
+    "fighter_a": "Kushitashvili",
+    "fighter_b": "Changalawe in emotional cruiserweight",
+    "winner": "Kushitashvili",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true
+  },
+  {
+    "id": "8ba6077ade107f41ad849757dfe60ab2694e531fb391daae00792369465fc0c4",
+    "date": "2026-03-12",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "Popov",
+    "fighter_b": "tactical battle against Azhbenov",
+    "winner": "Popov",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true
+  },
+  {
+    "id": "fc71fe44f2d2e41e043eeeca7b2f581da525709f42260b2207cdf7a1a83e5998",
+    "date": "2026-03-12",
+    "location": "",
+    "weight_class": "Super Welterweight",
+    "fighter_a": "Sosulin",
+    "fighter_b": "Nagbe to remain unbeaten",
+    "winner": "Sosulin",
+    "method": "PTS",
+    "rounds": 0,
+    "is_title_fight": true
+  },
+  {
+    "id": "79e9922294ce7b0280b0921fec0acb9007db66468aff66a0824d18bb71790cd9",
+    "date": "2025-05-24",
+    "location": "",
+    "weight_class": "",
+    "fighter_a": "Bakhodur Usmonov",
+    "fighter_b": "Albert Pagara",
+    "winner": "Bakhodur Usmonov",
+    "method": "KO",
+    "rounds": 0,
+    "is_title_fight": false
   }
 ]
