@@ -1,19 +1,25 @@
 {
-  "generated_at": "2026-08-18T06:11:28Z",
+  "generated_at": "2026-08-19T03:50:39Z",
   "organizations": {
+    "ffboxe-amateur": {
+      "name": "FFBoxe Amateur (CFA + BEA)",
+      "abbr": "FFBoxe-A",
+      "date_last_sync": "2026-08-19T03:50:39Z",
+      "total_fights": 25
+    },
     "ibf": {
       "name": "International Boxing Federation",
       "abbr": "IBF",
-      "date_last_sync": "2026-08-18T06:11:28Z",
+      "date_last_sync": "2026-08-19T03:50:39Z",
       "total_fights": 8
     },
     "wbc": {
       "name": "World Boxing Council",
       "abbr": "WBC",
-      "date_last_sync": "2026-08-18T06:11:28Z",
+      "date_last_sync": "2026-08-19T03:50:39Z",
       "total_fights": 14
     }
   },
-  "total_fights": 22,
-  "total_unique": 22
+  "total_fights": 47,
+  "total_unique": 47
 }
