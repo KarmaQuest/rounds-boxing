@@ -57,6 +57,8 @@ export interface Fighter {
   source?: string;
   /** sexe : 'M' homme, 'F' femme, '' inconnu */
   gender?: string;
+  /** boxeur amateur (FFBoxe BEA, IBA.PRO…) */
+  amateur?: boolean;
 }
 
 export type FightStatus = "upcoming" | "finished";
@@ -106,6 +108,7 @@ export interface FighterFilters {
   minWins?: number;
   minKoPct?: number;
   sort?: "name" | "wins" | "koPct" | "age" | "height" | "rank";
+  amateur?: "all" | "pro" | "amateur";
   /** pagination : nombre d'éléments à sauter (TASKS 2.1) */
   offset?: number;
   limit?: number;

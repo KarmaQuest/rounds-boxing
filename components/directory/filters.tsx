@@ -22,6 +22,7 @@ export interface FilterState {
   minWins: number;
   minKoPct: number;
   sort: SortKey;
+  amateur: "all" | "pro" | "amateur";
 }
 
 export const DEFAULT_FILTERS: FilterState = {
@@ -31,6 +32,7 @@ export const DEFAULT_FILTERS: FilterState = {
   minWins: 0,
   minKoPct: 0,
   sort: "rank",
+  amateur: "all",
 };
 
 export function isWeightClass(v: string): v is WeightClass {
@@ -128,6 +130,7 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
     filters.country !== "",
     filters.minWins > 0,
     filters.minKoPct > 0,
+    filters.amateur !== "all",
   ].filter(Boolean).length;
 
   const hasAny = filters.q !== "" || activeCount > 0;
@@ -209,6 +212,19 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
             </button>
           )}
         </div>
+      </div>
+
+      {/* Ligne 1.5 : filtre pro/amateur */}
+      <div className="flex items-center gap-2">
+        <Chip active={filters.amateur === "all"} onClick={() => onChange({ amateur: "all" })}>
+          {t("allFighters")}
+        </Chip>
+        <Chip active={filters.amateur === "pro"} onClick={() => onChange({ amateur: "pro" })}>
+          {t("proOnly")}
+        </Chip>
+        <Chip active={filters.amateur === "amateur"} onClick={() => onChange({ amateur: "amateur" })}>
+          {t("amateurOnly")}
+        </Chip>
       </div>
 
       {/* Ligne 2 : chips catégories */}

@@ -49,6 +49,7 @@ async function fetchSearch(q: string): Promise<ApiResponse> {
 function filtersFromUrl(sp: URLSearchParams): FilterState {
   const cat = sp.get("cat") ?? "";
   const tri = sp.get("tri") ?? "rank";
+  const am = sp.get("am") ?? "all";
   return {
     q: sp.get("q") ?? "",
     weightClass: isWeightClass(cat) ? cat : "",
@@ -56,6 +57,7 @@ function filtersFromUrl(sp: URLSearchParams): FilterState {
     minWins: Math.max(0, Number(sp.get("v") ?? 0)),
     minKoPct: Math.max(0, Number(sp.get("ko") ?? 0)),
     sort: isSortKey(tri) ? tri : "rank",
+    amateur: (am === "pro" || am === "amateur") ? am : "all",
   };
 }
 
@@ -88,6 +90,7 @@ export function Directory() {
     if (filters.minWins > 0) params.set("v", String(filters.minWins));
     if (filters.minKoPct > 0) params.set("ko", String(filters.minKoPct));
     if (filters.sort !== "rank") params.set("tri", filters.sort);
+    if (filters.amateur !== "all") params.set("am", filters.amateur);
     const qs = params.toString();
     router.replace(qs ? `/boxeurs?${qs}` : "/boxeurs", { scroll: false });
   }, [filters, router]);
@@ -139,6 +142,7 @@ export function Directory() {
         minWins: filters.minWins || undefined,
         minKoPct: filters.minKoPct || undefined,
         sort: filters.sort,
+        amateur: filters.amateur,
       });
     }
     // mode recherche : les autres filtres s'appliquent, puis tri par
@@ -150,6 +154,7 @@ export function Directory() {
       minWins: filters.minWins || undefined,
       minKoPct: filters.minKoPct || undefined,
       sort: "name",
+      amateur: filters.amateur,
     });
     list.sort(
       (a, b) =>

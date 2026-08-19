@@ -35,6 +35,7 @@ interface MergedBoxer {
   reach_cm?: number;
   stance?: string;
   gender?: string; // 'M' | 'F' | ''
+  amateur?: boolean;
   record?: [number, number, number, number]; // [V, D, N, KO]
   sources?: string[];
   wikidata_id?: string;
@@ -109,6 +110,7 @@ function toFighter(b: MergedBoxer): Fighter {
     titles: [],
     source: "annuaire",
     gender: b.gender || "",
+    amateur: b.amateur ?? false,
   };
 }
 

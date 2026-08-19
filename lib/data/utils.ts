@@ -290,6 +290,8 @@ export function applyFilters(fighters: Fighter[], filters: FighterFilters): Figh
       return false;
     if (filters.minWins && f.record.wins < filters.minWins) return false;
     if (filters.minKoPct && koPct(f.record) < filters.minKoPct) return false;
+    if (filters.amateur === "pro" && f.amateur) return false;
+    if (filters.amateur === "amateur" && !f.amateur) return false;
     return true;
   });
 
