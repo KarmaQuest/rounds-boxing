@@ -41,6 +41,7 @@ interface MergedBoxer {
   wikidata_id?: string;
   orgs?: string[];
   title_fights?: number;
+  rank?: number;
 }
 
 /** Cache process : merged.json est gros (~9 Mo), on ne le parse qu'une fois. */
@@ -111,6 +112,7 @@ function toFighter(b: MergedBoxer): Fighter {
     source: "annuaire",
     gender: b.gender || "",
     amateur: b.amateur ?? false,
+    rank: b.rank,
   };
 }
 
