@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import type { Fighter } from "@/lib/data/types";
@@ -8,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 /** Cœur « favori » sur les cartes boxeurs — visible uniquement connecté. */
 export function FavoriteButton({ fighter, className }: { fighter: Fighter; className?: string }) {
+  const t = useTranslations("auth");
   const qc = useQueryClient();
 
   const { data: me } = useQuery({
@@ -56,7 +58,7 @@ export function FavoriteButton({ fighter, className }: { fighter: Fighter; class
       onClick={() => mutation.mutate()}
       whileHover={{ scale: 1.15 }}
       whileTap={{ scale: 0.85 }}
-      aria-label={isFav ? `Retirer ${fighter.name} des favoris` : `Ajouter ${fighter.name} aux favoris`}
+      aria-label={isFav ? t("removeFavorite", { name: fighter.name }) : t("addFavorite", { name: fighter.name })}
       aria-pressed={isFav}
       disabled={mutation.isPending}
       className={cn(

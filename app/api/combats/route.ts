@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
   } catch (err) {
     console.error("[api/combats]", scope, clientIp(request), err);
     return jsonResponse(
-      { error: "Service temporairement indisponible. Réessaie dans un instant." },
+      { error: "Service temporairement indisponible. Réessaie dans un instant.", errorCode: "serviceUnavailable" },
       { status: 503 }
     );
   }

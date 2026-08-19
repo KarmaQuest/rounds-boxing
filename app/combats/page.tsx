@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import dynamic from "next/dynamic";
 import { getCombatsAvenir, getCombatsRecents } from "@/lib/data";
 import { JsonLd } from "@/components/json-ld";
@@ -20,14 +21,17 @@ const FightTabs = dynamic(
   }
 );
 
-export const metadata: Metadata = {
-  title: "Combats",
-  description:
-    "Les prochains grands combats de boxe avec cotes, et les résultats récents des meilleurs boxeurs.",
-  alternates: { canonical: "/combats" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("meta.combats");
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: { canonical: "/combats" },
+  };
+}
 
 async function Fights() {
+  const t = await getTranslations("fights");
   // Limite haute (50) : les filtres client (organisation, recherche) doivent
   // porter sur TOUS les combats à venir, pas sur un échantillon de 12.
   const [{ fights: upcoming }, { fights: recent }] = await Promise.all([
@@ -44,7 +48,7 @@ async function Fights() {
     "@type": "SportsEvent",
     name: `${f.fighters[0]!.name} vs ${f.fighters[1]!.name}`,
     startDate: f.date,
-    sport: "Boxe",
+    sport: t("sport"),
     eventStatus: "https://schema.org/EventScheduled",
     description: [f.title, f.venue, f.location].filter(Boolean).join(" — "),
     location: f.location
@@ -60,21 +64,19 @@ async function Fights() {
   );
 }
 
-export default function CombatsPage() {
+export default async function CombatsPage() {
+  const t = await getTranslations("fights");
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
       <div className="mb-10">
         <p className="text-xs font-semibold uppercase tracking-[0.35em] text-gold">
-          Rings & cotes
+          {t("eyebrow")}
         </p>
         <h1 className="mt-2 font-display text-4xl uppercase tracking-wide text-snow sm:text-5xl">
-          Les <span className="text-gold text-glow-gold">combats</span>
+          {t("title")}
         </h1>
-        <p className="mt-3 max-w-xl text-sm text-mist">
-          Les affiches à venir avec leurs cotes, et les derniers résultats
-          validés. Les cotes proviennent de The Odds API (actualisées toutes les
-          10 min).
-        </p>
+        <p className="mt-3 max-w-xl text-sm text-mist">{t("text")}</p>
       </div>
 
       <Suspense

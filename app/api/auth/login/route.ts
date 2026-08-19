@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
   try {
     body = await request.json();
   } catch {
-    return jsonResponse({ error: "Corps de requête invalide." }, { status: 400 });
+    return jsonResponse({ error: "Corps de requête invalide.", errorCode: "invalidBody" }, { status: 400 });
   }
 
   const email = (body.email ?? "").trim().toLowerCase();
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
   // Réponse identique que l'email existe ou non (pas de fuite d'existence).
   if (!user || !verifyPassword(password, user.password_hash)) {
     return jsonResponse(
-      { error: "Email ou mot de passe incorrect." },
+      { error: "Email ou mot de passe incorrect.", errorCode: "badCredentials" },
       { status: 401 }
     );
   }

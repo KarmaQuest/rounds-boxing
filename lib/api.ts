@@ -18,7 +18,7 @@ export function enforceRateLimit(req: NextRequest): NextResponse | null {
 
   if (!result.ok) {
     const res = NextResponse.json(
-      { error: "Trop de requêtes. Réessaie dans un instant." },
+      { error: "Trop de requêtes. Réessaie dans un instant.", errorCode: "rateLimited" },
       { status: 429 }
     );
     res.headers.set("Retry-After", String(Math.max(1, Math.ceil((result.resetAt - Date.now()) / 1000))));

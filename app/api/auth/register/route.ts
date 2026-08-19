@@ -20,24 +20,24 @@ export async function POST(request: NextRequest) {
   try {
     body = await request.json();
   } catch {
-    return jsonResponse({ error: "Corps de requête invalide." }, { status: 400 });
+    return jsonResponse({ error: "Corps de requête invalide.", errorCode: "invalidBody" }, { status: 400 });
   }
 
   const email = (body.email ?? "").trim().toLowerCase();
   const password = body.password ?? "";
 
   if (!EMAIL_RE.test(email)) {
-    return jsonResponse({ error: "Adresse email invalide." }, { status: 400 });
+    return jsonResponse({ error: "Adresse email invalide.", errorCode: "invalidEmail" }, { status: 400 });
   }
   if (password.length < 8) {
     return jsonResponse(
-      { error: "Le mot de passe doit faire au moins 8 caractères." },
+      { error: "Le mot de passe doit faire au moins 8 caractères.", errorCode: "passwordTooShort" },
       { status: 400 }
     );
   }
   if (findUserByEmail(email)) {
     return jsonResponse(
-      { error: "Un compte existe déjà avec cet email." },
+      { error: "Un compte existe déjà avec cet email.", errorCode: "emailExists" },
       { status: 409 }
     );
   }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, ExternalLink, Newspaper, PlayCircle, Radio } from "lucide-react";
 import type { NewsFilter, NewsItem } from "@/lib/news/types";
@@ -9,18 +10,28 @@ import type { NewsFilter, NewsItem } from "@/lib/news/types";
  *  côté client (changement de page instantané, un seul fetch). */
 const NEWS_FETCH_LIMIT = 50;
 
-const TABS: Array<{ key: NewsFilter; label: string }> = [
-  { key: "all", label: "Toutes" },
-  { key: "articles", label: "Articles" },
-  { key: "videos", label: "Vidéos" },
-];
-
 /** Onglets Toutes / Articles / Vidéos. */
-function NewsTabs({ tab, onChange }: { tab: NewsFilter; onChange: (t: NewsFilter) => void }) {
+function NewsTabs({
+  tab,
+  onChange,
+  labels,
+  ariaLabel,
+}: {
+  tab: NewsFilter;
+  onChange: (t: NewsFilter) => void;
+  labels: Record<NewsFilter, string>;
+  ariaLabel: string;
+}) {
+  const TABS: Array<{ key: NewsFilter; label: string }> = [
+    { key: "all", label: labels.all },
+    { key: "articles", label: labels.articles },
+    { key: "videos", label: labels.videos },
+  ];
+
   return (
     <div
       role="tablist"
-      aria-label="Type d’actualités"
+      aria-label={ariaLabel}
       className="flex rounded-full border border-line bg-ink/60 p-1"
     >
       {TABS.map((t) => (
@@ -68,6 +79,7 @@ function SourceGradient({ source }: { source: string }) {
 
 /** Carte article : miniature + texte + source. */
 function ArticleCard({ item }: { item: NewsItem }) {
+  const t = useTranslations("actualites");
   // Cascade de repli si l'image ne charge pas (403/hotlink, pas d'og:image,
   // quota IA épuisé) : image de flux → thumbFallback (route : og:image puis
   // génération IA) → dégradé néon. La carte ne casse jamais.
@@ -117,7 +129,7 @@ function ArticleCard({ item }: { item: NewsItem }) {
         )}
         <span className="mt-auto flex items-center gap-1 pt-4 text-xs text-fog">
           <ExternalLink size={12} aria-hidden />
-          Lire l’article
+          {t("readArticle")}
         </span>
       </div>
     </a>
@@ -178,6 +190,7 @@ function NewsPagination({
   onPage: (page: number) => void;
   className?: string;
 }) {
+  const t = useTranslations("actualites");
   if (totalPages <= 1) return null;
 
   const btn =
@@ -185,18 +198,18 @@ function NewsPagination({
 
   return (
     <nav
-      aria-label="Pagination des actualités"
+      aria-label={t("paginationAria")}
       className={`${className} flex items-center justify-center gap-4`}
     >
       <button className={btn} onClick={() => onPage(page - 1)} disabled={page <= 1}>
         <ChevronLeft size={16} aria-hidden />
-        Précédent
+        {t("prev")}
       </button>
       <span className="text-sm text-fog">
-        Page <span className="font-semibold text-snow">{page}</span> / {totalPages}
+        {t("page", { page, total: totalPages })}
       </span>
       <button className={btn} onClick={() => onPage(page + 1)} disabled={page >= totalPages}>
-        Suivant
+        {t("next")}
         <ChevronRight size={16} aria-hidden />
       </button>
     </nav>
@@ -220,8 +233,15 @@ export function NewsSection({
   /** Affiche les contrôles Précédent / Suivant (page actualités). */
   pagination?: boolean;
 }) {
+  const t = useTranslations("actualites");
   const [tab, setTab] = useState<NewsFilter>("all");
   const [page, setPage] = useState(1);
+
+  const tabsLabels: Record<NewsFilter, string> = {
+    all: t("all"),
+    articles: t("articles"),
+    videos: t("videos"),
+  };
 
   const handleTabChange = (t: NewsFilter) => {
     setTab(t);
@@ -265,19 +285,18 @@ export function NewsSection({
           <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div>
               <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.35em] text-neon-soft">
-                <Radio size={14} aria-hidden /> En direct du ring
+                <Radio size={14} aria-hidden /> {t("badge")}
               </p>
               <h2 className="mt-2 font-display text-4xl uppercase tracking-wide text-snow sm:text-5xl">
-                L’actu <span className="text-neon text-glow-red">boxe</span>
+                {t.rich("title", {
+                  b: (chunks) => <span className="text-neon text-glow-red">{chunks}</span>,
+                })}
               </h2>
-              <p className="mt-2 max-w-lg text-sm text-mist">
-                Derniers articles et vidéos des meilleures sources : Bad Left
-                Hook, World Boxing News, DAZN, Top Rank, Matchroom…
-              </p>
+              <p className="mt-2 max-w-lg text-sm text-mist">{t("text")}</p>
             </div>
 
             {/* Onglets */}
-            <NewsTabs tab={tab} onChange={handleTabChange} />
+            <NewsTabs tab={tab} onChange={handleTabChange} labels={tabsLabels} ariaLabel={t("ariaTabs")} />
           </div>
         )}
 
@@ -285,7 +304,7 @@ export function NewsSection({
             les onglets + la pagination (haut de section). */}
         {!header && (
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-            <NewsTabs tab={tab} onChange={handleTabChange} />
+            <NewsTabs tab={tab} onChange={handleTabChange} labels={tabsLabels} ariaLabel={t("ariaTabs")} />
             {pagination && (
               <NewsPagination
                 page={safePage}

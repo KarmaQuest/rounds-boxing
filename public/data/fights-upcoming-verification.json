@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-18T00:33:38Z",
+  "generated_at": "2026-08-18T13:16:17Z",
   "annuaire_loaded": true,
   "llm_available": true,
   "llm_calls": 1,
-  "total": 21,
-  "confirmed": 20,
+  "total": 22,
+  "confirmed": 21,
   "flagged": 1,
   "items": [
     {
@@ -99,7 +99,7 @@
       "llm": {
         "verdict": "flagged",
         "confidence": 0.2,
-        "reason": "Reymart Tagacanao et Chunlin Kuang sont de vrais boxeurs, mais aucun combat officiel entre eux n'est programmé ou annoncé par l'IBF Asia pour cette date lointaine en 2026."
+        "reason": "Reymart Tagacanao et Chunlin Kuang sont de vrais boxeurs mais un combat entre eux pour un titre IBF Asia en septembre 2026 relève de la pure projection spéculative à long terme, la date étant trop élo"
       },
       "status": "flagged"
     },
@@ -254,6 +254,24 @@
       "weight_class": "SUPERFLYWEIGHT SILVER",
       "fighter_a": "Jaqueline Calvo",
       "fighter_b": "Maria Soledad Vargas",
+      "checks": {
+        "future_date": true,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [],
+      "llm": {},
+      "status": "confirmed"
+    },
+    {
+      "id": "82ac6dabc558f556c87ead66610dba9bc1ece8baa861b8a836d8a29cb920d3df",
+      "org": "wbc",
+      "date": "2026-08-29",
+      "weight_class": "ATOMWEIGHT",
+      "fighter_a": "Camila Zamorano",
+      "fighter_b": "Perla Perez",
       "checks": {
         "future_date": true,
         "plausible_date": true,

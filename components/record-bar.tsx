@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import type { BoxerRecord } from "@/lib/data/types";
 import { koPct, totalFights } from "@/lib/data/utils";
@@ -15,6 +16,7 @@ interface RecordBarProps {
  * suivie d'une ligne KO % et du total de combats.
  */
 export function RecordBar({ record, className }: RecordBarProps) {
+  const t = useTranslations("common");
   const total = totalFights(record) || 1;
   const wPct = (record.wins / total) * 100;
   const lPct = (record.losses / total) * 100;
@@ -47,14 +49,14 @@ export function RecordBar({ record, className }: RecordBarProps) {
       </div>
       <div className="mt-2 flex items-center justify-between text-[11px] uppercase tracking-wider text-mist">
         <span>
-          <span className="font-semibold text-win">{record.wins} V</span>
+          <span className="font-semibold text-win">{record.wins} {t("wins").charAt(0)}</span>
           {" · "}
-          <span className="font-semibold text-loss">{record.losses} D</span>
+          <span className="font-semibold text-loss">{record.losses} {t("losses").charAt(0)}</span>
           {" · "}
-          <span className="font-semibold text-draw">{record.draws} N</span>
+          <span className="font-semibold text-draw">{record.draws} {t("draws").charAt(0)}</span>
         </span>
         <span>
-          {koPct(record)}% KO · {total} combats
+          {t("koPct", { pct: koPct(record) })} · {t("fightsCount", { count: total })}
         </span>
       </div>
     </div>
@@ -69,11 +71,12 @@ export function RecordNumbers({
   record: BoxerRecord;
   size?: "md" | "lg";
 }) {
+  const t = useTranslations("common");
   const nums = [
-    { label: "Victoires", value: record.wins, color: "text-win" },
-    { label: "Défaites", value: record.losses, color: "text-loss" },
-    { label: "Nuls", value: record.draws, color: "text-draw" },
-    { label: "Par KO", value: record.ko, color: "text-gold" },
+    { label: t("wins"), value: record.wins, color: "text-win" },
+    { label: t("losses"), value: record.losses, color: "text-loss" },
+    { label: t("draws"), value: record.draws, color: "text-draw" },
+    { label: t("byKo"), value: record.ko, color: "text-gold" },
   ];
 
   return (

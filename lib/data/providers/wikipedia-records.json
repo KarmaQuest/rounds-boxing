@@ -241,7 +241,6 @@
       "ko": 17
     },
     "reachCm": 170,
-    "stance": "Southpaw",
     "weightClass": "Poids super-coqs",
     "nickname": "Fantasma"
   },
@@ -277,7 +276,6 @@
     },
     "heightCm": 172,
     "reachCm": 174,
-    "stance": "Orthodoxe",
     "nickname": "El Gavilan"
   },
   "aaron-herrera": {
@@ -290,7 +288,6 @@
     },
     "heightCm": 182,
     "reachCm": 183,
-    "stance": "Orthodoxe",
     "nickname": "La Joya de Zací"
   },
   "aaron-mckenna": {
@@ -400,7 +397,6 @@
       "ko": 10
     },
     "heightCm": 173,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-coqs",
     "nickname": "Cobra"
   },
@@ -454,7 +450,6 @@
       "draws": 1,
       "ko": 25
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "The Ape"
   },
@@ -499,7 +494,6 @@
       "ko": 12
     },
     "heightCm": 175,
-    "stance": "Orthodoxe",
     "weightClass": "Poids légers",
     "nickname": "Pin"
   },
@@ -522,8 +516,7 @@
       "draws": 0,
       "ko": 1
     },
-    "heightCm": 193,
-    "stance": "Orthodoxe"
+    "heightCm": 193
   },
   "abraham-han": {
     "name": "Abraham Han",
@@ -535,7 +528,6 @@
     },
     "heightCm": 183,
     "reachCm": 183,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-welters",
     "nickname": "Abie"
   },
@@ -561,7 +553,6 @@
     },
     "heightCm": 175,
     "reachCm": 183,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-plumes",
     "nickname": "Supernova"
   },
@@ -624,7 +615,6 @@
       "ko": 12
     },
     "heightCm": 180,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-légers",
     "nickname": "The Assassin"
   },
@@ -637,8 +627,7 @@
       "ko": 12
     },
     "heightCm": 188,
-    "reachCm": 191,
-    "stance": "Orthodoxe"
+    "reachCm": 191
   },
   "adam-etches": {
     "name": "Adam Etches",
@@ -684,7 +673,6 @@
       "draws": 0
     },
     "heightCm": 175,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-welters",
     "nickname": "Hurricane"
   },
@@ -696,7 +684,6 @@
       "draws": 0,
       "ko": 15
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "Babyface"
   },
@@ -709,9 +696,18 @@
       "ko": 15
     },
     "heightCm": 188,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "The Swamp Donkey"
+  },
+  "adam-watt": {
+    "name": "Adam Watt",
+    "record": {
+      "wins": 14,
+      "losses": 4,
+      "draws": 0,
+      "ko": 14
+    },
+    "heightCm": 193
   },
   "adela-celeste-peralta": {
     "name": "Adela Celeste Peralta",
@@ -757,7 +753,6 @@
       "draws": 0,
       "ko": 8
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids welters",
     "nickname": "Platinum Kid"
   },
@@ -783,7 +778,6 @@
       "ko": 3
     },
     "heightCm": 172,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-légers"
   },
   "adnan-amar": {
@@ -894,7 +888,6 @@
       "ko": 15
     },
     "reachCm": 182,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-welters",
     "nickname": "Tigre"
   },
@@ -907,7 +900,6 @@
       "ko": 14
     },
     "heightCm": 201,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "Gäddan (\"The Pike\")"
   },
@@ -960,7 +952,6 @@
     },
     "heightCm": 167,
     "reachCm": 174,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-légers"
   },
   "adrien-broner": {
@@ -1068,7 +1059,6 @@
     },
     "heightCm": 183,
     "reachCm": 185,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds",
     "nickname": "The Egyptian"
   },
@@ -1106,7 +1096,6 @@
       "draws": 1,
       "ko": 23
     },
-    "stance": "Southpaw",
     "nickname": "Bazooka, AJ"
   },
   "ajose-olusegun": {
@@ -1119,7 +1108,6 @@
     },
     "heightCm": 170,
     "reachCm": 175,
-    "stance": "Southpaw",
     "weightClass": "Poids super-légers",
     "nickname": "The Gun"
   },
@@ -1219,7 +1207,6 @@
       "draws": 4,
       "ko": 46
     },
-    "stance": "Southpaw",
     "nickname": "Bummy"
   },
   "al-ford": {
@@ -1402,7 +1389,6 @@
       "draws": 1,
       "ko": 10
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids welters"
   },
   "alantez-fox": {
@@ -1415,7 +1401,6 @@
     },
     "heightCm": 193,
     "reachCm": 201,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-moyens",
     "nickname": "SlyAza"
   },
@@ -1428,7 +1413,6 @@
       "ko": 8
     },
     "heightCm": 166,
-    "stance": "Southpaw",
     "weightClass": "Poids plumes",
     "nickname": "AL BA"
   },
@@ -1453,7 +1437,6 @@
     },
     "heightCm": 183,
     "reachCm": 185,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-plumes",
     "nickname": "Prince"
   },
@@ -1486,7 +1469,6 @@
       "draws": 0,
       "ko": 26
     },
-    "stance": "Orthodoxe",
     "nickname": "Prince Prince Albert"
   },
   "albert-ramirez": {
@@ -1523,7 +1505,6 @@
       "ko": 2
     },
     "heightCm": 181,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-moyens"
   },
   "alberto-davila": {
@@ -1597,7 +1578,6 @@
       "ko": 7
     },
     "heightCm": 170,
-    "stance": "Orthodoxe",
     "weightClass": "Poids plumes",
     "nickname": "Impacto"
   },
@@ -1609,7 +1589,6 @@
       "draws": 0,
       "ko": 13
     },
-    "stance": "Southpaw",
     "weightClass": "Poids welters"
   },
   "alberto-puello": {
@@ -1677,7 +1656,6 @@
       "draws": 6,
       "ko": 31
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds"
   },
   "alejandra-jimenez": {
@@ -1690,7 +1668,6 @@
     },
     "heightCm": 180,
     "reachCm": 171,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "La Tigre"
   },
@@ -1717,7 +1694,6 @@
     },
     "heightCm": 185,
     "reachCm": 191,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-welters",
     "nickname": "El Elegido"
   },
@@ -1742,7 +1718,6 @@
     },
     "heightCm": 171,
     "reachCm": 178,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-coqs",
     "nickname": "Rude Boy"
   },
@@ -1817,7 +1792,6 @@
       "ko": 25
     },
     "heightCm": 177,
-    "stance": "Orthodoxe",
     "nickname": "Flacucho/Flaquita"
   },
   "aleksandar-aleksandrov": {
@@ -1841,7 +1815,6 @@
     },
     "heightCm": 170,
     "reachCm": 173,
-    "stance": "Southpaw",
     "weightClass": "Poids welters"
   },
   "aleksandr-makhmutov": {
@@ -1885,7 +1858,6 @@
       "draws": 0,
       "ko": 7
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds",
     "nickname": "Ali"
   },
@@ -1899,7 +1871,6 @@
     },
     "heightCm": 185,
     "reachCm": 188,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "The Savage"
   },
@@ -1968,7 +1939,6 @@
       "ko": 33
     },
     "heightCm": 194,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds"
   },
   "alex-buxton": {
@@ -1988,7 +1958,6 @@
       "draws": 0,
       "ko": 13
     },
-    "stance": "Southpaw",
     "weightClass": "Poids super-légers",
     "nickname": "El Pollo"
   },
@@ -2012,7 +1981,6 @@
       "ko": 7
     },
     "heightCm": 173,
-    "stance": "Southpaw",
     "weightClass": "Poids légers"
   },
   "alex-garcia": {
@@ -2186,7 +2154,6 @@
     },
     "heightCm": 193,
     "reachCm": 201,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "The Great"
   },
@@ -2200,7 +2167,6 @@
     },
     "heightCm": 186,
     "reachCm": 180,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds-légers"
   },
   "alexander-gurov": {
@@ -2253,7 +2219,6 @@
       "draws": 4,
       "ko": 27
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "Alex"
   },
@@ -2302,7 +2267,6 @@
     },
     "heightCm": 170,
     "reachCm": 173,
-    "stance": "Orthodoxe",
     "weightClass": "Poids coqs",
     "nickname": "The Spartan"
   },
@@ -2327,7 +2291,6 @@
       "ko": 12
     },
     "heightCm": 190,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds"
   },
   "alexis-arguello": {
@@ -2350,7 +2313,6 @@
       "ko": 10
     },
     "heightCm": 193,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds"
   },
   "alexis-diaz": {
@@ -2362,7 +2324,6 @@
       "ko": 18
     },
     "heightCm": 164,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-mouches",
     "nickname": "Erguito"
   },
@@ -2407,8 +2368,7 @@
       "losses": 6,
       "draws": 2,
       "ko": 12
-    },
-    "stance": "Orthodoxe"
+    }
   },
   "alfonso-lopez": {
     "name": "Alfonso López",
@@ -2518,7 +2478,6 @@
     },
     "heightCm": 177,
     "reachCm": 175,
-    "stance": "Orthodoxe",
     "weightClass": "Poids moyens",
     "nickname": "El Perro (\"The Dog\")"
   },
@@ -2586,7 +2545,6 @@
     },
     "heightCm": 192,
     "reachCm": 199,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "Zurdo Chihuahua"
   },
@@ -2620,7 +2578,6 @@
       "draws": 0,
       "ko": 12
     },
-    "stance": "Orthodoxe",
     "nickname": "The Iceman"
   },
   "ali-feliz": {
@@ -2633,7 +2590,6 @@
     },
     "heightCm": 188,
     "reachCm": 193,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds"
   },
   "ali-forbes": {
@@ -2678,7 +2634,6 @@
       "draws": 1,
       "ko": 16
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds-légers",
     "nickname": "Bronze Ali"
   },
@@ -2690,7 +2645,6 @@
       "draws": 0,
       "ko": 10
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds"
   },
   "ali-raymi": {
@@ -2736,7 +2690,6 @@
       "ko": 8
     },
     "heightCm": 171,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-légers"
   },
   "alicia-napoleon": {
@@ -2826,7 +2779,6 @@
       "ko": 25
     },
     "heightCm": 191,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "Big Zo"
   },
@@ -2878,7 +2830,6 @@
       "ko": 19
     },
     "heightCm": 191,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "Blue"
   },
@@ -3003,7 +2954,6 @@
     },
     "heightCm": 183,
     "reachCm": 189,
-    "stance": "Orthodoxe",
     "weightClass": "Poids moyens",
     "nickname": "Pety"
   },
@@ -3038,7 +2988,6 @@
     },
     "heightCm": 183,
     "reachCm": 193,
-    "stance": "Orthodoxe",
     "weightClass": "Poids moyens",
     "nickname": "Cashman"
   },
@@ -3134,7 +3083,6 @@
       "ko": 16
     },
     "heightCm": 163,
-    "stance": "Orthodoxe",
     "weightClass": "Poids coqs",
     "nickname": "La Guerrera"
   },
@@ -3247,7 +3195,6 @@
       "draws": 3,
       "ko": 26
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids moyens",
     "nickname": "Gatto"
   },
@@ -3292,7 +3239,6 @@
       "draws": 0,
       "ko": 7
     },
-    "stance": "Southpaw",
     "nickname": "Gorgeous"
   },
   "andre-purlette": {
@@ -3348,7 +3294,6 @@
       "ko": 14
     },
     "heightCm": 182,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds"
   },
   "andrea-scarpa": {
@@ -3360,7 +3305,6 @@
       "ko": 11
     },
     "heightCm": 183,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-légers",
     "nickname": "Sugar Ray"
   },
@@ -3405,8 +3349,7 @@
       "ko": 6
     },
     "heightCm": 9,
-    "reachCm": 164,
-    "stance": "Orthodoxe"
+    "reachCm": 164
   },
   "andres-gutierrez": {
     "name": "Andrés Gutiérrez",
@@ -3418,7 +3361,6 @@
     },
     "heightCm": 170,
     "reachCm": 178,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-légers",
     "nickname": "Jaguarcito"
   },
@@ -3456,7 +3398,6 @@
       "draws": 26,
       "ko": 56
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "Andrew Haynes"
   },
@@ -3468,7 +3409,6 @@
       "draws": 0,
       "ko": 0
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "Freddie"
   },
@@ -3493,7 +3433,6 @@
     },
     "heightCm": 178,
     "reachCm": 178,
-    "stance": "Orthodoxe",
     "weightClass": "Poids moyens",
     "nickname": "Hurricane"
   },
@@ -3570,7 +3509,6 @@
     },
     "heightCm": 185,
     "reachCm": 194,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds-légers",
     "nickname": "The Beast"
   },
@@ -3584,7 +3522,6 @@
     },
     "heightCm": 178,
     "reachCm": 183,
-    "stance": "Orthodoxe",
     "weightClass": "Poids légers"
   },
   "andrey-sirotkin": {
@@ -3596,7 +3533,6 @@
       "ko": 7
     },
     "heightCm": 173,
-    "stance": "Southpaw",
     "weightClass": "Poids super-moyens"
   },
   "andrey-tsurkan": {
@@ -3631,7 +3567,6 @@
     },
     "heightCm": 184,
     "reachCm": 186,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds"
   },
   "andrzej-fonfara": {
@@ -3644,7 +3579,6 @@
     },
     "heightCm": 189,
     "reachCm": 196,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds",
     "nickname": "The Polish Prince"
   },
@@ -3658,7 +3592,6 @@
     },
     "heightCm": 195,
     "reachCm": 201,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds"
   },
   "andy-agosto": {
@@ -3682,7 +3615,6 @@
     },
     "heightCm": 173,
     "reachCm": 170,
-    "stance": "Orthodoxe",
     "weightClass": "Poids coqs",
     "nickname": "Bellie"
   },
@@ -3707,7 +3639,6 @@
       "ko": 4
     },
     "heightCm": 175,
-    "stance": "Orthodoxe",
     "weightClass": "Poids légers"
   },
   "andy-holligan": {
@@ -3870,7 +3801,6 @@
       "draws": 1,
       "ko": 32
     },
-    "stance": "Orthodoxe",
     "nickname": "El Diablo"
   },
   "angel-robinson-garcia": {
@@ -3939,7 +3869,6 @@
       "ko": 7
     },
     "heightCm": 171,
-    "stance": "Southpaw",
     "weightClass": "Poids légers",
     "nickname": "The One"
   },
@@ -3988,7 +3917,6 @@
     },
     "heightCm": 165,
     "reachCm": 166,
-    "stance": "Orthodoxe",
     "weightClass": "Poids coqs"
   },
   "ann-marie-saccurato": {
@@ -4172,7 +4100,6 @@
     },
     "heightCm": 173,
     "reachCm": 188,
-    "stance": "Orthodoxe",
     "weightClass": "Poids légers",
     "nickname": "Hazardous"
   },
@@ -4186,7 +4113,6 @@
     },
     "heightCm": 185,
     "reachCm": 201,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds",
     "nickname": "Magician"
   },
@@ -4198,7 +4124,6 @@
       "draws": 0,
       "ko": 16
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-welters",
     "nickname": "Sugar Ray Clay Jones Jr."
   },
@@ -4233,7 +4158,6 @@
     },
     "heightCm": 27,
     "reachCm": 183,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds",
     "nickname": "The Beast from the East"
   },
@@ -4247,7 +4171,6 @@
     },
     "heightCm": 171,
     "reachCm": 168,
-    "stance": "Southpaw",
     "weightClass": "Poids welters",
     "nickname": "Digit Yigit, Can You Dig It"
   },
@@ -4261,7 +4184,6 @@
     },
     "heightCm": 183,
     "reachCm": 188,
-    "stance": "Orthodoxe",
     "weightClass": "Poids moyens",
     "nickname": "Action"
   },
@@ -4314,7 +4236,6 @@
       "draws": 0,
       "ko": 10
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids welters"
   },
   "antonio-amaya": {
@@ -4346,7 +4267,6 @@
     },
     "heightCm": 185,
     "reachCm": 183,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds"
   },
   "antonio-cermeno": {
@@ -4503,7 +4423,6 @@
     },
     "heightCm": 163,
     "reachCm": 174,
-    "stance": "Orthodoxe",
     "weightClass": "Poids coqs",
     "nickname": "Carita"
   },
@@ -4517,7 +4436,6 @@
     },
     "heightCm": 170,
     "reachCm": 178,
-    "stance": "Orthodoxe",
     "weightClass": "Poids welters",
     "nickname": "Relentless"
   },
@@ -4581,7 +4499,6 @@
     },
     "heightCm": 166,
     "reachCm": 168,
-    "stance": "Orthodoxe",
     "weightClass": "Poids coqs"
   },
   "antony-fowler": {
@@ -4594,7 +4511,6 @@
     },
     "heightCm": 180,
     "reachCm": 180,
-    "stance": "Orthodoxe",
     "weightClass": "Poids moyens",
     "nickname": "The Machine"
   },
@@ -4628,7 +4544,6 @@
       "ko": 5
     },
     "heightCm": 175,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-légers"
   },
   "apidej-sit-hrun": {
@@ -4684,7 +4599,6 @@
     },
     "heightCm": 173,
     "reachCm": 188,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-plumes"
   },
   "archie-moore": {
@@ -4720,7 +4634,6 @@
       "ko": 17
     },
     "heightCm": 160,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mouches",
     "nickname": "The Jackal"
   },
@@ -4759,7 +4672,6 @@
     },
     "heightCm": 178,
     "reachCm": 175,
-    "stance": "Orthodoxe",
     "weightClass": "Poids moyens",
     "nickname": "The Predator"
   },
@@ -4845,7 +4757,6 @@
     },
     "heightCm": 180,
     "reachCm": 183,
-    "stance": "Orthodoxe",
     "nickname": "Chato"
   },
   "armando-santos": {
@@ -4858,7 +4769,6 @@
     },
     "heightCm": 165,
     "reachCm": 165,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mouches",
     "nickname": "Cobra"
   },
@@ -4894,7 +4804,6 @@
     },
     "heightCm": 175,
     "reachCm": 183,
-    "stance": "Orthodoxe",
     "weightClass": "Poids welters"
   },
   "arnold-gjergjaj": {
@@ -4961,7 +4870,6 @@
     },
     "heightCm": 197,
     "reachCm": 194,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "Lion"
   },
@@ -5000,7 +4908,6 @@
       "draws": 3,
       "ko": 10
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-plumes",
     "nickname": "Lionheart"
   },
@@ -5012,7 +4919,6 @@
       "draws": 6,
       "ko": 34
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds"
   },
   "artem-chebotarev": {
@@ -5070,7 +4976,6 @@
       "ko": 10
     },
     "heightCm": 185,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds"
   },
   "artemio-reyes": {
@@ -5107,7 +5012,6 @@
       "ko": 16
     },
     "heightCm": 175,
-    "stance": "Southpaw",
     "weightClass": "Poids super-légers",
     "nickname": "The Chechen Wolf"
   },
@@ -5128,7 +5032,6 @@
       "losses": 4,
       "draws": 2
     },
-    "stance": "Orthodoxe",
     "nickname": "The Fighting Prince The People's Champ"
   },
   "arthur-pelkey": {
@@ -5184,7 +5087,6 @@
       "draws": 5,
       "ko": 38
     },
-    "stance": "Orthodoxe",
     "nickname": "Artie"
   },
   "artur-akavov": {
@@ -5196,7 +5098,6 @@
       "ko": 9
     },
     "heightCm": 176,
-    "stance": "Southpaw",
     "weightClass": "Poids moyens",
     "nickname": "Wolverine"
   },
@@ -5242,7 +5143,6 @@
       "ko": 13
     },
     "heightCm": 185,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds-légers",
     "nickname": "Thunder"
   },
@@ -5289,7 +5189,6 @@
       "draws": 12,
       "ko": 52
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds"
   },
   "arturo-gomez": {
@@ -5349,7 +5248,6 @@
       "ko": 1
     },
     "heightCm": 174,
-    "stance": "Southpaw",
     "weightClass": "Poids welters"
   },
   "ashley-brace": {
@@ -5360,8 +5258,7 @@
       "draws": 1,
       "ko": 3
     },
-    "heightCm": 157,
-    "stance": "Orthodoxe"
+    "heightCm": 157
   },
   "ashley-lane": {
     "name": "Ashley Lane",
@@ -5383,7 +5280,6 @@
       "draws": 2,
       "ko": 5
     },
-    "stance": "Orthodoxe",
     "nickname": "Flash Ash"
   },
   "ashley-theophane": {
@@ -5408,7 +5304,6 @@
     },
     "heightCm": 173,
     "reachCm": 173,
-    "stance": "Orthodoxe",
     "weightClass": "Poids légers",
     "nickname": "H2O"
   },
@@ -5548,7 +5443,6 @@
     },
     "heightCm": 177,
     "reachCm": 185,
-    "stance": "Southpaw",
     "weightClass": "Poids moyens",
     "nickname": "No Doubt"
   },
@@ -5560,7 +5454,6 @@
       "draws": 0,
       "ko": 13
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids moyens",
     "nickname": "Ammo"
   },
@@ -5572,7 +5465,6 @@
       "draws": 15,
       "ko": 64
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds"
   },
   "avni-y-ld-r-m": {
@@ -5585,7 +5477,6 @@
     },
     "heightCm": 182,
     "reachCm": 178,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds",
     "nickname": "Mr. Robot"
   },
@@ -5599,7 +5490,6 @@
     },
     "heightCm": 163,
     "reachCm": 185,
-    "stance": "Orthodoxe",
     "weightClass": "Poids moyens",
     "nickname": "Tazman"
   },
@@ -5613,7 +5503,6 @@
     },
     "heightCm": 191,
     "reachCm": 193,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "Der sanfte Riese (\"The Gentle Giant\")"
   },
@@ -5684,7 +5573,6 @@
     },
     "heightCm": 170,
     "reachCm": 178,
-    "stance": "Southpaw",
     "weightClass": "Poids super-plumes",
     "nickname": "Golden Boy"
   },
@@ -5766,7 +5654,6 @@
       "draws": 0,
       "ko": 8
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids légers",
     "nickname": "The Master"
   },
@@ -5802,7 +5689,6 @@
       "draws": 2,
       "ko": 23
     },
-    "stance": "Southpaw",
     "nickname": "Mr. Crush"
   },
   "bae-ki-suk": {
@@ -5857,7 +5743,6 @@
       "ko": 11
     },
     "heightCm": 170,
-    "stance": "Southpaw",
     "weightClass": "Poids légers",
     "nickname": "Bai"
   },
@@ -5870,7 +5755,6 @@
       "ko": 11
     },
     "heightCm": 180,
-    "stance": "Orthodoxe",
     "weightClass": "Poids super-welters"
   },
   "bakhodir-jalolov": {
@@ -6079,6 +5963,16 @@
     },
     "heightCm": 170
   },
+  "batu-khasikov": {
+    "name": "Batu Khasikov",
+    "record": {
+      "wins": 67,
+      "losses": 17,
+      "draws": 0
+    },
+    "heightCm": 176,
+    "nickname": "Batukhan"
+  },
   "batuhan-gozgec": {
     "name": "Batuhan Gözgeç",
     "record": {
@@ -6109,7 +6003,6 @@
       "ko": 2
     },
     "heightCm": 163,
-    "stance": "Orthodoxe",
     "weightClass": "Poids légers",
     "nickname": "The Beast"
   },
@@ -6134,7 +6027,6 @@
     },
     "heightCm": 175,
     "reachCm": 183,
-    "stance": "Southpaw",
     "weightClass": "Poids super-moyens",
     "nickname": "Honey Bee"
   },
@@ -6169,7 +6061,6 @@
       "draws": 0,
       "ko": 11
     },
-    "stance": "Southpaw",
     "weightClass": "Poids super-moyens"
   },
   "bektemir-melikuziev": {
@@ -6191,7 +6082,6 @@
       "ko": 2
     },
     "heightCm": 188,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds"
   },
   "belinda-laracuente": {
@@ -6315,7 +6205,6 @@
     },
     "heightCm": 191,
     "reachCm": 191,
-    "stance": "Orthodoxe",
     "weightClass": "Poids mi-lourds"
   },
   "bennetto-payne": {
@@ -6340,7 +6229,6 @@
       "ko": 53
     },
     "reachCm": 180,
-    "stance": "Orthodoxe",
     "nickname": "Bad"
   },
   "benny-bass": {
@@ -6578,7 +6466,6 @@
       "ko": 28
     },
     "heightCm": 193,
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds"
   },
   "bernardo-pinango": {
@@ -6611,7 +6498,6 @@
       "draws": 0,
       "ko": 31
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "Smokin"
   },
@@ -6666,7 +6552,6 @@
       "draws": 1,
       "ko": 9
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids welters",
     "nickname": "Unstoppable"
   },
@@ -7143,7 +7028,6 @@
       "draws": 1,
       "ko": 13
     },
-    "stance": "Southpaw",
     "weightClass": "Poids mi-lourds",
     "nickname": "IL CAPO"
   },
@@ -7167,7 +7051,6 @@
       "ko": 9
     },
     "heightCm": 188,
-    "stance": "Southpaw",
     "weightClass": "Poids mi-lourds",
     "nickname": "Lionheart"
   },
@@ -7179,7 +7062,6 @@
       "draws": 7,
       "ko": 15
     },
-    "stance": "Orthodoxe",
     "weightClass": "Poids lourds",
     "nickname": "The King of the Battle Royal"
   },

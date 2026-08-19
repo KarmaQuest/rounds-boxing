@@ -1,5 +1,29 @@
 [
   {
+    "id": "ae63a5179a1e3c96fe9b4bec93e7a26c6d48b2063475326d40c042e2c31311e3",
+    "date": "2026-08-17",
+    "location": "Atlanta, Georgia",
+    "weight_class": "middleweight",
+    "fighter_a": "Claressa Shields",
+    "fighter_b": "Kaye Scott",
+    "winner": "Claressa Shields",
+    "method": "TKO",
+    "rounds": 6,
+    "is_title_fight": true
+  },
+  {
+    "id": "48a14e07826a73c53c901949d89188edfe8639f04d754547e63e1179cdee59a0",
+    "date": "2026-08-17",
+    "location": "Tokyo, Japan",
+    "weight_class": "super welterweight",
+    "fighter_a": "Ryota Toyoshima",
+    "fighter_b": "Tsukuru Midorikawa",
+    "winner": "Ryota Toyoshima",
+    "method": "UD",
+    "rounds": 10,
+    "is_title_fight": true
+  },
+  {
     "id": "59891e6297d9059a2a8164f299ebec843b13f919d36e53ec1948bd52e146e70b",
     "date": "2026-08-12",
     "location": "",

@@ -2,10 +2,12 @@
 
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Swords } from "lucide-react";
 import type { Fighter } from "@/lib/data/types";
 import { koPct } from "@/lib/data/utils";
+import { countryLabel, toLocale, weightClassLabel } from "@/lib/i18n/data";
 import { Avatar } from "@/components/avatar";
 import { RecordBar, RecordNumbers } from "@/components/record-bar";
 import { cn } from "@/lib/utils";
@@ -51,54 +53,66 @@ function better(a: number, b: number, mode: "max" | "min"): Side {
 }
 
 interface StatRow {
+  key: string;
   label: string;
   a: string;
   b: string;
   win?: Side;
 }
 
-function buildRows(a: Fighter, b: Fighter): StatRow[] {
+function buildRows(
+  a: Fighter,
+  b: Fighter,
+  t: (key: string) => string
+): StatRow[] {
   const koA = koPct(a.record);
   const koB = koPct(b.record);
   const rows: StatRow[] = [
     {
-      label: "Victoires",
+      key: "wins",
+      label: t("wins"),
       a: String(a.record.wins),
       b: String(b.record.wins),
       win: better(a.record.wins, b.record.wins, "max"),
     },
     {
-      label: "Défaites",
+      key: "losses",
+      label: t("losses"),
       a: String(a.record.losses),
       b: String(b.record.losses),
       win: better(a.record.losses, b.record.losses, "min"),
     },
     {
-      label: "% KO",
+      key: "koPct",
+      label: t("koPct"),
       a: `${koA}%`,
       b: `${koB}%`,
       win: better(koA, koB, "max"),
     },
     {
-      label: "Taille",
+      key: "height",
+      label: t("height"),
       a: a.heightCm > 0 ? `${a.heightCm} cm` : "—",
       b: b.heightCm > 0 ? `${b.heightCm} cm` : "—",
       win: a.heightCm > 0 && b.heightCm > 0 ? better(a.heightCm, b.heightCm, "max") : "tie",
     },
     {
-      label: "Allonge",
+      key: "reach",
+      label: t("reach"),
       a: a.reachCm > 0 ? `${a.reachCm} cm` : "—",
       b: b.reachCm > 0 ? `${b.reachCm} cm` : "—",
       win: a.reachCm > 0 && b.reachCm > 0 ? better(a.reachCm, b.reachCm, "max") : "tie",
     },
     {
-      label: "Âge",
+      key: "age",
+      label: t("age"),
       a: `${a.age} ans`,
       b: `${b.age} ans`,
       win: better(a.age, b.age, "min"),
     },
     {
-      label: "Début pro",
+      key: "debut",
+      label: t("debut"),
       a: String(a.debutYear),
       b: String(b.debutYear),
       win: better(a.debutYear, b.debutYear, "min"),
@@ -142,6 +156,7 @@ function Selector({
 }
 
 function FighterColumn({ fighter }: { fighter: Fighter }) {
+  const locale = toLocale(useLocale());
   return (
     <div className="rounded-2xl border border-line/60 bg-panel p-6 panel-glow">
       <div className="flex flex-col items-center gap-3 text-center">
@@ -154,19 +169,19 @@ function FighterColumn({ fighter }: { fighter: Fighter }) {
             <p className="mt-0.5 text-sm italic text-gold-soft">« {fighter.nickname} »</p>
           )}
           <p className="mt-2 text-xs text-mist">
-            {fighter.flag} {fighter.country} · {fighter.weightClass}
+            {fighter.flag} {countryLabel(fighter.country, locale)} · {weightClassLabel(fighter.weightClass, locale)}
           </p>
         </div>
       </div>
 
       {fighter.titles.length > 0 && (
         <div className="mt-4 flex flex-wrap justify-center gap-1.5">
-          {fighter.titles.slice(0, 3).map((t) => (
+          {fighter.titles.slice(0, 3).map((title) => (
             <span
-              key={t}
+              key={title}
               className="rounded-full bg-gold/10 px-2.5 py-1 text-[10px] font-semibold text-gold ring-1 ring-gold/30"
             >
-              {t}
+              {title}
             </span>
           ))}
         </div>
@@ -188,6 +203,7 @@ function FighterColumn({ fighter }: { fighter: Fighter }) {
  * mises en or.
  */
 export function Comparateur() {
+  const t = useTranslations("comparateur");
   const router = useRouter();
   const sp = useSearchParams();
 
@@ -220,16 +236,16 @@ export function Comparateur() {
   if (isError) {
     return (
       <p className="rounded-2xl border border-loss/40 bg-loss/10 p-10 text-center text-mist">
-        Impossible de charger les boxeurs. Réessaie dans un instant.
+        {t("error")}
       </p>
     );
   }
 
-  const rows = a && b ? buildRows(a, b) : [];
+  const rows = a && b ? buildRows(a, b, (key) => t(key)) : [];
   const winStats = new Set<string>();
   for (const row of rows) {
-    if (row.win === "a") winStats.add(`${row.label}:a`);
-    if (row.win === "b") winStats.add(`${row.label}:b`);
+    if (row.win === "a") winStats.add(`${row.key}:a`);
+    if (row.win === "b") winStats.add(`${row.key}:b`);
   }
 
   return (
@@ -237,26 +253,26 @@ export function Comparateur() {
       {/* sélecteurs */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <Selector
-          label="Boxeur A"
+          label={t("boxeurA")}
           value={slugA}
           onChange={(s) => setSlug("a", s)}
           fighters={fighters}
-          placeholder="Choisir le boxeur A…"
+          placeholder={t("chooseA")}
         />
         <div className="hidden pb-2.5 text-neon sm:block" aria-hidden>
           <Swords size={20} />
         </div>
         <Selector
-          label="Boxeur B"
+          label={t("boxeurB")}
           value={slugB}
           onChange={(s) => setSlug("b", s)}
           fighters={fighters}
-          placeholder="Choisir le boxeur B…"
+          placeholder={t("chooseB")}
         />
       </div>
 
       {isLoading && (
-        <p className="text-center text-sm text-fog">Chargement du répertoire…</p>
+        <p className="text-center text-sm text-fog">{t("loadingDirectory")}</p>
       )}
 
       {!isLoading && a && b && (
@@ -271,14 +287,14 @@ export function Comparateur() {
             <table className="w-full text-sm">
               <tbody>
                 {rows.map((row) => (
-                  <tr key={row.label} className="border-b border-line-soft last:border-0">
+                  <tr key={row.key} className="border-b border-line-soft last:border-0">
                     <td className="w-[26%] px-4 py-2.5 text-xs uppercase tracking-wider text-fog">
                       {row.label}
                     </td>
                     <td
                       className={cn(
                         "w-[37%] px-4 py-2.5 text-right font-display text-base",
-                        winStats.has(`${row.label}:a`) ? "text-gold" : "text-snow"
+                        winStats.has(`${row.key}:a`) ? "text-gold" : "text-snow"
                       )}
                     >
                       {row.a}
@@ -289,7 +305,7 @@ export function Comparateur() {
                     <td
                       className={cn(
                         "w-[37%] px-4 py-2.5 font-display text-base",
-                        winStats.has(`${row.label}:b`) ? "text-gold" : "text-snow"
+                        winStats.has(`${row.key}:b`) ? "text-gold" : "text-snow"
                       )}
                     >
                       {row.b}
@@ -305,11 +321,8 @@ export function Comparateur() {
       {!isLoading && !(a && b) && (
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-line bg-panel/50 px-6 py-16 text-center">
           <Swords size={36} aria-hidden className="text-fog" />
-          <p className="font-display text-xl uppercase text-snow">Tale of the tape</p>
-          <p className="max-w-sm text-sm text-mist">
-            Sélectionne deux boxeurs ci-dessus pour comparer leurs fiches
-            techniques et leurs palmarès. Le partage se fait par URL.
-          </p>
+          <p className="font-display text-xl uppercase text-snow">{t("emptyTitle")}</p>
+          <p className="max-w-sm text-sm text-mist">{t("emptyText")}</p>
         </div>
       )}
     </div>

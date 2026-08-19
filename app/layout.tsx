@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Anton, Inter } from "next/font/google";
 import "./globals.css";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import { QueryProviders } from "@/components/query-providers";
 import { AppLoader } from "@/components/loader";
 import { Navbar } from "@/components/navbar";
@@ -21,46 +23,53 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: "ROUNDS — Les records de la boxe",
-    template: "%s · ROUNDS",
-  },
-  description:
-    "ROUNDS : palmarès, profils et combats des plus grands boxeurs du monde. Recherche, filtres ultra-rapides et design néon.",
-  keywords: ["boxe", "boxing", "palmarès", "records", "boxeurs", "combats"],
-  alternates: { canonical: "/" },
-  openGraph: {
-    siteName: "ROUNDS",
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("meta");
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: t("title.default"),
+      template: t("title.template"),
+    },
+    description: t("description"),
+    keywords: t("keywords").split(",").map((k) => k.trim()),
+    alternates: { canonical: "/" },
+    openGraph: {
+      siteName: "ROUNDS",
+      locale: t("ogLocale"),
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+    },
+  };
+}
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const locale = await getLocale();
+  const t = await getTranslations("nav");
+
   return (
-    <html lang="fr" className={`${anton.variable} ${inter.variable} h-full antialiased`}>
+    <html lang={locale} className={`${anton.variable} ${inter.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-ink text-snow">
-        <QueryProviders>
-          <a href="#contenu" className="skip-link">
-            Aller au contenu
-          </a>
-          {/* Rendu SSR : le rideau cache le site dès le premier paint et ne
-              le révèle qu'à l'événement « page prête » (voir loader.tsx). */}
-          <AppLoader />
-          {/* Émet rounds:page-ready au window.load (source de l'événement). */}
-          <PageReadySignal />
-          <SwRegister />
-          <Navbar />
-          <main id="contenu" className="flex-1">
-            <PageTransition>{children}</PageTransition>
-          </main>
-          <Footer />
-        </QueryProviders>
+        <NextIntlClientProvider>
+          <QueryProviders>
+            <a href="#contenu" className="skip-link">
+              {t("skip")}
+            </a>
+            {/* Rendu SSR : le rideau cache le site dès le premier paint et ne
+                le révèle qu'à l'événement « page prête » (voir loader.tsx). */}
+            <AppLoader />
+            {/* Émet rounds:page-ready au window.load (source de l'événement). */}
+            <PageReadySignal />
+            <SwRegister />
+            <Navbar />
+            <main id="contenu" className="flex-1">
+              <PageTransition>{children}</PageTransition>
+            </main>
+            <Footer />
+          </QueryProviders>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

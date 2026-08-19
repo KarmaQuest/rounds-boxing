@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
@@ -8,6 +9,8 @@ const LINE_1 = "ROUNDS".split("");
 
 /** Hero plein écran : anneaux néon animés + titre en cascade. */
 export function Hero() {
+  const t = useTranslations("home");
+
   return (
     <section className="relative flex min-h-[88vh] flex-col items-center justify-center overflow-hidden px-4">
       {/* fond quadrillé + vignette */}
@@ -38,7 +41,7 @@ export function Hero() {
           transition={{ delay: 0.15, duration: 0.6 }}
           className="mb-6 rounded-full border border-neon/40 bg-neon/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.35em] text-neon-soft"
         >
-          L’univers de la boxe en un coup d’œil
+          {t("heroBadge")}
         </motion.p>
 
         <h1 className="font-display uppercase leading-[0.95] tracking-wide text-snow">
@@ -63,8 +66,7 @@ export function Hero() {
           transition={{ delay: 0.9, duration: 0.7 }}
           className="mt-6 max-w-xl text-base text-mist sm:text-lg"
         >
-          Palmarès, fiches techniques et combats des plus grands boxeurs du
-          monde. Filtres ultra-rapides, données multi-sources et animations.
+          {t("heroText")}
         </motion.p>
 
         <motion.div
@@ -77,13 +79,13 @@ export function Hero() {
             href="/boxeurs"
             className="sheen press group relative inline-flex h-13 items-center gap-2 overflow-hidden rounded-full bg-neon px-8 py-4 font-display text-sm uppercase tracking-[0.2em] text-white transition-all duration-300 hover:shadow-neon"
           >
-            Explorer les boxeurs
+            {t("explore")}
           </Link>
           <Link
             href="/combats"
             className="press inline-flex items-center gap-2 rounded-full border border-gold/50 px-8 py-4 font-display text-sm uppercase tracking-[0.2em] text-gold transition-all duration-300 hover:bg-gold/10 hover:shadow-gold"
           >
-            Combats à venir
+            {t("upcomingFights")}
           </Link>
         </motion.div>
       </div>

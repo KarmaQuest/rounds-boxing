@@ -1,0 +1,97 @@
+{
+  "source": "wbc",
+  "articles": 100,
+  "articles_ok": 4,
+  "combats": [
+    {
+      "title": "Claressa Shields returns to the WBC middleweight division with a jolting TKO of Kaye Scott ",
+      "date": "2026-08-17",
+      "fights": [
+        {
+          "winner": "Claressa Shields",
+          "loser": "Kaye Scott",
+          "method": "TKO",
+          "rounds": 6,
+          "weight_class": "middleweight",
+          "is_title_fight": true,
+          "location": "Atlanta, Georgia"
+        }
+      ]
+    },
+    {
+      "title": "Ryota Toyoshima Crowned New OPBF Super Welterweight Champion After Defeating Tsukuru Midorikawa in Tokyo",
+      "date": "2026-08-17",
+      "fights": [
+        {
+          "winner": "Ryota Toyoshima",
+          "loser": "Tsukuru Midorikawa",
+          "method": "UD",
+          "rounds": 10,
+          "weight_class": "super welterweight",
+          "is_title_fight": true,
+          "location": "Tokyo, Japan"
+        }
+      ]
+    },
+    {
+      "title": "OPBF Results from Bangkok: Ping Tai Ng, Hayate Hanada, and Ryo Mandokoro Claim Titles in Thailand",
+      "date": "2026-08-12",
+      "fights": [
+        {
+          "winner": "Ping Tai Ng",
+          "loser": "Somphot Seesa",
+          "method": "TKO",
+          "rounds": 5,
+          "weight_class": "light heavyweight",
+          "is_title_fight": true,
+          "location": "BANGKOK, THAILAND"
+        },
+        {
+          "winner": "Hayate Hanada",
+          "loser": "Vanlalenkawitera",
+          "method": "SD",
+          "rounds": 10,
+          "weight_class": "super flyweight",
+          "is_title_fight": true,
+          "location": "BANGKOK, THAILAND"
+        },
+        {
+          "winner": "Ryo Mandokoro",
+          "loser": "Wei Song",
+          "method": "TKO",
+          "rounds": 8,
+          "weight_class": "flyweight",
+          "is_title_fight": true,
+          "location": "BANGKOK, THAILAND"
+        }
+      ]
+    },
+    {
+      "title": "Dina Thorslund Reigns Supreme Once Again!",
+      "date": "2026-08-10",
+      "fights": [
+        {
+          "winner": "Dina Thorslund",
+          "loser": "Cherneka Johnson",
+          "method": "UD",
+          "rounds": 10,
+          "weight_class": "bantamweight",
+          "is_title_fight": true,
+          "location": "Orlando, Florida"
+        },
+        {
+          "winner": "Dina Thorslund",
+          "loser": "Almudena Álvarez",
+          "method": "",
+          "rounds": 0,
+          "weight_class": "featherweight",
+          "is_title_fight": true,
+          "location": "Orlando, Florida"
+        }
+      ]
+    }
+  ],
+  "total_fights": 7,
+  "errors": [],
+  "articles_skipped": 46
+}

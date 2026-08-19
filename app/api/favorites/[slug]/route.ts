@@ -9,7 +9,7 @@ type Ctx = { params: Promise<{ slug: string }> };
 export async function PUT(_request: NextRequest, ctx: Ctx) {
   const user = await getCurrentUser(_request);
   if (!user) {
-    return jsonResponse({ error: "Non connecté" }, { status: 401, cache: "no-store" });
+    return jsonResponse({ error: "Non connecté", errorCode: "notConnected" }, { status: 401, cache: "no-store" });
   }
   const { slug } = await ctx.params;
   addFavorite(user.id, slug);
@@ -20,7 +20,7 @@ export async function PUT(_request: NextRequest, ctx: Ctx) {
 export async function DELETE(_request: NextRequest, ctx: Ctx) {
   const user = await getCurrentUser(_request);
   if (!user) {
-    return jsonResponse({ error: "Non connecté" }, { status: 401, cache: "no-store" });
+    return jsonResponse({ error: "Non connecté", errorCode: "notConnected" }, { status: 401, cache: "no-store" });
   }
   const { slug } = await ctx.params;
   removeFavorite(user.id, slug);
@@ -31,7 +31,7 @@ export async function DELETE(_request: NextRequest, ctx: Ctx) {
 export async function GET(_request: NextRequest, ctx: Ctx) {
   const user = await getCurrentUser(_request);
   if (!user) {
-    return jsonResponse({ error: "Non connecté" }, { status: 401, cache: "no-store" });
+    return jsonResponse({ error: "Non connecté", errorCode: "notConnected" }, { status: 401, cache: "no-store" });
   }
   const { slug } = await ctx.params;
   return jsonResponse({ favorite: isFavorite(user.id, slug) }, { cache: "no-store" });

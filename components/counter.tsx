@@ -1,6 +1,7 @@
 "use client";
 
 import { animate, useInView, useReducedMotion } from "framer-motion";
+import { useLocale } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 interface CounterProps {
@@ -16,6 +17,7 @@ export function Counter({ to, duration = 1.4, className, suffix = "" }: CounterP
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const reduce = useReducedMotion();
+  const locale = useLocale();
   const [value, setValue] = useState(0);
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export function Counter({ to, duration = 1.4, className, suffix = "" }: CounterP
 
   return (
     <span ref={ref} className={className}>
-      {value.toLocaleString("fr-FR")}
+      {value.toLocaleString(locale === "en" ? "en-US" : "fr-FR")}
       {suffix}
     </span>
   );

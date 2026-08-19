@@ -19,7 +19,7 @@ export async function GET(
     const { fighter, source } = await getBoxeur(slug);
 
     if (!fighter) {
-      return jsonResponse({ error: "Boxeur introuvable" }, { status: 404 });
+      return jsonResponse({ error: "Boxeur introuvable", errorCode: "notFound" }, { status: 404 });
     }
     return jsonResponse(
       { fighter, source },
@@ -28,7 +28,7 @@ export async function GET(
   } catch (err) {
     console.error("[api/boxeurs/:slug]", slug, clientIp(request), err);
     return jsonResponse(
-      { error: "Service temporairement indisponible. Réessaie dans un instant." },
+      { error: "Service temporairement indisponible. Réessaie dans un instant.", errorCode: "serviceUnavailable" },
       { status: 503 }
     );
   }

@@ -11,23 +11,23 @@ import { jsonResponse } from "@/lib/api";
 export async function PATCH(request: NextRequest) {
   const user = await getCurrentUser(request);
   if (!user) {
-    return jsonResponse({ error: "Non connecté" }, { status: 401 });
+    return jsonResponse({ error: "Non connecté", errorCode: "notConnected" }, { status: 401 });
   }
 
   let body: { oldPassword?: string; newPassword?: string };
   try {
     body = await request.json();
   } catch {
-    return jsonResponse({ error: "Corps de requête invalide." }, { status: 400 });
+    return jsonResponse({ error: "Corps de requête invalide.", errorCode: "invalidBody" }, { status: 400 });
   }
 
   const fresh = findUserById(user.id);
   if (!fresh || !verifyPassword(body.oldPassword ?? "", fresh.password_hash)) {
-    return jsonResponse({ error: "Mot de passe actuel incorrect." }, { status: 400 });
+    return jsonResponse({ error: "Mot de passe actuel incorrect.", errorCode: "wrongCurrentPassword" }, { status: 400 });
   }
   if ((body.newPassword ?? "").length < 8) {
     return jsonResponse(
-      { error: "Le nouveau mot de passe doit faire au moins 8 caractères." },
+      { error: "Le nouveau mot de passe doit faire au moins 8 caractères.", errorCode: "newPasswordTooShort" },
       { status: 400 }
     );
   }

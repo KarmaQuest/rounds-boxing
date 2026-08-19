@@ -1,28 +1,33 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { AuthForm } from "@/components/auth/auth-form";
 
-export const metadata: Metadata = {
-  title: "Connexion",
-  description: "Connecte-toi à ROUNDS pour gérer tes favoris.",
-  alternates: { canonical: "/connexion" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("meta.connexion");
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: { canonical: "/connexion" },
+  };
+}
 
-export default function ConnexionPage() {
+export default async function ConnexionPage() {
+  const t = await getTranslations("auth");
+  const tCommon = await getTranslations("common");
+
   return (
     <div className="mx-auto flex max-w-md flex-col px-4 py-16 sm:py-24">
       <div className="mb-8 text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neon-soft">
-          Compte
+          {t("account")}
         </p>
         <h1 className="mt-2 font-display text-4xl uppercase tracking-wide text-snow">
-          Connexion
+          {t("loginTitle")}
         </h1>
-        <p className="mt-3 text-sm text-mist">
-          Retrouve tes boxeurs favoris sur ton dashboard.
-        </p>
+        <p className="mt-3 text-sm text-mist">{t("loginText")}</p>
       </div>
-      <Suspense fallback={<p className="text-center text-sm text-fog">Chargement…</p>}>
+      <Suspense fallback={<p className="text-center text-sm text-fog">{tCommon("loading")}</p>}>
         <AuthForm mode="login" />
       </Suspense>
     </div>

@@ -2,11 +2,13 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useTranslations, useLocale } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2, SearchX } from "lucide-react";
 import type { Fighter } from "@/lib/data/types";
 import { applyFilters, fuzzyScore } from "@/lib/data/utils";
+import { toLocale, weightClassLabel } from "@/lib/i18n/data";
 import { FighterCard } from "@/components/fighter-card";
 import { FighterGridSkeleton } from "@/components/skeleton";
 import {
@@ -63,6 +65,8 @@ function filtersFromUrl(sp: URLSearchParams): FilterState {
  * instantanément côté client — aucune latence réseau en filtrant.
  */
 export function Directory() {
+  const t = useTranslations("boxeurs");
+  const locale = toLocale(useLocale());
   const router = useRouter();
   const sp = useSearchParams();
   const [filters, setFilters] = useState<FilterState>(() => filtersFromUrl(sp));
@@ -176,17 +180,17 @@ export function Directory() {
       <div className="flex items-center justify-between text-xs text-fog">
         <p>
           <span className="font-semibold text-snow">{filtered.length}</span>{" "}
-          boxeur{filtered.length > 1 ? "s" : ""} affiché{filtered.length > 1 ? "s" : ""}
+          {t("countLabel", { count: filtered.length })}
           {filters.weightClass && (
             <>
               {" · "}
-              <span className="text-mist">{filters.weightClass}</span>
+              <span className="text-mist">{weightClassLabel(filters.weightClass, locale)}</span>
             </>
           )}
         </p>
         {(query ? searchData?.source : data?.pages[0]?.source) && (
           <p className="hidden sm:block">
-            Source :{" "}
+            {t("source")} :{" "}
             <span className="text-mist">
               {query ? searchData!.source : data!.pages[0]!.source}
             </span>
@@ -202,7 +206,7 @@ export function Directory() {
 
       {isError && !isLoading && (
         <div className="rounded-2xl border border-loss/40 bg-loss/10 p-10 text-center text-mist">
-          Impossible de charger les boxeurs. Réessaie dans un instant.
+          {t("error")}
         </div>
       )}
 
@@ -213,16 +217,13 @@ export function Directory() {
           className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-line bg-panel/50 px-6 py-16 text-center"
         >
           <SearchX size={40} aria-hidden className="text-fog" />
-          <p className="font-display text-xl uppercase text-snow">Aucun boxeur trouvé</p>
-          <p className="max-w-sm text-sm text-mist">
-            Aucun boxeur ne correspond à ces critères. Essaie de relâcher les
-            filtres ou de changer de catégorie.
-          </p>
+          <p className="font-display text-xl uppercase text-snow">{t("none")}</p>
+          <p className="max-w-sm text-sm text-mist">{t("noneText")}</p>
           <button
             onClick={reset}
             className="mt-2 rounded-full border border-neon/60 px-5 py-2 text-sm font-medium text-neon-soft transition-colors hover:bg-neon/10"
           >
-            Réinitialiser les filtres
+            {t("resetFilters")}
           </button>
         </motion.div>
       )}
@@ -250,16 +251,13 @@ export function Directory() {
             className="inline-flex items-center gap-2 rounded-full border border-neon/60 px-6 py-2.5 text-sm font-medium text-neon-soft transition-colors hover:bg-neon/10 disabled:opacity-60"
           >
             {isFetchingNextPage && <Loader2 size={15} aria-hidden className="animate-spin" />}
-            {isFetchingNextPage ? "Chargement…" : "Charger plus"}
+            {isFetchingNextPage ? t("loading") : t("loadMore")}
           </button>
         </div>
       )}
 
       {!isLoading && !isError && fighters.length === 0 && (
-        <p className="text-center text-xs text-fog">
-          Astuce : ajoute une clé API (Big Balls Sports Data, TheSportsDB) dans
-          `.env.local` pour charger de vrais boxeurs — voir `.env.example`.
-        </p>
+        <p className="text-center text-xs text-fog">{t("tip")}</p>
       )}
     </div>
   );

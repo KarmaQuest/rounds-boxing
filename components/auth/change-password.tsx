@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
+import { isAuthErrorCode } from "@/lib/i18n/api-errors";
 
 export function ChangePasswordForm() {
+  const t = useTranslations("auth");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error">("idle");
@@ -23,7 +26,12 @@ export function ChangePasswordForm() {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         setStatus("error");
-        setError(data.error ?? "Une erreur est survenue.");
+        const code = data.errorCode;
+        setError(
+          isAuthErrorCode(code)
+            ? t(`errors.${code}`)
+            : (data.error ?? t("genericError"))
+        );
         return;
       }
       setStatus("ok");
@@ -31,7 +39,7 @@ export function ChangePasswordForm() {
       setNewPassword("");
     } catch {
       setStatus("error");
-      setError("Problème de connexion. Réessaie.");
+      setError(t("networkError"));
     }
   }
 
@@ -39,7 +47,7 @@ export function ChangePasswordForm() {
     <form onSubmit={onSubmit} className="space-y-4">
       <div className="space-y-1.5">
         <label htmlFor="oldPassword" className="text-xs font-semibold uppercase tracking-wider text-fog">
-          Mot de passe actuel
+          {t("currentPassword")}
         </label>
         <input
           id="oldPassword"
@@ -53,7 +61,7 @@ export function ChangePasswordForm() {
       </div>
       <div className="space-y-1.5">
         <label htmlFor="newPassword" className="text-xs font-semibold uppercase tracking-wider text-fog">
-          Nouveau mot de passe
+          {t("newPassword")}
         </label>
         <input
           id="newPassword"
@@ -73,7 +81,7 @@ export function ChangePasswordForm() {
           animate={{ opacity: 1 }}
           className="rounded-xl border border-win/40 bg-win/10 px-4 py-2.5 text-sm text-win"
         >
-          Mot de passe mis à jour ✅
+          {t("updated")} ✅
         </motion.p>
       )}
       {status === "error" && (
@@ -94,10 +102,10 @@ export function ChangePasswordForm() {
       >
         {status === "loading" ? (
           <span className="inline-flex items-center gap-2">
-            <Loader2 size={15} aria-hidden className="animate-spin" /> Un instant…
+            <Loader2 size={15} aria-hidden className="animate-spin" /> {t("unInstant")}
           </span>
         ) : (
-          "Mettre à jour"
+          t("update")
         )}
       </button>
     </form>

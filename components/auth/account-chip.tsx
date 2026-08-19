@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { UserRound } from "lucide-react";
 
@@ -23,6 +24,7 @@ export function useMe() {
 
 /** Chip du navbar : « Connexion » ou avatar → dashboard. */
 export function AccountChip() {
+  const t = useTranslations("nav");
   const { data } = useMe();
   const user = data?.user;
 
@@ -32,7 +34,7 @@ export function AccountChip() {
         href="/connexion"
         className="sheen relative hidden items-center gap-2 overflow-hidden rounded-full border border-neon/50 px-4 py-1.5 text-sm font-medium text-neon-soft transition-all hover:bg-neon/10 sm:inline-flex"
       >
-        <UserRound size={14} aria-hidden /> Connexion
+        <UserRound size={14} aria-hidden /> {t("login")}
       </Link>
     );
   }
@@ -41,7 +43,7 @@ export function AccountChip() {
   return (
     <Link
       href="/dashboard"
-      aria-label={`Mon dashboard (${user.email})`}
+      aria-label={t("dashboard", { email: user.email })}
       className="group flex items-center gap-2 rounded-full border border-line bg-panel py-1 pl-1 pr-3 transition-all hover:border-neon/50"
     >
       <span className="flex h-7 w-7 items-center justify-center rounded-full bg-neon/15 font-display text-sm text-neon-soft ring-1 ring-neon/40">

@@ -1,8 +1,10 @@
 import { ImageResponse } from "next/og";
 import { join } from "node:path";
 import { readFile } from "node:fs/promises";
+import { cookies } from "next/headers";
 import { getBoxeur } from "@/lib/data";
 import { koPct, recordLabel } from "@/lib/data/utils";
+import { titleLabel, weightClassLabel, countryLabel, toLocale } from "@/lib/i18n/data";
 
 export const runtime = "nodejs";
 export const alt = "Profil boxeur — ROUNDS";
@@ -10,6 +12,21 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const anton = await readFile(join(process.cwd(), "public/fonts/Anton-Regular.ttf"));
+
+const COPY = {
+  fr: {
+    profile: "Profil boxeur",
+    notFound: "Boxeur introuvable",
+    ko: "% KO",
+    footer: "Boxe · Palmarès & combats",
+  },
+  en: {
+    profile: "Boxer profile",
+    notFound: "Boxer not found",
+    ko: "% KO",
+    footer: "Boxing · Records & fights",
+  },
+} as const;
 
 /** Mêmes dégradés déterministes que components/avatar.tsx. */
 const GRADIENTS: Array<[string, string]> = [
@@ -44,12 +61,14 @@ export default async function Image({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const locale = toLocale((await cookies()).get("NEXT_LOCALE")?.value);
+  const copy = COPY[locale];
   const { fighter } = await getBoxeur(slug);
 
-  const name = fighter?.name ?? "Boxeur introuvable";
+  const name = titleLabel(fighter?.name ?? "", locale) || copy.notFound;
   const nickname = fighter?.nickname;
-  const country = fighter?.country ?? "";
-  const weightClass = fighter?.weightClass ?? "";
+  const country = countryLabel(fighter?.country ?? "", locale);
+  const weightClass = weightClassLabel(fighter?.weightClass ?? "", locale);
   const record = fighter?.record;
   const [from, to] = GRADIENTS[hash(name) % GRADIENTS.length]!;
   const nameSize = name.length > 20 ? 52 : 64;
@@ -113,7 +132,7 @@ export default async function Image({
                 marginBottom: 18,
               }}
             >
-              ROUNDS · Profil boxeur
+              ROUNDS · {copy.profile}
             </div>
 
             <div
@@ -167,7 +186,7 @@ export default async function Image({
                     color: "#a2a2b3",
                   }}
                 >
-                  {koPct(record)}% KO
+                  {koPct(record)}% {copy.ko}
                 </span>
               </div>
             )}
@@ -219,7 +238,7 @@ export default async function Image({
           }}
         >
           <span>ROUNDS</span>
-          <span>Boxe · Palmarès & combats</span>
+          <span>{copy.footer}</span>
         </div>
       </div>
     ),

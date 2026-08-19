@@ -78,6 +78,19 @@
     "org": "WBC"
   },
   {
+    "id": "82ac6dabc558f556c87ead66610dba9bc1ece8baa861b8a836d8a29cb920d3df",
+    "date": "2026-08-29",
+    "location": "San Luis",
+    "weight_class": "ATOMWEIGHT",
+    "fighter_a": "Camila Zamorano",
+    "fighter_b": "Perla Perez",
+    "is_title_fight": false,
+    "amateur": false,
+    "bout_type": "",
+    "promoter": "Zanfer",
+    "org": "WBC"
+  },
+  {
     "id": "42b6dcca066c5851e0595345da2ac66a8fb4b821bb53bdccc8b08defc632f5d3",
     "date": "2026-08-30",
     "location": "Australia",

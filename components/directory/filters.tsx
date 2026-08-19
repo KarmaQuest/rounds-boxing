@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import {
@@ -9,6 +10,7 @@ import {
   type WeightClass,
 } from "@/lib/data/types";
 import { fuzzySuggest } from "@/lib/data/utils";
+import { toLocale, weightClassLabel } from "@/lib/i18n/data";
 import { cn } from "@/lib/utils";
 
 export type SortKey = "rank" | "wins" | "koPct" | "name" | "age" | "height";
@@ -50,18 +52,21 @@ interface FiltersProps {
 function WeightChips({
   value,
   onChange,
+  allLabel,
 }: {
   value: WeightClass | "";
   onChange: (v: WeightClass | "") => void;
+  allLabel: string;
 }) {
+  const locale = toLocale(useLocale());
   return (
     <div className="thin-scroll -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
       <Chip active={value === ""} onClick={() => onChange("")}>
-        Toutes
+        {allLabel}
       </Chip>
       {WEIGHT_CLASSES.map((wc) => (
         <Chip key={wc} active={value === wc} onClick={() => onChange(wc)}>
-          {wc}
+          {weightClassLabel(wc, locale)}
         </Chip>
       ))}
     </div>
@@ -104,6 +109,8 @@ function Chip({
  * et est synchronisée avec l'URL par la page (partageable).
  */
 export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) {
+  const t = useTranslations("boxeurs");
+  const locale = toLocale(useLocale());
   const [searchFocused, setSearchFocused] = useState(false);
 
   // Autocomplete flou (TASKS 1.3) : suggestions pendant la frappe.
@@ -137,7 +144,7 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
             onChange={(e) => onChange({ q: e.target.value })}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setTimeout(() => setSearchFocused(false), 120)}
-            placeholder="Rechercher un boxeur, un surnom, un pays…"
+            placeholder={t("searchPlaceholder")}
             aria-autocomplete="list"
             className="h-11 w-full rounded-full border border-line bg-ink/60 pl-10 pr-4 text-sm text-snow placeholder:text-fog focus:border-neon/70 focus:outline-none focus:ring-2 focus:ring-neon/20"
           />
@@ -160,7 +167,7 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
                     </span>
                     <span className="truncate font-medium text-snow">{f.name}</span>
                     <span className="ml-auto shrink-0 text-[10px] uppercase tracking-wider text-fog">
-                      {f.weightClass}
+                      {weightClassLabel(f.weightClass, locale)}
                     </span>
                   </button>
                 </li>
@@ -179,12 +186,12 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
               }}
               className="cursor-pointer bg-transparent text-sm font-medium text-snow focus:outline-none"
             >
-              <option value="rank">Meilleurs d’abord</option>
-              <option value="wins">Plus de victoires</option>
-              <option value="koPct">Ratio KO élevé</option>
-              <option value="name">Nom A → Z</option>
-              <option value="age">Plus jeunes</option>
-              <option value="height">Plus grands</option>
+              <option value="rank">{t("sortRank")}</option>
+              <option value="wins">{t("sortWins")}</option>
+              <option value="koPct">{t("sortKo")}</option>
+              <option value="name">{t("sortName")}</option>
+              <option value="age">{t("sortAge")}</option>
+              <option value="height">{t("sortHeight")}</option>
             </select>
           </label>
 
@@ -193,7 +200,7 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
               onClick={onReset}
               className="flex h-11 items-center gap-1.5 rounded-full border border-line px-4 text-xs font-medium text-mist transition-colors hover:border-neon/60 hover:text-neon"
             >
-              <X size={14} aria-hidden /> Réinitialiser
+              <X size={14} aria-hidden /> {t("reset")}
               {activeCount > 0 && (
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-neon/20 text-[10px] font-bold text-neon-soft">
                   {activeCount}
@@ -205,7 +212,7 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
       </div>
 
       {/* Ligne 2 : chips catégories */}
-      <WeightChips value={filters.weightClass} onChange={(v) => onChange({ weightClass: v })} />
+      <WeightChips value={filters.weightClass} onChange={(v) => onChange({ weightClass: v })} allLabel={t("allWeightClasses")} />
 
       {/* Ligne 3 : pays + sliders */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
@@ -214,7 +221,7 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
           onChange={(e) => onChange({ country: e.target.value })}
           className="h-10 cursor-pointer rounded-full border border-line bg-ink/60 px-4 text-sm text-snow focus:border-neon/70 focus:outline-none"
         >
-          <option value="">🌍 Tous les pays</option>
+          <option value="">🌍 {t("allCountries")}</option>
           {countries.map((c) => (
             <option key={c} value={c}>
               {fighters.find((f) => f.country === c)?.flag} {c}
@@ -223,13 +230,13 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
         </select>
 
         <Slider
-          label="Victoires minimum"
+          label={t("minWins")}
           value={filters.minWins}
           max={40}
           onChange={(v) => onChange({ minWins: v })}
         />
         <Slider
-          label="% KO minimum"
+          label={t("minKo")}
           value={filters.minKoPct}
           max={100}
           step={5}

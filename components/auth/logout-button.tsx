@@ -1,10 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Loader2, LogOut } from "lucide-react";
 
 export function LogoutButton({ variant = "default" }: { variant?: "default" | "compact" }) {
+  const t = useTranslations("nav");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +35,7 @@ export function LogoutButton({ variant = "default" }: { variant?: "default" | "c
       ) : (
         <LogOut size={15} aria-hidden />
       )}
-      Déconnexion
+      {t("logout")}
     </button>
   );
 }

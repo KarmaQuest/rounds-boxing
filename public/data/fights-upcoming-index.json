@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-08-17T17:31:22Z",
+  "generated_at": "2026-08-18T06:11:28Z",
   "organizations": {
     "ibf": {
       "name": "International Boxing Federation",
       "abbr": "IBF",
-      "date_last_sync": "2026-08-17T17:31:22Z",
+      "date_last_sync": "2026-08-18T06:11:28Z",
       "total_fights": 8
     },
     "wbc": {
       "name": "World Boxing Council",
       "abbr": "WBC",
-      "date_last_sync": "2026-08-17T17:31:22Z",
-      "total_fights": 13
+      "date_last_sync": "2026-08-18T06:11:28Z",
+      "total_fights": 14
     }
   },
-  "total_fights": 21,
-  "total_unique": 21
+  "total_fights": 22,
+  "total_unique": 22
 }

@@ -1,6 +1,8 @@
 import { ImageResponse } from "next/og";
 import { join } from "node:path";
 import { readFile } from "node:fs/promises";
+import { cookies } from "next/headers";
+import { toLocale } from "@/lib/i18n/data";
 
 export const runtime = "nodejs";
 export const alt = "ROUNDS — Les records de la boxe";
@@ -9,7 +11,25 @@ export const contentType = "image/png";
 
 const anton = await readFile(join(process.cwd(), "public/fonts/Anton-Regular.ttf"));
 
+const COPY = {
+  fr: {
+    tagline: "Répertoire de la boxe",
+    sub: "Les records de la boxe",
+    meta: "Palmarès · Profils · Combats & cotes",
+    footer: "Boxe · Toutes catégories",
+  },
+  en: {
+    tagline: "Boxing directory",
+    sub: "Boxing records",
+    meta: "Records · Profiles · Fights & odds",
+    footer: "Boxing · All weight classes",
+  },
+} as const;
+
 export default async function Image() {
+  const locale = toLocale((await cookies()).get("NEXT_LOCALE")?.value);
+  const copy = COPY[locale];
+
   return new ImageResponse(
     (
       <div
@@ -45,7 +65,7 @@ export default async function Image() {
               marginBottom: 24,
             }}
           >
-            Répertoire de la boxe
+            {copy.tagline}
           </div>
           <div
             style={{
@@ -68,7 +88,7 @@ export default async function Image() {
               marginTop: 28,
             }}
           >
-            Les records de la boxe
+            {copy.sub}
           </div>
           <div
             style={{
@@ -79,7 +99,7 @@ export default async function Image() {
               marginTop: 40,
             }}
           >
-            Palmarès · Profils · Combats & cotes
+            {copy.meta}
           </div>
         </div>
         <div
@@ -94,7 +114,7 @@ export default async function Image() {
           }}
         >
           <span>ROUNDS</span>
-          <span>Boxe · Toutes catégories</span>
+          <span>{copy.footer}</span>
         </div>
       </div>
     ),

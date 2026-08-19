@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ArrowLeft, Crown, Ruler, Scale, Calendar, Flag, Swords } from "lucide-react";
 import { getBoxeur, getCarriere, getCombatsAvenir } from "@/lib/data";
 import type { Fight } from "@/lib/data/types";
 import { koPct } from "@/lib/data/utils";
+import { countryLabel, titleLabel, toLocale, weightClassLabel } from "@/lib/i18n/data";
 import { Avatar } from "@/components/avatar";
 import { JsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
@@ -18,12 +20,22 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const t = await getTranslations("meta.boxeur");
   const { slug } = await params;
   const { fighter } = await getBoxeur(slug);
-  if (!fighter) return { title: "Boxeur introuvable" };
+  if (!fighter) return { title: t("notFound") };
   return {
-    title: `${fighter.name} — palmarès ${fighter.record.wins}-${fighter.record.losses}-${fighter.record.draws}`,
-    description: `${fighter.name} (${fighter.country}) : ${fighter.weightClass}, ${fighter.record.wins} victoires dont ${fighter.record.ko} par KO.`,
+    title: t("title", {
+      name: fighter.name,
+      record: `${fighter.record.wins}-${fighter.record.losses}-${fighter.record.draws}`,
+    }),
+    description: t("description", {
+      name: fighter.name,
+      country: fighter.country,
+      weightClass: fighter.weightClass,
+      wins: fighter.record.wins,
+      ko: fighter.record.ko,
+    }),
     alternates: { canonical: `/boxeurs/${slug}` },
   };
 }
@@ -48,6 +60,9 @@ function statTile(
 }
 
 export default async function FighterPage({ params }: PageProps) {
+  const t = await getTranslations("boxeurs");
+  const tMeta = await getTranslations("meta.boxeur");
+  const locale = toLocale(await getLocale());
   const { slug } = await params;
   const { fighter, source } = await getBoxeur(slug);
   if (!fighter) notFound();
@@ -75,12 +90,21 @@ export default async function FighterPage({ params }: PageProps) {
     "@type": "Person",
     name: fighter.name,
     alternateName: fighter.nickname,
-    jobTitle: "Boxeur professionnel",
-    nationality: { "@type": "Country", name: fighter.country },
+    jobTitle: t("proFighter"),
+    nationality: { "@type": "Country", name: countryLabel(fighter.country, locale) },
     height: { "@type": "QuantitativeValue", value: fighter.heightCm, unitCode: "CMT" },
     url: `${SITE_URL}/boxeurs/${fighter.slug}`,
-    description: `${fighter.name} (${fighter.country}) : ${fighter.weightClass}, ${fighter.record.wins} victoires dont ${fighter.record.ko} par KO.`,
-    knowsAbout: [fighter.weightClass, ...fighter.titles],
+    description: tMeta("description", {
+      name: fighter.name,
+      country: countryLabel(fighter.country, locale),
+      weightClass: weightClassLabel(fighter.weightClass, locale),
+      wins: fighter.record.wins,
+      ko: fighter.record.ko,
+    }),
+    knowsAbout: [
+      weightClassLabel(fighter.weightClass, locale),
+      ...fighter.titles.map((title) => titleLabel(title, locale)),
+    ],
   };
 
   return (
@@ -90,7 +114,7 @@ export default async function FighterPage({ params }: PageProps) {
         href="/boxeurs"
         className="mb-8 inline-flex items-center gap-2 text-sm text-mist transition-colors hover:text-neon"
       >
-        <ArrowLeft size={16} aria-hidden /> Retour au répertoire
+        <ArrowLeft size={16} aria-hidden /> {t("backToDirectory")}
       </Link>
 
       {/* ── Hero ─────────────────────────────────────────── */}
@@ -125,10 +149,10 @@ export default async function FighterPage({ params }: PageProps) {
               )}
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
                 <span className="rounded-full border border-line bg-ink/60 px-3 py-1 text-xs text-mist">
-                  {fighter.flag} {fighter.country}
+                  {fighter.flag} {countryLabel(fighter.country, locale)}
                 </span>
                 <span className="rounded-full border border-neon/50 bg-neon/10 px-3 py-1 text-xs font-semibold text-neon-soft">
-                  {fighter.weightClass}
+                  {weightClassLabel(fighter.weightClass, locale)}
                 </span>
                 {fighter.promoter && (
                   <span className="rounded-full border border-line bg-ink/60 px-3 py-1 text-xs text-mist">
@@ -142,19 +166,19 @@ export default async function FighterPage({ params }: PageProps) {
                     rel="noopener noreferrer"
                     className="rounded-full border border-line bg-ink/60 px-3 py-1 text-xs text-mist transition-colors hover:border-gold/60 hover:text-gold"
                   >
-                    Voir sur BoxRec ↗
+                    {t("viewOnBoxRec")} ↗
                   </a>
                 )}
               </div>
 
               {fighter.titles.length > 0 && (
                 <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5 sm:justify-start">
-                  {fighter.titles.map((t) => (
+                  {fighter.titles.map((title) => (
                     <span
-                      key={t}
+                      key={title}
                       className="inline-flex items-center gap-1 rounded-full bg-gold/10 px-2.5 py-1 text-[11px] font-semibold text-gold ring-1 ring-gold/30"
                     >
-                      <Crown size={11} aria-hidden /> {t}
+                      <Crown size={11} aria-hidden /> {titleLabel(title, locale)}
                     </span>
                   ))}
                 </div>
@@ -169,17 +193,12 @@ export default async function FighterPage({ params }: PageProps) {
         <Reveal delay={0.05}>
           <section className="h-full rounded-2xl border border-line/60 bg-panel p-6 panel-glow">
             <h2 className="mb-5 font-display text-sm uppercase tracking-[0.3em] text-fog">
-              Palmarès
+              {t("palmares")}
             </h2>
             {fighter.record.wins + fighter.record.losses + fighter.record.draws === 0 ? (
               <div className="rounded-xl bg-panel-2 p-6 text-center">
-                <p className="text-sm text-mist">
-                  Palmarès non publié pour l’instant.
-                </p>
-                <p className="mt-1 text-xs text-fog">
-                  La source de données fournira le palmarès complet dès qu’il
-                  sera disponible.
-                </p>
+                <p className="text-sm text-mist">{t("recordNotPublished")}</p>
+                <p className="mt-1 text-xs text-fog">{t("recordNotPublishedText")}</p>
               </div>
             ) : (
               <>
@@ -191,7 +210,7 @@ export default async function FighterPage({ params }: PageProps) {
                   <div className="rounded-xl bg-panel-2 p-4 text-center">
                     <p className="font-display text-3xl text-gold text-glow-gold">{ko}%</p>
                     <p className="mt-1 text-[10px] uppercase tracking-wider text-fog">
-                      Victoires par KO
+                      {t("winsByKo")}
                     </p>
                   </div>
                   <div className="rounded-xl bg-panel-2 p-4 text-center">
@@ -199,7 +218,7 @@ export default async function FighterPage({ params }: PageProps) {
                       {fighter.record.wins + fighter.record.losses + fighter.record.draws}
                     </p>
                     <p className="mt-1 text-[10px] uppercase tracking-wider text-fog">
-                      Combats pro
+                      {t("proFights")}
                     </p>
                   </div>
                 </div>
@@ -212,15 +231,15 @@ export default async function FighterPage({ params }: PageProps) {
         <Reveal delay={0.1}>
           <section className="h-full rounded-2xl border border-line/60 bg-panel p-6 panel-glow">
             <h2 className="mb-5 font-display text-sm uppercase tracking-[0.3em] text-fog">
-              Fiche technique
+              {t("techSheet")}
             </h2>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {statTile(<Ruler size={16} aria-hidden />, "Taille", `${fighter.heightCm} cm`, 0.05)}
-              {statTile(<Scale size={16} aria-hidden />, "Allonge", fighter.reachCm > 0 ? `${fighter.reachCm} cm` : "—", 0.1)}
-              {statTile(<Swords size={16} aria-hidden />, "Garde", fighter.stance, 0.15)}
-              {statTile(<Calendar size={16} aria-hidden />, "Âge", `${fighter.age} ans`, 0.2)}
-              {statTile(<Calendar size={16} aria-hidden />, "Début pro", String(fighter.debutYear), 0.25)}
-              {statTile(<Flag size={16} aria-hidden />, "Nationalité", fighter.country, 0.3)}
+              {statTile(<Ruler size={16} aria-hidden />, t("height"), `${fighter.heightCm} cm`, 0.05)}
+              {statTile(<Scale size={16} aria-hidden />, t("reach"), fighter.reachCm > 0 ? `${fighter.reachCm} cm` : "—", 0.1)}
+              {statTile(<Swords size={16} aria-hidden />, t("stance"), fighter.stance, 0.15)}
+              {statTile(<Calendar size={16} aria-hidden />, t("age"), `${fighter.age} ans`, 0.2)}
+              {statTile(<Calendar size={16} aria-hidden />, t("debut"), String(fighter.debutYear), 0.25)}
+              {statTile(<Flag size={16} aria-hidden />, t("nationality"), countryLabel(fighter.country, locale), 0.3)}
             </div>
             {fighter.bio && (
               <p className="mt-6 border-t border-line-soft pt-5 text-sm leading-relaxed text-mist">
@@ -235,12 +254,12 @@ export default async function FighterPage({ params }: PageProps) {
       {(recentFights.length > 0 || upcomingFights.length > 0) && (
         <section className="mt-12">
           <h2 className="mb-6 font-display text-2xl uppercase tracking-wide text-snow">
-            Sur le ring
+            {t("onTheRing")}
           </h2>
           {upcomingFights.length > 0 && (
             <div className="mb-8">
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-gold">
-                À venir
+                {t("upcoming")}
               </p>
               <div className="grid gap-4 sm:grid-cols-2">
                 {upcomingFights.map((fight, i) => (
@@ -253,8 +272,8 @@ export default async function FighterPage({ params }: PageProps) {
             <div>
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-fog">
                 {career.fights.length > 0
-                  ? `Carrière (${recentFights.length} combats archivés)`
-                  : "Derniers résultats"}
+                  ? t("career", { count: recentFights.length })
+                  : t("recentResults")}
               </p>
               <div className="grid gap-4 sm:grid-cols-2">
                 {recentFights.map((fight, i) => (
@@ -267,7 +286,7 @@ export default async function FighterPage({ params }: PageProps) {
       )}
 
       <p className="mt-10 text-center text-[11px] text-fog">
-        Données : {source} · les palmarès sans clé API sont des données de démo
+        {t("dataNote", { source })}
       </p>
     </div>
   );

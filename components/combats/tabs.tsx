@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
 import type { Fight } from "@/lib/data/types";
@@ -28,6 +29,7 @@ interface TabsProps {
 
 /** Onglets avec indicateur animé + filtres par organisation et recherche texte. */
 export function FightTabs({ featured, upcoming, recent }: TabsProps) {
+  const t = useTranslations("fights");
   const [tab, setTab] = useState<"upcoming" | "recent">("upcoming");
   const [orgFilter, setOrgFilter] = useState("all");
   const [q, setQ] = useState("");
@@ -71,9 +73,12 @@ export function FightTabs({ featured, upcoming, recent }: TabsProps) {
   const tabs = [
     {
       key: "upcoming" as const,
-      label: `À venir (${filteredFeatured.length + filteredUpcoming.length})`,
+      label: t("tabUpcoming", { count: filteredFeatured.length + filteredUpcoming.length }),
     },
-    { key: "recent" as const, label: `Résultats récents (${filteredRecent.length})` },
+    {
+      key: "recent" as const,
+      label: t("tabRecent", { count: filteredRecent.length }),
+    },
   ];
 
   const fights = tab === "upcoming" ? filteredUpcoming : filteredRecent;
@@ -121,7 +126,7 @@ export function FightTabs({ featured, upcoming, recent }: TabsProps) {
                   : "border-line bg-ink/60 text-mist hover:text-snow"
               )}
             >
-              Toutes
+              {t("orgAll")}
             </button>
             {orgs.map((org) => (
               <button
@@ -144,7 +149,7 @@ export function FightTabs({ featured, upcoming, recent }: TabsProps) {
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Rechercher un boxeur…"
+              placeholder={t("searchPlaceholder")}
               className="w-40 bg-transparent text-snow placeholder:text-fog focus:outline-none sm:w-56"
             />
           </label>
@@ -156,7 +161,7 @@ export function FightTabs({ featured, upcoming, recent }: TabsProps) {
           {tab === "upcoming" && filteredFeatured.length > 0 && (
             <section className="mb-10">
               <p className="mb-4 flex items-center gap-2 font-display text-xs uppercase tracking-[0.3em] text-gold">
-                <span aria-hidden>🏆</span> Les affiches du moment
+                <span aria-hidden>🏆</span> {t("featuredTitle")}
               </p>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {filteredFeatured.map((fight, i) => (
@@ -170,7 +175,7 @@ export function FightTabs({ featured, upcoming, recent }: TabsProps) {
             <>
               {tab === "upcoming" && filteredFeatured.length > 0 && (
                 <p className="mb-4 font-display text-xs uppercase tracking-[0.3em] text-fog">
-                  Toutes les affiches
+                  {t("allFights")}
                 </p>
               )}
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -181,13 +186,11 @@ export function FightTabs({ featured, upcoming, recent }: TabsProps) {
             </>
           ) : hasActiveFilter ? (
             <p className="rounded-2xl border border-dashed border-line bg-panel/50 px-6 py-14 text-center text-sm text-mist">
-              Aucun combat ne correspond à ces filtres.
+              {t("noMatch")}
             </p>
           ) : (
             <p className="rounded-2xl border border-dashed border-line bg-panel/50 px-6 py-14 text-center text-sm text-mist">
-              {tab === "upcoming"
-                ? "Aucun combat pour le moment."
-                : "Aucun résultat pour le moment."}
+              {tab === "upcoming" ? t("noneUpcoming") : t("noneRecent")}
             </p>
           )}
         </motion.div>

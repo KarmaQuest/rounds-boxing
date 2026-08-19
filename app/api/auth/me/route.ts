@@ -6,7 +6,7 @@ import { jsonResponse } from "@/lib/api";
 export async function GET(request: NextRequest) {
   const user = await getCurrentUser(request);
   if (!user) {
-    return jsonResponse({ error: "Non connecté" }, { status: 401, cache: "no-store" });
+    return jsonResponse({ error: "Non connecté", errorCode: "notConnected" }, { status: 401, cache: "no-store" });
   }
   return jsonResponse({ user: publicUser(user) }, { cache: "no-store" });
 }

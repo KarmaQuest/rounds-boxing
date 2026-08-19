@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Loader2, Lock, Mail } from "lucide-react";
+import { isAuthErrorCode } from "@/lib/i18n/api-errors";
 
 interface AuthFormProps {
   mode: "login" | "register";
@@ -15,6 +17,7 @@ interface AuthFormProps {
  * paramètre `next` (défini par le proxy) ou le dashboard.
  */
 export function AuthForm({ mode }: AuthFormProps) {
+  const t = useTranslations("auth");
   const router = useRouter();
   const sp = useSearchParams();
   const [email, setEmail] = useState("");
@@ -36,7 +39,12 @@ export function AuthForm({ mode }: AuthFormProps) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data.error ?? "Une erreur est survenue.");
+        const code = data.errorCode;
+        setError(
+          isAuthErrorCode(code)
+            ? t(`errors.${code}`)
+            : (data.error ?? t("genericError"))
+        );
         setLoading(false);
         return;
       }
@@ -44,7 +52,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       router.push(next && next.startsWith("/") ? next : "/dashboard");
       router.refresh();
     } catch {
-      setError("Problème de connexion. Réessaie.");
+      setError(t("networkError"));
       setLoading(false);
     }
   }
@@ -59,7 +67,7 @@ export function AuthForm({ mode }: AuthFormProps) {
     >
       <div className="space-y-1.5">
         <label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-fog">
-          Email
+          {t("email")}
         </label>
         <div className="relative">
           <Mail size={16} aria-hidden className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-fog" />
@@ -78,7 +86,7 @@ export function AuthForm({ mode }: AuthFormProps) {
 
       <div className="space-y-1.5">
         <label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-fog">
-          Mot de passe
+          {t("password")}
         </label>
         <div className="relative">
           <Lock size={16} aria-hidden className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-fog" />
@@ -90,7 +98,7 @@ export function AuthForm({ mode }: AuthFormProps) {
             autoComplete={isLogin ? "current-password" : "new-password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="8 caractères minimum"
+            placeholder={t("passwordMin")}
             className="h-11 w-full rounded-full border border-line bg-ink/60 pl-10 pr-4 text-sm text-snow placeholder:text-fog focus:border-neon/70 focus:outline-none focus:ring-2 focus:ring-neon/20"
           />
         </div>
@@ -114,28 +122,28 @@ export function AuthForm({ mode }: AuthFormProps) {
       >
         {loading ? (
           <span className="inline-flex items-center gap-2">
-            <Loader2 size={16} aria-hidden className="animate-spin" /> Un instant…
+            <Loader2 size={16} aria-hidden className="animate-spin" /> {t("unInstant")}
           </span>
         ) : isLogin ? (
-          "Se connecter"
+          t("login")
         ) : (
-          "Créer mon compte"
+          t("register")
         )}
       </button>
 
       <p className="text-center text-sm text-mist">
         {isLogin ? (
           <>
-            Pas encore de compte ?{" "}
+            {t("noAccount")}{" "}
             <Link href="/inscription" className="font-medium text-neon-soft hover:underline">
-              S’inscrire
+              {t("signup")}
             </Link>
           </>
         ) : (
           <>
-            Déjà inscrit ?{" "}
+            {t("already")}{" "}
             <Link href="/connexion" className="font-medium text-neon-soft hover:underline">
-              Se connecter
+              {t("login")}
             </Link>
           </>
         )}

@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AccountChip } from "@/components/auth/account-chip";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 /**
  * Menu style Rive : barre minimale (logo + burger), burger qui se
@@ -12,18 +14,8 @@ import { AccountChip } from "@/components/auth/account-chip";
  * cascadent un par un. Scroll verrouillé tant que le menu est ouvert.
  */
 
-const PRIMARY_LINKS = [
-  { href: "/", label: "Accueil" },
-  { href: "/boxeurs", label: "Boxeurs" },
-  { href: "/combats", label: "Combats" },
-  { href: "/comparateur", label: "Comparateur" },
-  { href: "/actualite", label: "Actualités" },
-];
-
-const SECONDARY_LINKS = [
-  { href: "/debug", label: "État des sources" },
-  { href: "/dashboard", label: "Mon compte" },
-];
+const PRIMARY_KEYS = ["home", "boxeurs", "combats", "comparateur", "actualite"] as const;
+const SECONDARY_KEYS = ["debug", "account"] as const;
 
 function isActive(pathname: string, href: string): boolean {
   if (href === "/") return pathname === "/";
@@ -32,8 +24,22 @@ function isActive(pathname: string, href: string): boolean {
 }
 
 export function Navbar() {
+  const t = useTranslations("nav");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  const primaryLinks = PRIMARY_KEYS.map((key) => ({
+    key,
+    href:
+      key === "home" ? "/" : `/${key === "actualite" ? "actualite" : key}`,
+    label: t(key),
+  }));
+
+  const secondaryLinks = SECONDARY_KEYS.map((key) => ({
+    key,
+    href: key === "debug" ? "/debug" : "/dashboard",
+    label: t(key),
+  }));
 
   // verrouille le scroll tant que le menu est ouvert
   useEffect(() => {
@@ -75,6 +81,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <AccountChip />
+          <LanguageSwitcher />
 
           {/* Burger animé (3 traits → croix) */}
           <button
@@ -82,7 +89,7 @@ export function Navbar() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="menu-principal"
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-label={open ? t("closeMenu") : t("openMenu")}
             className="press group relative flex h-11 w-11 items-center justify-center rounded-full border border-line bg-panel transition-colors hover:border-neon/50"
           >
             <span className="relative block h-3.5 w-5">
@@ -132,7 +139,7 @@ export function Navbar() {
 
             <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 py-10 sm:px-10">
               <ul className="space-y-1">
-                {PRIMARY_LINKS.map((link, i) => {
+                {primaryLinks.map((link, i) => {
                   const active = isActive(pathname, link.href);
                   return (
                     <li key={link.href} className="overflow-hidden">
@@ -174,7 +181,7 @@ export function Navbar() {
                 transition={{ delay: 0.5, duration: 0.4 }}
                 className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-line/60 pt-6 text-sm text-mist"
               >
-                {SECONDARY_LINKS.map((link) => (
+                {secondaryLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
@@ -195,7 +202,7 @@ export function Navbar() {
               transition={{ delay: 0.65 }}
               className="border-t border-line/40 px-6 py-4 text-center text-[11px] uppercase tracking-[0.3em] text-fog sm:px-10"
             >
-              Records &amp; légendes de la boxe
+              {t("tagline")}
             </motion.p>
           </motion.div>
         )}

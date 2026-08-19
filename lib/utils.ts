@@ -3,10 +3,14 @@ export function cn(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(" ");
 }
 
-/** Formate une date ISO en français. */
-export function formatDate(iso: string, opts: Intl.DateTimeFormatOptions = {}): string {
+/** Formate une date ISO dans la locale donnée (défaut : français). */
+export function formatDate(
+  iso: string,
+  opts: Intl.DateTimeFormatOptions = {},
+  locale: string = "fr-FR"
+): string {
   try {
-    return new Date(iso).toLocaleDateString("fr-FR", {
+    return new Date(iso).toLocaleDateString(locale, {
       day: "numeric",
       month: "long",
       year: "numeric",

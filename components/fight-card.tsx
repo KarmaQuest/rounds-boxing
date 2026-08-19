@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { CalendarDays, MapPin } from "lucide-react";
 import type { Fight } from "@/lib/data/types";
 import { formatDate, formatOdds } from "@/lib/utils";
 import { slugify } from "@/lib/data/utils";
+import { methodLabel, toLocale, weightClassLabel } from "@/lib/i18n/data";
 import { cn } from "@/lib/utils";
 
 function FighterSide({
@@ -14,12 +16,14 @@ function FighterSide({
   flag,
   odds,
   isWinner,
+  winnerLabel,
 }: {
   side: "a" | "b";
   name: string;
   flag?: string;
   odds?: number;
   isWinner?: boolean;
+  winnerLabel?: string;
 }) {
   return (
     <div className="flex flex-1 flex-col items-center gap-2 text-center">
@@ -45,7 +49,7 @@ function FighterSide({
       )}
       {isWinner && (
         <span className="text-[10px] font-semibold uppercase tracking-wider text-gold">
-          Vainqueur
+          {winnerLabel}
         </span>
       )}
     </div>
@@ -64,12 +68,12 @@ const ORG_LABELS: Record<string, string> = {
 };
 
 /** Badge discret indiquant l'organisation officielle qui a publié le résultat. */
-function OrgBadge({ source }: { source?: string }) {
+function OrgBadge({ source, title }: { source?: string; title?: string }) {
   const label = source ? ORG_LABELS[source] : undefined;
   if (!label) return null;
   return (
     <span
-      title="Résultat publié par l'organisation"
+      title={title}
       className="rounded-full border border-line/60 bg-panel-2 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-mist"
     >
       {label}
@@ -85,6 +89,8 @@ interface FightCardProps {
 /** Carte combat : deux boxeurs face à face, cotes ou résultat.
  *  Cliquable → comparateur des deux boxeurs (tale of the tape). */
 export function FightCard({ fight, index = 0 }: FightCardProps) {
+  const t = useTranslations("fights");
+  const locale = toLocale(useLocale());
   const [a, b] = fight.fighters;
   const upcoming = fight.status === "upcoming";
   const winnerIdx = fight.outcome?.winnerIndex;
@@ -120,6 +126,7 @@ export function FightCard({ fight, index = 0 }: FightCardProps) {
             flag={a.flag}
             odds={upcoming ? fight.odds?.[0] : undefined}
             isWinner={!upcoming && winnerIdx === 0}
+            winnerLabel={t("winner")}
           />
 
           <div className="flex flex-col items-center gap-1 px-1">
@@ -128,7 +135,7 @@ export function FightCard({ fight, index = 0 }: FightCardProps) {
             </span>
             {!upcoming && fight.outcome && (
               <span className="text-center text-[10px] font-bold uppercase leading-tight text-snow">
-                {fight.outcome.method}
+                {methodLabel(fight.outcome.method, locale)}
                 {fight.outcome.round ? ` R${fight.outcome.round}` : ""}
               </span>
             )}
@@ -140,20 +147,21 @@ export function FightCard({ fight, index = 0 }: FightCardProps) {
             flag={b.flag}
             odds={upcoming ? fight.odds?.[1] : undefined}
             isWinner={!upcoming && winnerIdx === 1}
+            winnerLabel={t("winner")}
           />
         </div>
 
         <div className="relative mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-fog">
           <span className="flex items-center gap-1">
-            <CalendarDays size={12} aria-hidden /> {formatDate(fight.date)}
+            <CalendarDays size={12} aria-hidden /> {formatDate(fight.date, {}, locale === "en" ? "en-US" : "fr-FR")}
           </span>
           {fight.location && (
             <span className="flex items-center gap-1">
               <MapPin size={12} aria-hidden /> {fight.location}
             </span>
           )}
-          {fight.weightClass && <span>{fight.weightClass}</span>}
-          <OrgBadge source={fight.source} />
+          {fight.weightClass && <span>{weightClassLabel(fight.weightClass, locale)}</span>}
+          <OrgBadge source={fight.source} title={t("orgPublished")} />
         </div>
       </Link>
     </motion.div>

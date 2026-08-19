@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Database, ShieldCheck, Zap } from "lucide-react";
 import { searchBoxeurs, getCombatsAvenir, getCombatsRecents } from "@/lib/data";
 import { JsonLd } from "@/components/json-ld";
@@ -11,6 +12,8 @@ import { FightCard } from "@/components/fight-card";
 import { NewsSection } from "@/components/home/news";
 
 export default async function Home() {
+  const t = await getTranslations("home");
+  const locale = await getLocale();
   const [{ fighters }, { fights: upcoming }, { fights: recents }] =
     await Promise.all([
       searchBoxeurs({ limit: 300 }),
@@ -23,10 +26,10 @@ export default async function Home() {
   const titles = fighters.reduce((n, f) => n + f.titles.length, 0);
 
   const stats = [
-    { label: "Boxeurs référencés", value: fighters.length, suffix: "" },
-    { label: "Combats suivis", value: upcoming.length + recents.length, suffix: "" },
-    { label: "Pays représentés", value: countries, suffix: "" },
-    { label: "Ceintures répertoriées", value: titles, suffix: "" },
+    { label: t("statsBoxeurs"), value: fighters.length, suffix: "" },
+    { label: t("statsCombats"), value: upcoming.length + recents.length, suffix: "" },
+    { label: t("statsPays"), value: countries, suffix: "" },
+    { label: t("statsCeintures"), value: titles, suffix: "" },
   ];
 
   return (
@@ -37,9 +40,8 @@ export default async function Home() {
           "@type": "WebSite",
           name: "ROUNDS",
           url: SITE_URL,
-          inLanguage: "fr-FR",
-          description:
-            "Palmarès, profils et combats des plus grands boxeurs du monde.",
+          inLanguage: locale === "en" ? "en-US" : "fr-FR",
+          description: t("ldDescription"),
         }}
       />
       <Hero />
@@ -66,17 +68,17 @@ export default async function Home() {
           <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.35em] text-gold">
-                Pound for pound
+                {t("p4p")}
               </p>
               <h2 className="mt-2 font-display text-4xl uppercase tracking-wide text-snow sm:text-5xl">
-                Les meilleurs du <span className="text-neon text-glow-red">monde</span>
+                {t("bestWorld")}
               </h2>
             </div>
             <Link
               href="/boxeurs"
               className="text-sm font-medium text-mist underline-offset-4 transition-colors hover:text-neon hover:underline"
             >
-              Voir tous les boxeurs →
+              {t("viewAllBoxeurs")} →
             </Link>
           </div>
         </Reveal>
@@ -97,17 +99,17 @@ export default async function Home() {
             <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neon-soft">
-                  Prochainement
+                  {t("comingSoon")}
                 </p>
                 <h2 className="mt-2 font-display text-4xl uppercase tracking-wide text-snow sm:text-5xl">
-                  Les grands <span className="text-gold text-glow-gold">combats</span>
+                  {t("bigFights")}
                 </h2>
               </div>
               <Link
                 href="/combats"
                 className="text-sm font-medium text-mist underline-offset-4 transition-colors hover:text-neon hover:underline"
               >
-                Tous les combats →
+                {t("allFights")} →
               </Link>
             </div>
           </Reveal>
@@ -131,29 +133,26 @@ export default async function Home() {
           <div className="rounded-3xl border border-line/60 bg-panel p-8 panel-glow sm:p-10">
             <div className="mb-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="font-display text-3xl uppercase tracking-wide text-snow">
-                Des données <span className="text-neon">multi-sources</span>
+                {t("multisource")}
               </h2>
-              <p className="max-w-md text-sm text-mist">
-                ROUNDS agrège plusieurs APIs de boxe avec bascule automatique en
-                cas de limite atteinte — et met tout en cache pour rester rapide.
-              </p>
+              <p className="max-w-md text-sm text-mist">{t("multisourceText")}</p>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
               {[
                 {
                   icon: <Database size={18} aria-hidden />,
-                  title: "Big Balls Sports Data",
-                  desc: "12 000+ profils de boxeurs avec fiches techniques complètes.",
+                  title: t("sourceBigballsTitle"),
+                  desc: t("sourceBigballsDesc"),
                 },
                 {
                   icon: <ShieldCheck size={18} aria-hidden />,
-                  title: "TheSportsDB",
-                  desc: "Base communautaire gratuite : boxeurs, événements et visuels.",
+                  title: t("sourceThesportsdbTitle"),
+                  desc: t("sourceThesportsdbDesc"),
                 },
                 {
                   icon: <Zap size={18} aria-hidden />,
-                  title: "The Odds API",
-                  desc: "Combats à venir et cotes, actualisées toutes les 10 minutes.",
+                  title: t("sourceOddsTitle"),
+                  desc: t("sourceOddsDesc"),
                 },
               ].map((p, i) => (
                 <Reveal key={p.title} delay={i * 0.08}>
