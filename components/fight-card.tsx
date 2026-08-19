@@ -65,6 +65,7 @@ const ORG_LABELS: Record<string, string> = {
   csac: "CSAC",
   nsac: "NSAC",
   ffboxe: "FFBoxe",
+  "ffboxe-amateur": "FFBoxe Amateur",
 };
 
 /** Badge discret indiquant l'organisation officielle qui a publié le résultat. */
@@ -162,6 +163,11 @@ export function FightCard({ fight, index = 0 }: FightCardProps) {
           )}
           {fight.weightClass && <span>{weightClassLabel(fight.weightClass, locale)}</span>}
           <OrgBadge source={fight.source} title={t("orgPublished")} />
+          {fight.amateur && (
+            <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+              Amateur
+            </span>
+          )}
         </div>
       </Link>
     </motion.div>
