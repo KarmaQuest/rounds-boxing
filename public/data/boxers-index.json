@@ -1,22 +1,27 @@
 {
-  "generated_at": "2026-08-18T15:39:25Z",
+  "generated_at": "2026-08-19T04:09:05Z",
   "sources": {
+    "bea": {
+      "name": "bea",
+      "date_last_sync": "2026-08-19T04:09:05Z",
+      "total_boxers": 154
+    },
     "bigballs": {
       "name": "bigballs",
-      "date_last_sync": "2026-08-18T15:39:25Z",
+      "date_last_sync": "2026-08-19T04:09:05Z",
       "total_boxers": 12163
     },
     "merged": {
       "name": "merged",
-      "date_last_sync": "2026-08-18T15:39:25Z",
-      "total_boxers": 22188
+      "date_last_sync": "2026-08-19T04:09:05Z",
+      "total_boxers": 22340
     },
     "wikidata": {
       "name": "wikidata",
-      "date_last_sync": "2026-08-18T15:39:25Z",
+      "date_last_sync": "2026-08-19T04:09:05Z",
       "total_boxers": 19586
     }
   },
-  "total_boxers": 53937,
-  "total_unique": 22606
+  "total_boxers": 54243,
+  "total_unique": 22760
 }
