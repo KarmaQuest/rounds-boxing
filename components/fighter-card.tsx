@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Crown, TrendingUp } from "lucide-react";
 import type { Fighter } from "@/lib/data/types";
 import { koPct } from "@/lib/data/utils";
-import { countryLabel, toLocale, weightClassLabel } from "@/lib/i18n/data";
+import { countryLabel, weightClassLabel } from "@/lib/i18n/data";
+import { useFormattedLocale } from "@/lib/hooks";
 import { Avatar } from "./avatar";
 import { RecordBar } from "./record-bar";
 
@@ -19,7 +20,7 @@ interface FighterCardProps {
 export function FighterCard({ fighter, index = 0 }: FighterCardProps) {
   const t = useTranslations("common");
   const tBoxeurs = useTranslations("boxeurs");
-  const locale = toLocale(useLocale());
+  const locale = useFormattedLocale();
   const ko = koPct(fighter.record);
   const total = fighter.record.wins + fighter.record.losses + fighter.record.draws;
 
@@ -33,7 +34,7 @@ export function FighterCard({ fighter, index = 0 }: FighterCardProps) {
     >
       <Link
         href={`/boxeurs/${fighter.slug}`}
-        className="group relative block overflow-hidden rounded-2xl border border-line/60 bg-panel p-5 transition-all duration-300 panel-glow hover:-translate-y-1 hover:border-neon/60 hover:shadow-neon"
+        className="group relative flex h-full flex-col overflow-hidden card p-5 panel-glow transition-all duration-300 hover:-translate-y-1 hover:border-neon/60 hover:shadow-neon"
       >
         {/* halo neon au survol */}
         <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-neon/0 blur-3xl transition-all duration-500 group-hover:bg-neon/20" />
@@ -57,32 +58,36 @@ export function FighterCard({ fighter, index = 0 }: FighterCardProps) {
             <h3 className="truncate font-display text-lg uppercase leading-tight tracking-wide text-snow">
               {fighter.name}
             </h3>
-            {fighter.nickname && (
-              <p className="truncate text-xs italic text-mist">&laquo; {fighter.nickname} &raquo;</p>
-            )}
+            {/* Placeholder fixe quand pas de nickname → hauteur stable */}
+            <p className="truncate text-xs italic text-mist min-h-[1rem]">
+              {fighter.nickname ? `« ${fighter.nickname} »` : "\u00A0"}
+            </p>
             <p className="mt-1 flex items-center gap-1.5 text-xs text-fog">
               <span>{fighter.flag}</span>
               <span>{countryLabel(fighter.country, locale)}</span>
               <span className="text-line">&bull;</span>
               <span>{weightClassLabel(fighter.weightClass, locale)}</span>
               {fighter.gender === "F" && (
-                <span className="text-pink-400">&female; Femme</span>
+                <span className="text-pink-400">♀ Femme</span>
               )}
               {fighter.gender === "M" && (
-                <span className="text-blue-400">&male; Homme</span>
+                <span className="text-blue-400">♂ Homme</span>
               )}
             </p>
           </div>
         </div>
 
+        {/* Espace flexible : pousse le palmarès en bas */}
+        <div className="flex-1" />
+
         {total === 0 ? (
-          <div className="mt-5">
+          <div className="mt-4">
             <span className="inline-flex items-center rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-gold">
               {tBoxeurs("recordUpcoming")}
             </span>
           </div>
         ) : (
-          <div className="mt-5">
+          <div className="mt-4">
             <div className="mb-2 flex items-baseline justify-between">
               <p className="font-display text-2xl tracking-wide text-snow">
                 {fighter.record.wins}

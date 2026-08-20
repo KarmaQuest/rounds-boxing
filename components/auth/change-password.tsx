@@ -56,7 +56,7 @@ export function ChangePasswordForm() {
           autoComplete="current-password"
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
-          className="h-11 w-full rounded-full border border-line bg-ink/60 px-4 text-sm text-snow placeholder:text-fog focus:border-neon/70 focus:outline-none focus:ring-2 focus:ring-neon/20"
+          className="input-field h-11 w-full"
         />
       </div>
       <div className="space-y-1.5">
@@ -71,7 +71,7 @@ export function ChangePasswordForm() {
           autoComplete="new-password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          className="h-11 w-full rounded-full border border-line bg-ink/60 px-4 text-sm text-snow placeholder:text-fog focus:border-neon/70 focus:outline-none focus:ring-2 focus:ring-neon/20"
+          className="input-field h-11 w-full"
         />
       </div>
 
@@ -98,7 +98,7 @@ export function ChangePasswordForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="sheen relative w-full overflow-hidden rounded-full border border-neon/60 px-6 py-2.5 text-sm font-medium text-neon-soft transition-all hover:bg-neon/10 disabled:opacity-60"
+        className="sheen relative w-full overflow-hidden btn-neon"
       >
         {status === "loading" ? (
           <span className="inline-flex items-center gap-2">

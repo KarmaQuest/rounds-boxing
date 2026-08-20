@@ -7,6 +7,52 @@ import { ChevronDown } from "lucide-react";
 
 const LINE_1 = "ROUNDS".split("");
 
+/** Gant de boxe SVG inline (style outlined). */
+function BoxingGlove({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden
+    >
+      {/* Main glove body */}
+      <path
+        d="M18 22c0-8 6-14 14-14s14 6 14 14v6c0 4-2 7-5 9l-2 14c-1 5-5 9-10 9h-4c-5 0-9-4-10-9l-2-14c-3-2-5-5-5-9v-6z"
+        fill="var(--color-neon)"
+        opacity="0.9"
+      />
+      {/* Thumb */}
+      <path
+        d="M18 26c-4 0-7-3-7-7s3-7 7-7"
+        stroke="var(--color-neon)"
+        strokeWidth="3"
+        strokeLinecap="round"
+        opacity="0.7"
+      />
+      {/* Lacing lines */}
+      <path
+        d="M26 12v12M32 10v14M38 12v12"
+        stroke="var(--color-ink)"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        opacity="0.3"
+      />
+      {/* Wrist */}
+      <rect
+        x="22"
+        y="52"
+        width="20"
+        height="6"
+        rx="3"
+        fill="var(--color-neon)"
+        opacity="0.6"
+      />
+    </svg>
+  );
+}
+
 /** Hero plein écran : anneaux néon animés + titre en cascade. */
 export function Hero() {
   const t = useTranslations("home");
@@ -45,7 +91,7 @@ export function Hero() {
         </motion.p>
 
         <h1 className="font-display uppercase leading-[0.95] tracking-wide text-snow">
-          <span className="block overflow-hidden text-6xl sm:text-8xl lg:text-9xl">
+          <span className="flex items-center justify-center overflow-hidden text-6xl sm:text-8xl lg:text-9xl">
             {LINE_1.map((l, i) => (
               <motion.span
                 key={i}
@@ -57,6 +103,14 @@ export function Hero() {
                 {l}
               </motion.span>
             ))}
+            <motion.span
+              className="ml-3 inline-block sm:ml-4"
+              initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ delay: 0.65, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <BoxingGlove className="h-[0.7em] w-[0.7em] sm:h-[0.8em] sm:w-[0.8em]" />
+            </motion.span>
           </span>
         </h1>
 

@@ -25,6 +25,9 @@ export async function GET(request: NextRequest) {
   const minWins = Number(sp.get("minWins") ?? 0);
   const minKoPct = Number(sp.get("minKoPct") ?? 0);
 
+  const gender = sp.get("gender") ?? "";
+  const amateur = sp.get("amateur") ?? "";
+
   const filters: FighterFilters = {
     q: sp.get("q")?.trim().slice(0, 100) || undefined,
     weightClass: (WEIGHT_CLASSES as readonly string[]).includes(weightClass)
@@ -34,6 +37,8 @@ export async function GET(request: NextRequest) {
     minWins: Number.isFinite(minWins) && minWins > 0 ? Math.min(minWins, 999) : undefined,
     minKoPct: Number.isFinite(minKoPct) && minKoPct > 0 ? Math.min(minKoPct, 100) : undefined,
     sort: allowedSorts.includes(sort) ? (sort as FighterFilters["sort"]) : undefined,
+    gender: (gender === "M" || gender === "F") ? gender : undefined,
+    amateur: (amateur === "pro" || amateur === "amateur") ? amateur : undefined,
     offset: Number.isFinite(rawOffset) ? Math.min(Math.max(0, rawOffset), 100_000) : 0,
     limit: Number.isFinite(rawLimit) ? Math.min(Math.max(1, rawLimit), 500) : 300,
   };

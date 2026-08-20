@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { CalendarDays, MapPin } from "lucide-react";
 import type { Fight } from "@/lib/data/types";
 import { formatDate, formatOdds } from "@/lib/utils";
 import { slugify } from "@/lib/data/utils";
-import { methodLabel, toLocale, weightClassLabel } from "@/lib/i18n/data";
+import { methodLabel, weightClassLabel } from "@/lib/i18n/data";
+import { useFormattedLocale } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 function FighterSide({
@@ -91,7 +92,7 @@ interface FightCardProps {
  *  Cliquable → comparateur des deux boxeurs (tale of the tape). */
 export function FightCard({ fight, index = 0 }: FightCardProps) {
   const t = useTranslations("fights");
-  const locale = toLocale(useLocale());
+  const locale = useFormattedLocale();
   const [a, b] = fight.fighters;
   const upcoming = fight.status === "upcoming";
   const winnerIdx = fight.outcome?.winnerIndex;
@@ -107,7 +108,7 @@ export function FightCard({ fight, index = 0 }: FightCardProps) {
     >
       <Link
         href={compareHref}
-        className="group relative block overflow-hidden rounded-2xl border border-line/60 bg-panel p-6 transition-all duration-300 panel-glow hover:-translate-y-1 hover:border-gold/50 hover:shadow-gold"
+        className="group relative block overflow-hidden card p-6 transition-all duration-300 panel-glow hover:-translate-y-1 hover:border-gold/50 hover:shadow-gold"
       >
         {/* bandeau "VS" */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.04]">

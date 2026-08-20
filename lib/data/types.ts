@@ -109,6 +109,8 @@ export interface FighterFilters {
   minKoPct?: number;
   sort?: "name" | "wins" | "koPct" | "age" | "height" | "rank";
   amateur?: "all" | "pro" | "amateur";
+  /** genre : 'all' tous, 'M' hommes, 'F' femmes */
+  gender?: "all" | "M" | "F";
   /** pagination : nombre d'éléments à sauter (TASKS 2.1) */
   offset?: number;
   limit?: number;

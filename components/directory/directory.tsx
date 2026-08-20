@@ -2,13 +2,14 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2, SearchX } from "lucide-react";
 import type { Fighter } from "@/lib/data/types";
 import { applyFilters, fuzzyScore } from "@/lib/data/utils";
-import { toLocale, weightClassLabel } from "@/lib/i18n/data";
+import { weightClassLabel } from "@/lib/i18n/data";
+import { useFormattedLocale } from "@/lib/hooks";
 import { FighterCard } from "@/components/fighter-card";
 import { FighterGridSkeleton } from "@/components/skeleton";
 import {
@@ -45,11 +46,28 @@ async function fetchSearch(q: string): Promise<ApiResponse> {
   return res.json();
 }
 
+/**
+ * Recherche serveur avec filtres genre/amateur : interroge l'API pour
+ * obtenir TOUS les boxeurs correspondants (pas juste la page paginée).
+ */
+async function fetchFiltered(filters: {
+  gender?: string;
+  amateur?: string;
+}): Promise<ApiResponse> {
+  const params = new URLSearchParams({ limit: "500" });
+  if (filters.gender && filters.gender !== "all") params.set("gender", filters.gender);
+  if (filters.amateur && filters.amateur !== "all") params.set("amateur", filters.amateur);
+  const res = await fetch(`/api/boxeurs?${params}`);
+  if (!res.ok) throw new Error("Échec du filtrage");
+  return res.json();
+}
+
 /** Lit l'état initial des filtres depuis l'URL (valeurs validées). */
 function filtersFromUrl(sp: URLSearchParams): FilterState {
   const cat = sp.get("cat") ?? "";
   const tri = sp.get("tri") ?? "rank";
   const am = sp.get("am") ?? "all";
+  const g = sp.get("g") ?? "all";
   return {
     q: sp.get("q") ?? "",
     weightClass: isWeightClass(cat) ? cat : "",
@@ -58,6 +76,7 @@ function filtersFromUrl(sp: URLSearchParams): FilterState {
     minKoPct: Math.max(0, Number(sp.get("ko") ?? 0)),
     sort: isSortKey(tri) ? tri : "rank",
     amateur: (am === "pro" || am === "amateur") ? am : "all",
+    gender: (g === "M" || g === "F") ? g : "all",
   };
 }
 
@@ -68,7 +87,7 @@ function filtersFromUrl(sp: URLSearchParams): FilterState {
  */
 export function Directory() {
   const t = useTranslations("boxeurs");
-  const locale = toLocale(useLocale());
+  const locale = useFormattedLocale();
   const router = useRouter();
   const sp = useSearchParams();
   const [filters, setFilters] = useState<FilterState>(() => filtersFromUrl(sp));
@@ -91,6 +110,7 @@ export function Directory() {
     if (filters.minKoPct > 0) params.set("ko", String(filters.minKoPct));
     if (filters.sort !== "rank") params.set("tri", filters.sort);
     if (filters.amateur !== "all") params.set("am", filters.amateur);
+    if (filters.gender !== "all") params.set("g", filters.gender);
     const qs = params.toString();
     router.replace(qs ? `/boxeurs?${qs}` : "/boxeurs", { scroll: false });
   }, [filters, router]);
@@ -124,6 +144,8 @@ export function Directory() {
   // l'annuaire — bigballs + wikipedia + merged.json), sans attendre que le
   // boxeur soit dans la liste déjà chargée.
   const query = filters.q.trim();
+  const hasAdvancedFilter = filters.gender !== "all" || filters.amateur !== "all";
+
   const { data: searchData, isFetching: isSearching } = useQuery({
     queryKey: ["boxeurs-search", query],
     queryFn: () => fetchSearch(query),
@@ -132,10 +154,23 @@ export function Directory() {
     placeholderData: (prev) => prev, // garde les résultats précédents pendant qu'on tape
   });
 
+  // Quand genre ou amateur est sélectionné, interroger l'API pour
+  // charger TOUS les boxeurs correspondants (pas juste la page paginée).
+  const { data: filterData, isFetching: isFiltering } = useQuery({
+    queryKey: ["boxeurs-filter", filters.gender, filters.amateur],
+    queryFn: () => fetchFiltered({ gender: filters.gender, amateur: filters.amateur }),
+    enabled: hasAdvancedFilter && query.length === 0,
+    staleTime: 1000 * 60,
+    placeholderData: (prev) => prev,
+  });
+
   const filtered = useMemo(() => {
-    // recherche : résultats API ; sinon liste paginée déjà chargée
-    const base = query ? searchData?.fighters ?? [] : fighters;
-    if (!query) {
+    // recherche texte → résultats API texte
+    // filtre genre/amateur → résultats API filtrés
+    // sinon → liste paginée chargée
+    const useFilter = hasAdvancedFilter && query.length === 0 && filterData;
+    const base = query ? searchData?.fighters ?? [] : useFilter ? filterData.fighters : fighters;
+    if (!query && !useFilter) {
       return applyFilters(base, {
         weightClass: filters.weightClass || undefined,
         country: filters.country || undefined,
@@ -143,6 +178,7 @@ export function Directory() {
         minKoPct: filters.minKoPct || undefined,
         sort: filters.sort,
         amateur: filters.amateur,
+        gender: filters.gender,
       });
     }
     // mode recherche : les autres filtres s'appliquent, puis tri par
@@ -155,6 +191,7 @@ export function Directory() {
       minKoPct: filters.minKoPct || undefined,
       sort: "name",
       amateur: filters.amateur,
+      gender: filters.gender,
     });
     list.sort(
       (a, b) =>
@@ -162,7 +199,7 @@ export function Directory() {
         a.name.localeCompare(b.name)
     );
     return list;
-  }, [fighters, searchData, filters, query]);
+  }, [fighters, searchData, filterData, filters, query, hasAdvancedFilter]);
 
   const updateFilters = (patch: Partial<FilterState>) => {
     setFilters((prev) => ({ ...prev, ...patch }));
@@ -209,6 +246,10 @@ export function Directory() {
         <FighterGridSkeleton count={8} />
       )}
 
+      {isFiltering && hasAdvancedFilter && query.length === 0 && !filterData && (
+        <FighterGridSkeleton count={8} />
+      )}
+
       {isError && !isLoading && (
         <div className="rounded-2xl border border-loss/40 bg-loss/10 p-10 text-center text-mist">
           {t("error")}
@@ -219,14 +260,14 @@ export function Directory() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-line bg-panel/50 px-6 py-16 text-center"
+          className="flex flex-col items-center gap-3 card border-dashed bg-panel/50 px-6 py-16 text-center"
         >
           <SearchX size={40} aria-hidden className="text-fog" />
           <p className="font-display text-xl uppercase text-snow">{t("none")}</p>
           <p className="max-w-sm text-sm text-mist">{t("noneText")}</p>
           <button
             onClick={reset}
-            className="mt-2 rounded-full border border-neon/60 px-5 py-2 text-sm font-medium text-neon-soft transition-colors hover:bg-neon/10"
+            className="mt-2 btn-neon px-5 py-2"
           >
             {t("resetFilters")}
           </button>
@@ -236,7 +277,7 @@ export function Directory() {
       {!isLoading && !isError && filtered.length > 0 && (
         <motion.div
           layout
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((fighter, i) => (
@@ -246,14 +287,14 @@ export function Directory() {
         </motion.div>
       )}
 
-      {/* Charger plus (TASKS 2.1) — masqué en recherche : la recherche
-          serveur renvoie déjà tous les matchs d'un coup */}
-      {!query && !isLoading && !isError && hasNextPage && filtered.length > 0 && (
+      {/* Charger plus (TASKS 2.1) — masqué en recherche ou filtre avancé :
+          le serveur renvoie déjà tous les matchs d'un coup */}
+      {!query && !hasAdvancedFilter && !isLoading && !isError && hasNextPage && filtered.length > 0 && (
         <div className="flex justify-center pt-2">
           <button
             onClick={loadMore}
             disabled={isFetchingNextPage}
-            className="inline-flex items-center gap-2 rounded-full border border-neon/60 px-6 py-2.5 text-sm font-medium text-neon-soft transition-colors hover:bg-neon/10 disabled:opacity-60"
+            className="inline-flex items-center gap-2 btn-neon px-6 py-2.5"
           >
             {isFetchingNextPage && <Loader2 size={15} aria-hidden className="animate-spin" />}
             {isFetchingNextPage ? t("loading") : t("loadMore")}

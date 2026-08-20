@@ -63,7 +63,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="space-y-5 rounded-2xl border border-line/60 bg-panel p-6 panel-glow sm:p-8"
+      className="space-y-5 card p-6 panel-glow sm:p-8"
     >
       <div className="space-y-1.5">
         <label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-fog">
@@ -79,7 +79,7 @@ export function AuthForm({ mode }: AuthFormProps) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="toi@exemple.fr"
-            className="h-11 w-full rounded-full border border-line bg-ink/60 pl-10 pr-4 text-sm text-snow placeholder:text-fog focus:border-neon/70 focus:outline-none focus:ring-2 focus:ring-neon/20"
+            className="input-field h-11 w-full pl-10"
           />
         </div>
       </div>
@@ -99,7 +99,7 @@ export function AuthForm({ mode }: AuthFormProps) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder={t("passwordMin")}
-            className="h-11 w-full rounded-full border border-line bg-ink/60 pl-10 pr-4 text-sm text-snow placeholder:text-fog focus:border-neon/70 focus:outline-none focus:ring-2 focus:ring-neon/20"
+            className="input-field h-11 w-full pl-10"
           />
         </div>
       </div>

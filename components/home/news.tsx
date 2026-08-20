@@ -100,7 +100,7 @@ function ArticleCard({ item }: { item: NewsItem }) {
       href={item.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line/60 bg-panel transition-all duration-300 hover:-translate-y-1 hover:border-neon/40 hover:shadow-neon-sm"
+      className="group flex h-full flex-col overflow-hidden card-hover"
     >
       <div className="relative aspect-video overflow-hidden bg-ink">
         {showThumb ? (
@@ -143,7 +143,7 @@ function VideoCard({ item }: { item: NewsItem }) {
       href={item.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line/60 bg-panel transition-all duration-300 hover:-translate-y-1 hover:border-neon/40 hover:shadow-neon-sm"
+      className="group flex h-full flex-col overflow-hidden card-hover"
     >
       <div className="relative aspect-video overflow-hidden bg-ink">
         {/* eslint-disable-next-line @next/next/no-img-element */}

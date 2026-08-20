@@ -4,12 +4,14 @@ import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { QueryProviders } from "@/components/query-providers";
+import { ThemeProvider } from "@/components/theme-provider";
 import { AppLoader } from "@/components/loader";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { SwRegister } from "@/components/sw-register";
 import { PageReadySignal } from "@/components/page-ready-signal";
 import { PageTransition } from "@/components/page-transition";
+import { NavigationProgress } from "@/components/navigation-progress";
 import { SITE_URL } from "@/lib/site";
 
 const anton = Anton({
@@ -50,24 +52,28 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const t = await getTranslations("nav");
 
   return (
-    <html lang={locale} className={`${anton.variable} ${inter.variable} h-full antialiased`}>
+    <html lang={locale} className={`${anton.variable} ${inter.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="flex min-h-full flex-col bg-ink text-snow">
         <NextIntlClientProvider>
           <QueryProviders>
-            <a href="#contenu" className="skip-link">
-              {t("skip")}
-            </a>
-            {/* Rendu SSR : le rideau cache le site dès le premier paint et ne
-                le révèle qu'à l'événement « page prête » (voir loader.tsx). */}
-            <AppLoader />
-            {/* Émet rounds:page-ready au window.load (source de l'événement). */}
-            <PageReadySignal />
-            <SwRegister />
-            <Navbar />
-            <main id="contenu" className="flex-1">
-              <PageTransition>{children}</PageTransition>
-            </main>
-            <Footer />
+            <ThemeProvider>
+              {/* Barre de progression des navigations SPA (fine ligne néon). */}
+              <NavigationProgress />
+              <a href="#contenu" className="skip-link">
+                {t("skip")}
+              </a>
+              {/* Rendu SSR : le rideau cache le site dès le premier paint et ne
+                  le révèle qu'à l'événement « page prête » (voir loader.tsx). */}
+              <AppLoader />
+              {/* Émet rounds:page-ready au window.load (source de l'événement). */}
+              <PageReadySignal />
+              <SwRegister />
+              <Navbar />
+              <main id="contenu" className="flex-1">
+                <PageTransition>{children}</PageTransition>
+              </main>
+              <Footer />
+            </ThemeProvider>
           </QueryProviders>
         </NextIntlClientProvider>
       </body>

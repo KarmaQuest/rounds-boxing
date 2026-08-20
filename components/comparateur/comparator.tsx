@@ -2,12 +2,13 @@
 
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Swords } from "lucide-react";
 import type { Fighter } from "@/lib/data/types";
 import { koPct } from "@/lib/data/utils";
-import { countryLabel, toLocale, weightClassLabel } from "@/lib/i18n/data";
+import { countryLabel, weightClassLabel } from "@/lib/i18n/data";
+import { useFormattedLocale } from "@/lib/hooks";
 import { Avatar } from "@/components/avatar";
 import { RecordBar, RecordNumbers } from "@/components/record-bar";
 import { cn } from "@/lib/utils";
@@ -142,7 +143,7 @@ function Selector({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="h-11 w-full cursor-pointer rounded-full border border-line bg-ink/60 px-4 text-sm text-snow focus:border-neon/70 focus:outline-none"
+        className="input-field h-11 w-full cursor-pointer px-4"
       >
         <option value="">{placeholder}</option>
         {fighters.map((f) => (
@@ -156,9 +157,9 @@ function Selector({
 }
 
 function FighterColumn({ fighter }: { fighter: Fighter }) {
-  const locale = toLocale(useLocale());
+  const locale = useFormattedLocale();
   return (
-    <div className="rounded-2xl border border-line/60 bg-panel p-6 panel-glow">
+    <div className="card p-6 panel-glow">
       <div className="flex flex-col items-center gap-3 text-center">
         <Avatar name={fighter.name} size="xl" />
         <div>
@@ -283,7 +284,7 @@ export function Comparateur() {
           </div>
 
           {/* tableau comparatif */}
-          <div className="overflow-hidden rounded-2xl border border-line/60 bg-panel panel-glow">
+          <div className="overflow-hidden card panel-glow">
             <table className="w-full text-sm">
               <tbody>
                 {rows.map((row) => (
@@ -319,7 +320,7 @@ export function Comparateur() {
       )}
 
       {!isLoading && !(a && b) && (
-        <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-line bg-panel/50 px-6 py-16 text-center">
+        <div className="flex flex-col items-center gap-3 card border-dashed bg-panel/50 px-6 py-16 text-center">
           <Swords size={36} aria-hidden className="text-fog" />
           <p className="font-display text-xl uppercase text-snow">{t("emptyTitle")}</p>
           <p className="max-w-sm text-sm text-mist">{t("emptyText")}</p>

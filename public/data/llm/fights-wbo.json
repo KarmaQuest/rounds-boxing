@@ -1,0 +1,98 @@
+[
+  {
+    "date": "2026-03-01",
+    "location": "Glendale, Arizona",
+    "weight_class": "Junior Lightweight",
+    "fighter_a": "Emanuel Navarrete",
+    "fighter_b": "Eduardo Nuñez",
+    "winner": "Emanuel Navarrete",
+    "method": "TKO",
+    "rounds": 11,
+    "is_title_fight": true,
+    "source": "wbo"
+  },
+  {
+    "date": "2025-12-27",
+    "location": "Riyadh, Saudi Arabia",
+    "weight_class": "Jr. Featherweight",
+    "fighter_a": "Naoya \"The Monster\" Inoue",
+    "fighter_b": "David Picasso",
+    "winner": "Naoya \"The Monster\" Inoue",
+    "method": "UD",
+    "rounds": 12,
+    "is_title_fight": true,
+    "source": "wbo"
+  },
+  {
+    "date": "2025-11-16",
+    "location": "San Luis Potosí, México",
+    "weight_class": "Featherweight",
+    "fighter_a": "Rafael “El Divino” Espinoza",
+    "fighter_b": "Arnold Khegai",
+    "winner": "Rafael “El Divino” Espinoza",
+    "method": "TKO",
+    "rounds": 11,
+    "is_title_fight": true,
+    "source": "wbo"
+  },
+  {
+    "date": "2025-05-19",
+    "location": "Los Angeles, California",
+    "weight_class": "junior bantamweight",
+    "fighter_a": "Mizuki Hiruta",
+    "fighter_b": "Carla “La Muñeca” Merino",
+    "winner": "Mizuki Hiruta",
+    "method": "UD",
+    "rounds": 0,
+    "is_title_fight": true,
+    "source": "wbo"
+  },
+  {
+    "date": "2025-05-12",
+    "location": "SAN DIEGO",
+    "weight_class": "junior lightweight",
+    "fighter_a": "Emanuel Navarrete",
+    "fighter_b": "Charly Suarez",
+    "winner": "Emanuel Navarrete",
+    "method": "TD",
+    "rounds": 8,
+    "is_title_fight": true,
+    "source": "wbo"
+  },
+  {
+    "date": "2025-04-20",
+    "location": "Oceanside",
+    "weight_class": "",
+    "fighter_a": "Gabriela “Sweet Poison” Fundora",
+    "fighter_b": "Marilyn Badillo",
+    "winner": "Gabriela “Sweet Poison” Fundora",
+    "method": "TKO",
+    "rounds": 7,
+    "is_title_fight": true,
+    "source": "wbo"
+  },
+  {
+    "date": "2025-02-15",
+    "location": "",
+    "weight_class": "lightweight",
+    "fighter_a": "Keyshawn Davis",
+    "fighter_b": "Denys Berinchyk",
+    "winner": "Keyshawn Davis",
+    "method": "KO",
+    "rounds": 4,
+    "is_title_fight": true,
+    "source": "wbo"
+  },
+  {
+    "date": "2025-02-15",
+    "location": "",
+    "weight_class": "junior middleweight",
+    "fighter_a": "Xander Zayas",
+    "fighter_b": "Slawa Spomer",
+    "winner": "Xander Zayas",
+    "method": "TKO",
+    "rounds": 9,
+    "is_title_fight": true,
+    "source": "wbo"
+  }
+]

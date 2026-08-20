@@ -1,0 +1,141 @@
+{
+  "source": "wbo",
+  "articles": 8,
+  "articles_ok": 8,
+  "combats": [
+    {
+      "title": "Rafael “El Divino” Espinoza Dominates Arnold Khegai, Retains WBO Featherweight Title via TKO",
+      "date": "2025-11-16",
+      "fights": [
+        {
+          "winner": "Rafael “El Divino” Espinoza",
+          "loser": "Arnold Khegai",
+          "method": "TKO",
+          "rounds": 11,
+          "weight_class": "Featherweight",
+          "is_title_fight": true,
+          "location": "San Luis Potosí, México"
+        }
+      ]
+    },
+    {
+      "title": "4th Successful World Title Defense for Hiruta",
+      "date": "2025-05-19",
+      "fights": [
+        {
+          "winner": "Mizuki Hiruta",
+          "loser": "Carla “La Muñeca” Merino",
+          "method": "UD",
+          "rounds": 0,
+          "weight_class": "junior bantamweight",
+          "is_title_fight": true,
+          "location": "Los Angeles, California"
+        }
+      ]
+    },
+    {
+      "title": "Navarrete Edges Suarez to Retain Crown",
+      "date": "2025-05-12",
+      "fights": [
+        {
+          "winner": "Emanuel Navarrete",
+          "loser": "Charly Suarez",
+          "method": "TD",
+          "rounds": 8,
+          "weight_class": "junior lightweight",
+          "is_title_fight": true,
+          "location": "SAN DIEGO"
+        }
+      ]
+    },
+    {
+      "title": "And Still Undisputed WBO Champion Gabriela “Sweet Poison” Fundora",
+      "date": "2025-04-20",
+      "fights": [
+        {
+          "winner": "Gabriela “Sweet Poison” Fundora",
+          "loser": "Marilyn Badillo",
+          "method": "TKO",
+          "rounds": 7,
+          "weight_class": "",
+          "is_title_fight": true,
+          "location": "Oceanside"
+        }
+      ]
+    },
+    {
+      "title": "Business Handled: Keyshawn Davis Crushes Denys Berinchyk in Four to Capture WBO Lightweight Crown",
+      "date": "2025-02-15",
+      "fights": [
+        {
+          "winner": "Keyshawn Davis",
+          "loser": "Denys Berinchyk",
+          "method": "KO",
+          "rounds": 4,
+          "weight_class": "lightweight",
+          "is_title_fight": true,
+          "location": ""
+        },
+        {
+          "winner": "Xander Zayas",
+          "loser": "Slawa Spomer",
+          "method": "TKO",
+          "rounds": 9,
+          "weight_class": "junior middleweight",
+          "is_title_fight": true,
+          "location": ""
+        }
+      ]
+    },
+    {
+      "title": "Xander Zayas dominates Slawa Spomer  and sucessfuly defends his NABO Jr. Middleweight Title",
+      "date": "2025-02-15",
+      "fights": [
+        {
+          "winner": "Xander Zayas",
+          "loser": "Slawa Spomer",
+          "method": "TKO",
+          "rounds": 9,
+          "weight_class": "Jr. Middleweight",
+          "is_title_fight": true,
+          "location": "New York City"
+        }
+      ]
+    },
+    {
+      "title": "Emanuel Navarrete beats Sugar Nunez to become Unified Jr. Lightweight Champion",
+      "date": "2026-03-01",
+      "link": "https://wboboxing.com/boxing-news/emanuel-navarrete-beats-sugar-nunez-to-become-unified-jr-lightweight-champion/",
+      "fights": [
+        {
+          "winner": "Emanuel Navarrete",
+          "loser": "Eduardo Nuñez",
+          "method": "TKO",
+          "rounds": 11,
+          "weight_class": "Jr. Lightweight",
+          "is_title_fight": true,
+          "location": "Glendale, Arizona"
+        }
+      ]
+    },
+    {
+      "title": "Inoue wins by decision over Picasso retaining titles",
+      "date": "2025-12-27",
+      "link": "https://wboboxing.com/boxing-news/fight-result-inoue-picasso/",
+      "fights": [
+        {
+          "winner": "Naoya \"The Monster\" Inoue",
+          "loser": "David Picasso",
+          "method": "UD",
+          "rounds": 12,
+          "weight_class": "Jr. Featherweight",
+          "is_title_fight": true,
+          "location": "Riyadh, Saudi Arabia"
+        }
+      ]
+    }
+  ],
+  "total_fights": 9,
+  "errors": [],
+  "articles_skipped": 0
+}

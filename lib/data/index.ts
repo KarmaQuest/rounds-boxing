@@ -47,8 +47,21 @@ export async function searchBoxeurs(filters: FighterFilters) {
   // alphabétique (ex. Bakary Samaké), et la liste est mise en cache 1 h.
   const FETCH_LIMIT = 1500;
 
+  const needFullPool = filters.amateur || filters.gender;
+
   if (!filters.q) {
     const { fighters, source } = await router.listFighters(FETCH_LIMIT);
+    // Quand le filtre amateur/gender est actif, on complète avec TOUS
+    // les boxeurs du merged.json (22k) pour ne rien rater — le pool
+    // classé ne contient que 1500 entrées et les amateurs/femmes y
+    // sont très dilués.
+    if (needFullPool) {
+      const annuaire = new MergedBoxersProvider();
+      const allMerged = await annuaire.listFighters(30_000);
+      const combined = dedupeFighters([...fighters, ...allMerged]);
+      const filtered = applyFilters(combined, filters);
+      return { fighters: filtered, source: source + " + annuaire" };
+    }
     const filtered = applyFilters(fighters, filters);
     return { fighters: filtered, source };
   }
@@ -65,7 +78,9 @@ export async function searchBoxeurs(filters: FighterFilters) {
     [...fromSearch.source.split(" + "), ...fullList.source.split(" + ")].filter(Boolean)
   );
 
-  const filtered = applyFilters(merged, filters);
+  // Même en mode recherche, si amateur/gender est actif on élargit
+  const base = needFullPool ? [...merged, ...(await new MergedBoxersProvider().listFighters(30_000))] : merged;
+  const filtered = applyFilters(dedupeFighters(base), filters);
   return { fighters: filtered, source: [...sources].join(" + ") || "aucune" };
 }
 

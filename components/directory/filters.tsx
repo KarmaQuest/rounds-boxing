@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import {
@@ -10,7 +10,8 @@ import {
   type WeightClass,
 } from "@/lib/data/types";
 import { fuzzySuggest } from "@/lib/data/utils";
-import { toLocale, weightClassLabel } from "@/lib/i18n/data";
+import { weightClassLabel } from "@/lib/i18n/data";
+import { useFormattedLocale } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 export type SortKey = "rank" | "wins" | "koPct" | "name" | "age" | "height";
@@ -23,6 +24,7 @@ export interface FilterState {
   minKoPct: number;
   sort: SortKey;
   amateur: "all" | "pro" | "amateur";
+  gender: "all" | "M" | "F";
 }
 
 export const DEFAULT_FILTERS: FilterState = {
@@ -33,6 +35,7 @@ export const DEFAULT_FILTERS: FilterState = {
   minKoPct: 0,
   sort: "rank",
   amateur: "all",
+  gender: "all",
 };
 
 export function isWeightClass(v: string): v is WeightClass {
@@ -60,7 +63,7 @@ function WeightChips({
   onChange: (v: WeightClass | "") => void;
   allLabel: string;
 }) {
-  const locale = toLocale(useLocale());
+  const locale = useFormattedLocale();
   return (
     <div className="thin-scroll -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
       <Chip active={value === ""} onClick={() => onChange("")}>
@@ -112,7 +115,7 @@ function Chip({
  */
 export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) {
   const t = useTranslations("boxeurs");
-  const locale = toLocale(useLocale());
+  const locale = useFormattedLocale();
   const [searchFocused, setSearchFocused] = useState(false);
 
   // Autocomplete flou (TASKS 1.3) : suggestions pendant la frappe.
@@ -131,12 +134,13 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
     filters.minWins > 0,
     filters.minKoPct > 0,
     filters.amateur !== "all",
+    filters.gender !== "all",
   ].filter(Boolean).length;
 
   const hasAny = filters.q !== "" || activeCount > 0;
 
   return (
-    <div className="space-y-4 rounded-2xl border border-line/60 bg-panel/70 p-4 panel-glow sm:p-5">
+    <div className="space-y-4 card bg-panel/70 p-4 panel-glow sm:p-5">
       {/* Ligne 1 : recherche + tri + reset */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
@@ -149,7 +153,7 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
             onBlur={() => setTimeout(() => setSearchFocused(false), 120)}
             placeholder={t("searchPlaceholder")}
             aria-autocomplete="list"
-            className="h-11 w-full rounded-full border border-line bg-ink/60 pl-10 pr-4 text-sm text-snow placeholder:text-fog focus:border-neon/70 focus:outline-none focus:ring-2 focus:ring-neon/20"
+            className="input-field h-11 w-full pl-10 pr-10"
           />
 
           {searchFocused && suggestions.length > 0 && (
@@ -214,8 +218,9 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
         </div>
       </div>
 
-      {/* Ligne 1.5 : filtre pro/amateur */}
-      <div className="flex items-center gap-2">
+      {/* Ligne 1.5 : filtres pro/amateur + genre */}
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-xs text-fog">{t("type")} :</span>
         <Chip active={filters.amateur === "all"} onClick={() => onChange({ amateur: "all" })}>
           {t("allFighters")}
         </Chip>
@@ -224,6 +229,19 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
         </Chip>
         <Chip active={filters.amateur === "amateur"} onClick={() => onChange({ amateur: "amateur" })}>
           {t("amateurOnly")}
+        </Chip>
+
+        <span className="mx-1 h-4 w-px bg-line" aria-hidden />
+
+        <span className="text-xs text-fog">{t("gender")} :</span>
+        <Chip active={filters.gender === "all"} onClick={() => onChange({ gender: "all" })}>
+          {t("all")}
+        </Chip>
+        <Chip active={filters.gender === "M"} onClick={() => onChange({ gender: "M" })}>
+          👨 {t("men")}
+        </Chip>
+        <Chip active={filters.gender === "F"} onClick={() => onChange({ gender: "F" })}>
+          👩 {t("women")}
         </Chip>
       </div>
 
@@ -235,7 +253,7 @@ export function Filters({ filters, onChange, onReset, fighters }: FiltersProps) 
         <select
           value={filters.country}
           onChange={(e) => onChange({ country: e.target.value })}
-          className="h-10 cursor-pointer rounded-full border border-line bg-ink/60 px-4 text-sm text-snow focus:border-neon/70 focus:outline-none"
+          className="input-field h-10 cursor-pointer px-4"
         >
           <option value="">🌍 {t("allCountries")}</option>
           {countries.map((c) => (

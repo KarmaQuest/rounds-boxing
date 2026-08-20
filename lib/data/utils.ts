@@ -292,6 +292,8 @@ export function applyFilters(fighters: Fighter[], filters: FighterFilters): Figh
     if (filters.minKoPct && koPct(f.record) < filters.minKoPct) return false;
     if (filters.amateur === "pro" && f.amateur) return false;
     if (filters.amateur === "amateur" && !f.amateur) return false;
+    if (filters.gender === "M" && f.gender && f.gender !== "M") return false;
+    if (filters.gender === "F" && f.gender !== "F") return false;
     return true;
   });
 

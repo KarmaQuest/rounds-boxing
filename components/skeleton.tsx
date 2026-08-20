@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 export function FighterCardSkeleton() {
   return (
-    <div className="rounded-2xl border border-line/60 bg-panel p-5 panel-glow">
+    <div className="card p-5 panel-glow">
       <div className="flex items-center gap-4">
         <div className="shimmer h-14 w-14 rounded-full" />
         <div className="flex-1 space-y-2">
@@ -20,7 +20,7 @@ export function FighterCardSkeleton() {
 
 export function FighterGridSkeleton({ count = 8 }: { count?: number }) {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length: count }).map((_, i) => (
         <FighterCardSkeleton key={i} />
       ))}
@@ -30,7 +30,7 @@ export function FighterGridSkeleton({ count = 8 }: { count?: number }) {
 
 export function FightCardSkeleton() {
   return (
-    <div className="rounded-2xl border border-line/60 bg-panel p-6 panel-glow">
+    <div className="card p-6 panel-glow">
       <div className="shimmer mx-auto mb-4 h-3 w-40 rounded" />
       <div className="flex items-center justify-between gap-4">
         <div className="shimmer h-10 w-10 rounded-full" />

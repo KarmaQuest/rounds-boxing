@@ -26,7 +26,7 @@ export default function GlobalError({
       <p className="text-sm text-mist">{t("globalText")}</p>
       <button
         onClick={reset}
-        className="press mt-2 rounded-full border border-neon/60 px-6 py-2.5 text-sm font-medium text-neon-soft transition-colors hover:bg-neon/10"
+        className="press mt-2 btn-neon px-6 py-2.5"
       >
         {t("retry")}
       </button>

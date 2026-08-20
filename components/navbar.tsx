@@ -7,6 +7,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AccountChip } from "@/components/auth/account-chip";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { IconButton } from "@/components/ui/icon-btn";
 
 /**
  * Menu style Rive : barre minimale (logo + burger), burger qui se
@@ -81,16 +83,16 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <AccountChip />
+          <ThemeToggle />
           <LanguageSwitcher />
 
           {/* Burger animé (3 traits → croix) */}
-          <button
-            type="button"
+          <IconButton
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="menu-principal"
             aria-label={open ? t("closeMenu") : t("openMenu")}
-            className="press group relative flex h-11 w-11 items-center justify-center rounded-full border border-line bg-panel transition-colors hover:border-neon/50"
+            className="group relative"
           >
             <span className="relative block h-3.5 w-5">
               <span
@@ -109,7 +111,7 @@ export function Navbar() {
                 }`}
               />
             </span>
-          </button>
+          </IconButton>
         </div>
       </nav>
     </header>

@@ -30,7 +30,7 @@ export default function FighterError({
       <div className="mt-2 flex items-center gap-3">
         <button
           onClick={reset}
-          className="press rounded-full border border-neon/60 px-6 py-2.5 text-sm font-medium text-neon-soft transition-colors hover:bg-neon/10"
+          className="press btn-neon px-6 py-2.5"
         >
           {t("retry")}
         </button>
