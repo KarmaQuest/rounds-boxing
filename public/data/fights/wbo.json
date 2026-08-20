@@ -10,5 +10,89 @@
     "method": "TKO",
     "rounds": 11,
     "is_title_fight": true
+  },
+  {
+    "id": "9537cfec50e3bb7e044a399436d544bc0cc5b6362697c0bfe281ca94978075e6",
+    "date": "2025-12-27",
+    "location": "Riyadh, Saudi Arabia",
+    "weight_class": "Jr. Featherweight",
+    "fighter_a": "Naoya \"The Monster\" Inoue",
+    "fighter_b": "David Picasso",
+    "winner": "Naoya \"The Monster\" Inoue",
+    "method": "UD",
+    "rounds": 12,
+    "is_title_fight": true
+  },
+  {
+    "id": "98e54865dbac12a5c7e8cd95994ac5ba4b90297fb76c3a4ed2fc4191410b31d3",
+    "date": "2025-11-16",
+    "location": "San Luis Potosí, México",
+    "weight_class": "Featherweight",
+    "fighter_a": "Rafael “El Divino” Espinoza",
+    "fighter_b": "Arnold Khegai",
+    "winner": "Rafael “El Divino” Espinoza",
+    "method": "TKO",
+    "rounds": 11,
+    "is_title_fight": true
+  },
+  {
+    "id": "767ac2f34081cf2aecadd710498e7ac72d98eb19d2db28662c84c866425596e9",
+    "date": "2025-05-19",
+    "location": "Los Angeles, California",
+    "weight_class": "junior bantamweight",
+    "fighter_a": "Mizuki Hiruta",
+    "fighter_b": "Carla “La Muñeca” Merino",
+    "winner": "Mizuki Hiruta",
+    "method": "UD",
+    "rounds": 0,
+    "is_title_fight": true
+  },
+  {
+    "id": "2303c6cfb75896f718b7ffcb249e30722ae987482a77b89fcd20e57e1b2acd88",
+    "date": "2025-05-12",
+    "location": "SAN DIEGO",
+    "weight_class": "junior lightweight",
+    "fighter_a": "Emanuel Navarrete",
+    "fighter_b": "Charly Suarez",
+    "winner": "Emanuel Navarrete",
+    "method": "TD",
+    "rounds": 8,
+    "is_title_fight": true
+  },
+  {
+    "id": "099e7e43a2644b87a22a33ded6f56fe36d8e8f72d4439fa9ca8fb0a3447d851d",
+    "date": "2025-04-20",
+    "location": "Oceanside",
+    "weight_class": "",
+    "fighter_a": "Gabriela “Sweet Poison” Fundora",
+    "fighter_b": "Marilyn Badillo",
+    "winner": "Gabriela “Sweet Poison” Fundora",
+    "method": "TKO",
+    "rounds": 7,
+    "is_title_fight": true
+  },
+  {
+    "id": "feafb031c1848a013d67df1f6d0df50f109208dda17eac6de56785baa1e7d65f",
+    "date": "2025-02-15",
+    "location": "",
+    "weight_class": "lightweight",
+    "fighter_a": "Keyshawn Davis",
+    "fighter_b": "Denys Berinchyk",
+    "winner": "Keyshawn Davis",
+    "method": "KO",
+    "rounds": 4,
+    "is_title_fight": true
+  },
+  {
+    "id": "26c013a63c57af0c3d06d014dd525a9822e9bdcc11167a7fea3185d52c3579c9",
+    "date": "2025-02-15",
+    "location": "",
+    "weight_class": "junior middleweight",
+    "fighter_a": "Xander Zayas",
+    "fighter_b": "Slawa Spomer",
+    "winner": "Xander Zayas",
+    "method": "TKO",
+    "rounds": 9,
+    "is_title_fight": true
   }
 ]

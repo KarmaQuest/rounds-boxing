@@ -1,12 +1,627 @@
 {
-  "generated_at": "2026-08-18T13:16:17Z",
+  "generated_at": "2026-08-19T19:20:09Z",
   "annuaire_loaded": true,
   "llm_available": true,
-  "llm_calls": 1,
-  "total": 22,
+  "llm_calls": 26,
+  "total": 47,
   "confirmed": 21,
-  "flagged": 1,
+  "flagged": 26,
   "items": [
+    {
+      "id": "44dc96eb8f3bec2e39579f311fe68dfae7176d71e0b96c4a2c1886c756634b8e",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids mi-mouches",
+      "fighter_a": "Gloria D'Almeida",
+      "fighter_b": "Mathilda Fragnieres",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "La date du 19 janvier 2026 est un lundi, jour inhabituel pour un gala de boxe officiel, et les noms ne correspondent pas à des boxeurs amateurs de premier plan connus dans cette catégorie."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "efb49eed1f7625e3561c3cae86921b40fb728348d7cb5662126ecbe09d93016f",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids mouches",
+      "fighter_a": "Mayssoun Bourega",
+      "fighter_b": "Kaeyla Mopin",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "La date du 19 janvier 2026 est dans le futur et ne correspond pas à un calendrier officiel vérifiable pour ces boxeurs amateurs spécifiques au niveau national."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "1555144ce426558bfea923a9af667b221bb164e9c4e9f1b5eb536ff7b275dce0",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-coqs",
+      "fighter_a": "Aya Hamdi",
+      "fighter_b": "Maloé Teresi",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "Les noms ne correspondent pas à des boxeurs professionnels ou amateurs connus au niveau national en super-coqs, et la date (un lundi) est atypique pour un gala officiel."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "b736071a77dc4e46e69b089cafe09d9299ecb907c24ebb24f43796ce48f3d524",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids coqs",
+      "fighter_a": "Marianne D'Antuono",
+      "fighter_b": "Lucie Pauliac",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "Les noms ne correspondent pas à des boxeuses connues au niveau national pour cette catégorie et la date précise un lundi (inhabituel pour un gala officiel)."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "fdba8d6e9eecfdc721a1f497a8213b285c6ed18e36ae4cf5e15ea70096f9fd96",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids plumes",
+      "fighter_a": "Lisa Nouiceur",
+      "fighter_b": "Sarah Nouiri",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "Les noms Lisa Nouiceur et Sarah Nouiri ne correspondent pas à des boxeuses notoires de niveau national ou international dans les bases de données publiques de la FFBoxe. De plus, la date indiquée (un "
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "3daf23a521211161d777c9929201a9280c8c68588977b5ddd6bffa7450f6fa7d",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-plumes",
+      "fighter_a": "Rafaëla Courant",
+      "fighter_b": "Tania Kovacic",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.8,
+        "reason": "Les noms de Rafaëla Courant et Tania Kovacic ne correspondent pas à des boxeuses professionnelles ou amateurs notoires répertoriées dans les bases de données officielles pour un combat officiel de la "
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "21d8266f629b904e315a8039f093c6ea05fce74da0f728e3f4678c392dcfbd21",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-plumes",
+      "fighter_a": "Shainez Grout",
+      "fighter_b": "Lina Souaken",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "La date du 19 janvier 2026 est un lundi, jour inhabituel pour un gala de boxe officielle, et la confrontation spécifique entre Shainez Grout et Lina Souaken en poids super-plumes ne repose sur aucune "
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "42c3fc541a65cea9f8a7db2362bfc26633bdf4c7f0fd9a286cd01230ef13eb6a",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids légers",
+      "fighter_a": "Sadaf Khadem Jaha Seyedeh",
+      "fighter_b": "Sindy Said",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.4,
+        "reason": "Sadaf Khadem est une boxeuse iranienne connue (première femme à avoir gagné un combat officiel pour l'Iran, exilée en France), mais un combat officiel un lundi (19 janvier 2026) sous l'égide de la FFB"
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "9580465aa740ff4402a597e1ff1f84c916f06089a33077fe32f70cd9e39c61fe",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-légers",
+      "fighter_a": "Andréa Badin",
+      "fighter_b": "Laetitia Delin",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.8,
+        "reason": "Le combat oppose un boxeur et une boxeuse (mixte), ce qui est interdit en boxe anglaise officielle. De plus, les noms ne correspondent pas à des boxeurs connus dans cette configuration."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "29a6649c45137cc27e3938d714d87aab8c87f9a0c4de8de9852d2a12021e217f",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids welters",
+      "fighter_a": "Solana Ayivi",
+      "fighter_b": "Valinka Huvelin",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "Noms peu courants ou inconnus au niveau national en boxe amateur, et date un lundi inhabituelle pour un gala officiel."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "4fc7308017cce0d45e95cdaa76cc6b589d9b209a36df964c12605983120c602b",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-welters",
+      "fighter_a": "Camille Vincent",
+      "fighter_b": "Edith Tavanae",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.1,
+        "reason": "La date du 19 janvier 2026 est dans le futur et aucun combat officiel d'envergure nationale ou internationale n'est programmé à cette date pour ces noms dans cette catégorie."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "4287a05c6e2ff8fac5725755b34ecde046c6750cc32451d333b687a6951ef9b6",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids mouches",
+      "fighter_a": "Zakarya Bouhaouak",
+      "fighter_b": "Larry Tevanee",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "La date du 19 janvier 2026 est un lundi, jour inhabituel pour un gala de boxe officielle, et la confrontation entre Zakarya Bouhaouak et Larry Tevanee ne correspond à aucun combat majeur répertorié ou"
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "57ae56b31ca92ca0bd8b2a2883991a1c892a408eb634edde5a7c90eafa953384",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-mouches",
+      "fighter_a": "Adama Diagne",
+      "fighter_b": "Roulio Gaucher",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "La base de données ne contient pas de confirmation officielle pour un combat entre Adama Diagne et Roulio Gaucher sous l'égide de la FF Boxe Amateur à cette date précise."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "f03360e72c5004b8c12178e90d643fd7974b072d065c293d9b0f57e5a41950de",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-coqs",
+      "fighter_a": "Christopher Hippocrate",
+      "fighter_b": "Izaya Gaucher",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.8,
+        "reason": "Les noms ne correspondent pas à des boxeurs professionnels ou amateurs connus au niveau national, et un combat un lundi (19 janvier 2026) est hautement improbable pour la FFBoxe."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "35419dc99f57f31b1c5868df44615791d7de6eb9409b7b1c47c3a1c14426b6b6",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids coqs",
+      "fighter_a": "Alexis Divry",
+      "fighter_b": "Dahmane Djemmal Mohamed",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "La date du 19 janvier 2026 tombe un lundi, jour inhabituel pour un gala de boxe officielle, et la FFBoxe ne programme généralement pas d'événements à cette échéance aussi lointaine de manière vérifiab"
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "d03bec40ef893ffe5aa2152ca14de65092d03f08e38b08b71299a198ba70b262",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids plumes",
+      "fighter_a": "Adam Ashkapov",
+      "fighter_b": "Jozué Gaucher",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.1,
+        "reason": "La date du 19 janvier 2026 est dans le futur et les noms ne correspondent pas à des boxeurs amateurs répertoriés au niveau national avec certitude, ce qui rend l'affiche invérifiable et incertaine."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "0e032027866bcb4f7846af144684fcff2d76292442e20f4edbff93e5c20afcf8",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-plumes",
+      "fighter_a": "Hedi Tlili",
+      "fighter_b": "Yacine Ettouir",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "Les noms ne correspondent pas à des boxeurs professionnels ou amateurs nationaux référencés de premier plan, et la date (un lundi) est atypique pour un gala officiel de boxe en France."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "cb87de37d6820767eaae5228608a998ac6f5c201630ec332902b501319591eab",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-plumes",
+      "fighter_a": "Mohamed Ounai",
+      "fighter_b": "Joachim Fenu",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.3,
+        "reason": "La date du 19 janvier 2026 est un lundi, jour inhabituel pour un gala de boxe officielle, et l'existence simultanée et le niveau exact de ces deux boxeurs amateurs dans cette catégorie précise ne peuv"
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "9cb3ee414aecfb8fab9de57a8e043fb59825a81703c0aecdd9289b0ab3062884",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids légers",
+      "fighter_a": "Djamel Djemmal",
+      "fighter_b": "Elie Nicolas Tairick",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.1,
+        "reason": "La base de données ne permet pas de confirmer l'existence de ces boxeurs précis pour cette date et ce lieu exacts dans le cadre de la FFBoxe amateur."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "e1e1da8eb247544416d4421e7de307c6a6f0bae97511cb9cb0286ab9e211776e",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-légers",
+      "fighter_a": "Ruben Kalema",
+      "fighter_b": "Kamil Boussehaba",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "La date du 19 janvier 2026 tombe un lundi, jour inhabituel pour un gala de boxe officiel, et les noms ne correspondent pas à des boxeurs notoires de l'Hexagone dans cette configuration exacte."
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "a86108196638ee86e5c9457d2e227832e6aff463f2d96b0a0245d2ae16085036",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids welters",
+      "fighter_a": "Hassana El Qadmi",
+      "fighter_b": "Alexandre Macdonald",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": true,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "La date (un lundi) et le manque de notoriété publique de cette affiche précise au niveau national empêchent de confirmer formellement la tenue de ce combat amateur en l'absence de source officielle vé"
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "6763bf5779f8a580083e75f7da34b67663cbe214dde2918a968d4fff9fc0fef9",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-welters",
+      "fighter_a": "Massimo Pauget",
+      "fighter_b": "Enzo Bourgoin",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "Massimo Pauget et Enzo Bourgoin ne correspondent pas à des boxeurs répertoriés de haut niveau ou connus dans les fichiers fédéraux de la FF Boxe pour un combat officiel majeur à cette date. De plus, u"
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "39e1fa2ec414585aa56f97c75aee6fb386cb2773456c42bb4d0d878bf90ed3d7",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids moyens",
+      "fighter_a": "Gabriel Yildiz",
+      "fighter_b": "Junior Tadah",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "Les noms Gabriel Yildiz et Junior Tadah ne correspondent pas à des boxeurs amateurs notoires ou référencés au niveau national de la FFBoxe pour un combat officiel en janvier 2026, et la date (un lundi"
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "485259bb67dfe7dd974d111a47eef9c5f3b63165163b2c7f2ec56d8c7f2908f1",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids super-moyens",
+      "fighter_a": "Sami Diguerher",
+      "fighter_b": "Vincent Djinou",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "La date (un lundi 19 janvier 2026) est inhabituelle pour un gala officiel, et les bases de données publiques ne permettent pas de confirmer un combat programmé entre ces deux boxeurs à cette date préc"
+      },
+      "status": "flagged"
+    },
+    {
+      "id": "fdb8b61118f0f6a515b1bddd46a58033148120de746c48a4a2ac1e5470d90b54",
+      "org": "ffboxe-amateur",
+      "date": "2026-01-19",
+      "weight_class": "Poids lourds",
+      "fighter_a": "Donald Nembot",
+      "fighter_b": "Angelo Parentaud",
+      "checks": {
+        "future_date": false,
+        "plausible_date": true,
+        "names_ok": true,
+        "annuaire": false,
+        "no_dup_across_orgs": true
+      },
+      "failed_checks": [
+        "future_date",
+        "annuaire"
+      ],
+      "llm": {
+        "verdict": "flagged",
+        "confidence": 0.2,
+        "reason": "La date (un lundi) et le niveau précis des boxeurs ne permettent pas de confirmer avec certitude un gala officiel de la FFBoxe ce jour-là."
+      },
+      "status": "flagged"
+    },
     {
       "id": "4d7045ac318720ce90851ee048406cab08f20e86ef85149fd9b79e4793a9bdbb",
       "org": "ibf",
@@ -98,8 +713,8 @@
       ],
       "llm": {
         "verdict": "flagged",
-        "confidence": 0.2,
-        "reason": "Reymart Tagacanao et Chunlin Kuang sont de vrais boxeurs mais un combat entre eux pour un titre IBF Asia en septembre 2026 relève de la pure projection spéculative à long terme, la date étant trop élo"
+        "confidence": 0.3,
+        "reason": "Reymart Tagacanao et Chunlin Kuang sont de vrais boxeurs professionnels, mais un combat officiel sanctionné par l'IBF Asia entre eux en septembre 2026 est impossible à vérifier et purement spéculatif "
       },
       "status": "flagged"
     },
