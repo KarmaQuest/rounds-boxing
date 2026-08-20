@@ -1,13 +1,15 @@
 // Rafraîchit le snapshot Wikipedia des palmarès (wikipedia-records.json).
 //
-// Usage :  npx tsx scripts/refresh-wikipedia.ts   (~1-2 min)
+// Usage :  npx tsx scripts/refresh-wikipedia.ts          (run complet, ~20-40 min)
+//          npx tsx scripts/refresh-wikipedia.ts --limit 200  (run de test rapide)
 //
-// Couvre le pool visible dans l'app : les ~1500 premiers boxeurs Big Balls
-// (ordre alphabétique de l'API) + les stars du mock (hors pool). Pour chaque
-// boxeur on résout le titre Wikipedia via son ID Wikidata (par lots de 50),
-// on récupère la section 0 du wikitext (infobox) par lots, et on parse la
-// meilleure fiche fr/en. Poli envers les APIs : User-Agent descriptif,
-// requêtes groupées (50/req), pacing ~600 ms, retry avec backoff sur 429.
+// Couvre : les stars du mock + le pool visible Big Balls (~1500 premiers,
+// ordre alphabétique de l'API) + TOUS les boxeurs de l'annuaire merged.json
+// avec un ID Wikidata (~19,5 k) — la fiche de chaque boxeur Wikipedia est
+// résolue via son ID Wikidata (par lots de 50), le wikitext est récupéré par
+// lots, et on parse la meilleure fiche fr/en. Poli envers les APIs :
+// User-Agent descriptif, requêtes groupées (50/req), pacing ~600 ms, retry
+// avec backoff sur 429.
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -16,13 +18,21 @@ import type { WikipediaBout } from "../lib/data/providers/wikipedia-types.ts";
 import { FIGHTERS } from "../lib/data/providers/mock.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Limite optionnelle pour les runs de test : `--limit N` tronque le pool
+// total (stars + Big Balls + annuaire) après assemblage. En mode test, les
+// sorties vont vers des fichiers `.test.json` (jamais les vrais datasets).
+const LIMIT_ARG = process.argv.find((a) => a.startsWith("--limit="));
+const LIMIT = LIMIT_ARG ? Number(LIMIT_ARG.split("=")[1]) : 0;
+const TEST_SUFFIX = LIMIT > 0 ? ".test" : "";
+
 const OUT = join(
   __dirname,
   "..",
   "lib",
   "data",
   "providers",
-  "wikipedia-records.json"
+  `wikipedia-records${TEST_SUFFIX}.json`
 );
 // Carrières complètes (tableaux « Professional boxing record ») — dataset
 // séparé, lu par CareersProvider ; alimenté aussi par add-wikipedia-bouts.ts
@@ -33,7 +43,16 @@ const CAREERS_OUT = join(
   "lib",
   "data",
   "providers",
-  "wikipedia-careers.json"
+  `wikipedia-careers${TEST_SUFFIX}.json`
+);
+// Annuaire pipeline : { boxeurs avec wikidata_id } → couverture complète.
+const MERGED_FILE = join(
+  __dirname,
+  "..",
+  "public",
+  "data",
+  "boxers",
+  "merged.json"
 );
 
 // charge .env.local (clé Big Balls) — tsx ne le fait pas automatiquement
@@ -234,18 +253,49 @@ async function fetchStarWikidata(stars: Athlete[]): Promise<void> {
   }
 }
 
+/** Couverture étendue : tous les boxeurs de l'annuaire merged.json avec un
+ *  ID Wikidata (hors ceux déjà couverts par le pool Big Balls / les stars). */
+function fetchMergedPool(existingSlugs: Set<string>): Athlete[] {
+  let raw: Array<{
+    name?: string;
+    slug?: string;
+    wikidata_id?: string | null;
+  }>;
+  try {
+    raw = JSON.parse(readFileSync(MERGED_FILE, "utf8"));
+  } catch {
+    console.warn("merged.json absent — couverture limitée au pool + stars.");
+    return [];
+  }
+  const out: Athlete[] = [];
+  for (const b of raw) {
+    if (!b?.slug || !b?.name || !b.wikidata_id) continue;
+    if (existingSlugs.has(b.slug)) continue;
+    existingSlugs.add(b.slug);
+    out.push({ name: b.name, slug: b.slug, wikidata: b.wikidata_id, ranked: false });
+  }
+  console.log(`  Annuaire merged.json : ${out.length} boxeurs avec Wikidata (hors pool)`);
+  return out;
+}
+
 async function main() {
-  console.log(`Rafraîchissement Wikipedia — pool ${POOL} + stars…`);
+  const pool = await fetchBigBallsPool();
+  const poolSlugs = new Set(pool.map((p) => p.slug));
+  console.log(`Rafraîchissement Wikipedia — pool ${POOL} + stars + annuaire…`);
 
   // 1. pool Big Balls + stars du mock (Wikidata résolu par recherche)
-  const pool = await fetchBigBallsPool();
   const stars: Athlete[] = FIGHTERS.filter(
     (f) => !pool.some((p) => p.slug === f.slug)
   ).map((f) => ({ name: f.name, slug: f.slug, wikidata: null, ranked: false }));
   await fetchStarWikidata(stars);
+
+  // 1b. couverture étendue : tous les QIDs de l'annuaire merged.json
+  const mergedExtra = fetchMergedPool(poolSlugs);
   // les stars du mock passent EN TÊTE : si la liste Wikipedia est tronquée
-  // (limite du routeur), elles restent incluses
-  const all = [...stars, ...pool];
+  // (limite du routeur), elles restent incluses ; le pool Big Balls puis
+  // l'annuaire suivent
+  let all = [...stars, ...pool, ...mergedExtra];
+  if (LIMIT > 0) all = all.slice(0, LIMIT);
   console.log(`  Total à traiter : ${all.length} boxeurs`);
 
   // 2. résolution des titres via Wikidata (par lots)
