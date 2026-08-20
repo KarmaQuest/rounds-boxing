@@ -351,9 +351,18 @@ async function main() {
       if (enBouts.length > bouts.length) bouts = enBouts;
     }
     if (best) {
-      out[a.slug] = { name: a.name, ...best };
-      if (bouts.length) careersOut[a.slug] = { name: a.name, bouts };
-      ok++;
+      // on n'écrit que les records COMPLETS (wins + losses + draws) : un
+      // record partiel (infobox abrégée) fausserait le palmarès affiché
+      const r = best.record;
+      const complete =
+        typeof r.wins === "number" &&
+        typeof r.losses === "number" &&
+        typeof r.draws === "number";
+      if (complete) {
+        out[a.slug] = { name: a.name, ...best };
+        if (bouts.length) careersOut[a.slug] = { name: a.name, bouts };
+        ok++;
+      }
     }
   }
 
