@@ -8,8 +8,8 @@ import { ShardsFightsProvider } from "./providers/shardsfights";
 import { CareersProvider } from "./providers/careers";
 import { MergedBoxersProvider } from "./providers/mergedboxers";
 import { ProviderRouter } from "./providers/router";
-import type { FighterFilters } from "./types";
-import { applyFilters, dedupeFighters } from "./utils";
+import type { BoxerRecord, Fighter, FighterFilters, Fight } from "./types";
+import { applyFilters, dedupeFighters, slugify } from "./utils";
 
 /**
  * Couche de données unique pour toute l'app.
@@ -84,8 +84,47 @@ export async function searchBoxeurs(filters: FighterFilters) {
   return { fighters: filtered, source: [...sources].join(" + ") || "aucune" };
 }
 
+/** Compte le palmarès depuis les combats de carrière, du point de vue du
+ *  boxeur (les KO ne comptent que sur les victoires). */
+function recordFromFights(name: string, fights: Fight[]): BoxerRecord {
+  const rec: BoxerRecord = { wins: 0, losses: 0, draws: 0, ko: 0 };
+  const slug = slugify(name);
+  for (const f of fights) {
+    const winnerIndex = f.outcome?.winnerIndex;
+    const myIndex = f.fighters.findIndex((ref) => slugify(ref.name) === slug);
+    if (myIndex === -1) continue; // combat où le boxeur n'est pas cité
+    if (winnerIndex === undefined) {
+      rec.draws += 1;
+    } else if (winnerIndex === myIndex) {
+      rec.wins += 1;
+      if (/ko|tko|knockout|arr[êe]t/i.test(f.outcome?.method ?? "")) rec.ko += 1;
+    } else {
+      rec.losses += 1;
+    }
+  }
+  return rec;
+}
+
+/** Dérive le palmarès depuis la carrière (archive pipeline + Wikipedia)
+ *  quand aucune source n'a publié de record (0-0-0) — ex. Rico Verhoeven,
+ *  dont les combats existent dans wikipedia-careers.json mais pas dans
+ *  wikipedia-records.json. La dérivation ne touche jamais un record réel. */
+async function deriveRecord(fighter: Fighter): Promise<Fighter> {
+  const { wins, losses, draws } = fighter.record;
+  if (wins + losses + draws > 0) return fighter;
+  const { fights } = await getCarriere(fighter.slug);
+  if (fights.length === 0) return fighter;
+  const record = recordFromFights(fighter.name, fights);
+  if (record.wins + record.losses + record.draws === 0) return fighter;
+  const source = fighter.source ? `${fighter.source} + carrière` : "carrière";
+  return { ...fighter, record, source };
+}
+
 export async function getBoxeur(slug: string) {
-  return router.getFighter(slug);
+  const { fighter, source } = await router.getFighter(slug);
+  if (!fighter) return { fighter: null, source };
+  const derived = await deriveRecord(fighter);
+  return { fighter: derived, source: derived.source ?? source };
 }
 
 export async function getCombatsAvenir(limit = 20) {

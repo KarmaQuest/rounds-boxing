@@ -170,6 +170,65 @@ describe("listFighters — fusion multi-source", () => {
     expect(fighters[0]!.nickname).toBe("The Cat");
   });
 
+  it("des champs physiques placeholder (0, garde par défaut) sont comblés par la source suivante", async () => {
+    // Big Balls ne fournit ni taille, ni allonge, ni garde (→ placeholders) ;
+    // Wikipedia apporte les vraies valeurs (infobox) : elles doivent gagner.
+    const bigballs = mkFighter({
+      name: "Oleksandr Usyk",
+      heightCm: 0,
+      reachCm: 0,
+      stance: "Orthodoxe", // valeur par défaut du fournisseur (pas de garde connue)
+      record: { wins: 0, losses: 0, draws: 0, ko: 0 },
+    });
+    const wikipedia = mkFighter({
+      name: "Oleksandr Usyk",
+      heightCm: 191,
+      reachCm: 198,
+      stance: "Southpaw",
+      country: "",
+      flag: "",
+      record: { wins: 25, losses: 0, draws: 0, ko: 16 },
+      source: "wikipedia",
+    });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "bigballs", priority: 1, listFighters: async () => [bigballs] }),
+      mkProvider({ name: "wikipedia", priority: 2, listFighters: async () => [wikipedia] }),
+    ]);
+
+    const { fighters } = await router.listFighters();
+    const f = fighters[0]!;
+    expect(f.heightCm).toBe(191); // 0 comblé par la vraie taille
+    expect(f.reachCm).toBe(198); // 0 comblé par la vraie allonge
+    expect(f.stance).toBe("Southpaw"); // garde par défaut remplacée
+    expect(f.record).toEqual({ wins: 25, losses: 0, draws: 0, ko: 16 }); // palmarès réel
+    expect(f.country).toBe("France"); // champ Big Balls réel préservé (pas écrasé par "")
+  });
+
+  it("une garde réelle d'une source prioritaire n'est jamais remplacée par un défaut", async () => {
+    // Big Balls a une vraie garde Southpaw ; la source suivante ne connaît
+    // pas la garde (défaut « Orthodoxe ») → la vraie garde est conservée.
+    const bigballs = mkFighter({
+      name: "Oleksandr Usyk",
+      stance: "Southpaw",
+      record: { wins: 25, losses: 0, draws: 0, ko: 16 },
+    });
+    const wikipedia = mkFighter({
+      name: "Oleksandr Usyk",
+      stance: "Orthodoxe", // défaut (infobox sans garde)
+      record: { wins: 25, losses: 0, draws: 0, ko: 16 },
+      source: "wikipedia",
+    });
+
+    const router = new ProviderRouter([
+      mkProvider({ name: "bigballs", priority: 1, listFighters: async () => [bigballs] }),
+      mkProvider({ name: "wikipedia", priority: 2, listFighters: async () => [wikipedia] }),
+    ]);
+
+    const { fighters } = await router.listFighters();
+    expect(fighters[0]!.stance).toBe("Southpaw");
+  });
+
   it("une fiche minimale (Wikipedia) ne doit pas écraser les champs de la source réelle (Big Balls)", async () => {
     const bigballs = mkFighter({
       name: "Bakary Samaké",

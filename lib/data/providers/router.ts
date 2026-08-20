@@ -20,10 +20,35 @@ function hasFights(record: Fighter["record"]): boolean {
   return record.wins + record.losses + record.draws > 0;
 }
 
+/** Valeur « vide » = donnée absente chez un fournisseur (0, "", undefined…). */
+function isBlank(v: unknown): boolean {
+  return v === undefined || v === null || v === "" || v === 0 || v === false;
+}
+
+/** La source prioritaire garde son champ réel ; la source suivante ne comble
+ *  que les trous (0, "", …) — jamais d'écrasement d'un champ réel par un
+ *  placeholder (ex. une fiche Wikipedia minimale sans bio ni pays). */
+function pickField<T>(existing: T, incoming: T): T {
+  return isBlank(existing) && !isBlank(incoming) ? incoming : existing;
+}
+
+/** Garde : la source suivante ne l'emporte que si la source prioritaire a la
+ *  valeur par défaut « Orthodoxe » (fournisseur sans info garde) et que la
+ *  suivante apporte une garde explicite non-orthodoxe (Southpaw/Switch).
+ *  Sinon la garde réelle de la source prioritaire est conservée. */
+function pickStance(existing: Fighter["stance"], incoming: Fighter["stance"]): Fighter["stance"] {
+  if (existing === "Orthodoxe" && (incoming === "Southpaw" || incoming === "Switch")) {
+    return incoming;
+  }
+  return existing;
+}
+
 /**
  * Fusionne deux fiches du même boxeur (slug identique) :
- * - `incoming` (source arrivée en second, typiquement le mock) remplit ce
- *   que la source réelle n'a pas (palmarès, ceintures, bio, rang) ;
+ * - `incoming` (source arrivée en second, typiquement Wikipedia / mock)
+ *   remplit ce que la source réelle n'a pas (palmarès, ceintures, bio, rang)
+ *   et comble les trous physiques laissés par la source prioritaire (taille/
+ *   allonge à 0, garde par défaut « Orthodoxe ») ;
  * - on préserve les données réelles utiles absentes du mock (ID BoxRec) ;
  * - `recordPriority` règle qui gagne sur le palmarès quand les deux sources
  *   en fournissent un :
@@ -53,17 +78,29 @@ function mergeFighter(
     // La source suivante (Wikipedia minimal, mock) comble les trous…
     ...incoming,
     // …mais la source arrivée en premier (priorité haute : Big Balls,
-    // Wikipedia) GARDE ses champs — jamais d'écrasement d'un champ réel
-    // par `undefined` (ex. une fiche Wikipedia minimale sans bio ni pays)
+    // Wikipedia) GARDE ses champs réels — le merge champ par champ ci-dessous
+    // ne laisse un placeholder (0, "", garde par défaut) être remplacé que
+    // par une vraie valeur de la source suivante (ex. allonge 198 cm de
+    // Wikipedia à la place du 0 de Big Balls, ou Southpaw à la place de la
+    // garde par défaut « Orthodoxe »).
     ...existing,
     boxrecId: incoming.boxrecId ?? existing.boxrecId,
+    nickname: pickField(existing.nickname, incoming.nickname),
+    country: pickField(existing.country, incoming.country),
+    flag: pickField(existing.flag, incoming.flag),
+    weightClass: pickField(existing.weightClass, incoming.weightClass),
+    stance: pickStance(existing.stance, incoming.stance),
+    heightCm: pickField(existing.heightCm, incoming.heightCm),
+    reachCm: pickField(existing.reachCm, incoming.reachCm),
+    age: pickField(existing.age, incoming.age),
+    debutYear: pickField(existing.debutYear, incoming.debutYear),
     record,
     // le label source suit le palmarès retenu (pas le dernier provider)
     source: record === existing.record ? existing.source : incoming.source,
     titles: incoming.titles.length > 0 ? incoming.titles : existing.titles,
-    bio: incoming.bio ?? existing.bio,
-    rank: incoming.rank ?? existing.rank,
-    promoter: incoming.promoter ?? existing.promoter,
+    bio: pickField(existing.bio, incoming.bio),
+    rank: pickField(existing.rank, incoming.rank),
+    promoter: pickField(existing.promoter, incoming.promoter),
   };
 }
 

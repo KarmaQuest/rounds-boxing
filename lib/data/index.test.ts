@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getCombatsRecents, searchBoxeurs } from "./index";
+import { getBoxeur, getCombatsRecents, searchBoxeurs } from "./index";
 
 /**
  * Tests d'intégration de la couche publique (index.ts) sur le mock
@@ -35,6 +35,24 @@ describe("searchBoxeurs (intégration mock)", () => {
     });
     expect(fighters.length).toBeGreaterThan(0);
     expect(fighters.every((f) => f.weightClass === "Poids super-moyens")).toBe(true);
+  });
+});
+
+describe("getBoxeur (dérivation palmarès depuis la carrière)", () => {
+  it("Rico Verhoeven (record vide 0-0-0) reçoit un palmarès dérivé de ses combats", async () => {
+    const { fighter } = await getBoxeur("rico-verhoeven");
+    expect(fighter).not.toBeNull();
+    const f = fighter!;
+    expect(f.record.wins + f.record.losses + f.record.draws).toBeGreaterThan(0);
+    expect(f.record).toEqual({ wins: 1, losses: 1, draws: 0, ko: 1 });
+  });
+
+  it("un record réel n'est pas touché par la dérivation", async () => {
+    const { fighter } = await getBoxeur("oleksandr-usyk");
+    expect(fighter).not.toBeNull();
+    const total =
+      fighter!.record.wins + fighter!.record.losses + fighter!.record.draws;
+    expect(total).toBeGreaterThan(0);
   });
 });
 
